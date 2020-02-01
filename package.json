@@ -1,0 +1,42 @@
+{
+  "name": "autojs-scripts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --config tools/webpack/webpack.dev.js",
+    "watch": "npm run dev -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demoshang/autojs-scripts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/demoshang/autojs-scripts/issues"
+  },
+  "homepage": "https://github.com/demoshang/autojs-scripts#readme",
+  "devDependencies": {
+    "@ofa2/eslint-config": "^3.4.0",
+    "@types/node": "^13.5.3",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "glob": "^7.1.6",
+    "prettier": "^1.19.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2",
+    "webpack-sources": "^1.4.3"
+  }
+}
