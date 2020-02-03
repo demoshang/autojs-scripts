@@ -1,18 +1,16 @@
-import { getUi } from './get-ui';
+import xml from './check-floaty.xml';
 
 async function checkFloaty() {
   let hadPermission = false;
   const floatyThreads = threads.start(() => {
-    const w = getUi<any>('floatyCheck');
-
-    w.setSize(-1, -1);
-    w.setTouchable(false);
+    const w = xml();
+    w.setSize(0, 0);
     w.close();
+
     hadPermission = true;
   });
 
   floatyThreads.waitFor();
-  floatyThreads.interrupt();
 
   return new Promise((resolve) => {
     const interval = setInterval(() => {
@@ -23,6 +21,8 @@ async function checkFloaty() {
     }, 200);
 
     setTimeout(() => {
+      floatyThreads.interrupt();
+
       resolve(hadPermission);
       clearInterval(interval);
     }, 1000);

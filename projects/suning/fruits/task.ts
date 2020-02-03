@@ -23,12 +23,18 @@ function isInTask() {
   return !!textContains(key).findOnce();
 }
 
-function runTask(taskPrefix: string) {
+function runTask(taskPrefix: string | RegExp) {
   if (!isInTask()) {
     throw new Error('不在任务界面');
   }
 
-  const uiObj = textContains(taskPrefix).findOnce();
+  let uiObj: UiObject | null = null;
+  if (typeof taskPrefix === 'string') {
+    uiObj = textContains(taskPrefix).findOnce();
+  } else {
+    uiObj = textMatches(taskPrefix).findOnce();
+  }
+
   if (!uiObj) {
     throw new Error(`未找到任务详情: ${taskPrefix}`);
   }
@@ -46,7 +52,12 @@ function runTask(taskPrefix: string) {
   }
 
   const goBtn = uiObj.parent().findOne(textContains('去完成'));
+  const finishBtn = uiObj.parent().findOne(textContains('已完成'));
   if (!goBtn) {
+    if (finishBtn) {
+      return;
+    }
+
     throw new Error(`未找到任务按钮: ${taskPrefix}`);
   }
 
@@ -74,17 +85,21 @@ function run() {
 
   toastLog('苏宁打开成功...');
 
-  runTask('店铺(');
+  runTask(/.*(店铺|店)\(\d\/\d\).*/);
   runTask('视频(');
   runTask('会场(');
 
   toastLog('结束');
 }
 
-retryRun(
-  run,
-  () => {
-    killApp(suningApplicationId);
-  },
-  3
-);
+function runWithRetry(retries = 3) {
+  retryRun(
+    run,
+    () => {
+      killApp(suningApplicationId);
+    },
+    retries
+  );
+}
+
+export { runWithRetry };

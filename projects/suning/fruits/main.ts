@@ -1,9 +1,11 @@
 'ui';
 
-import { checkFloaty } from '../../common/check-floaty';
-import { getUi } from '../../common/get-ui';
+import layout from './layout.xml';
+import { runWithRetry } from './task';
 
-getUi('gui');
+import { checkFloaty } from '../../common/check-floaty';
+
+layout();
 
 function checkAccessibilityStatus() {
   toastLog(`无障碍服务状态: ${!!auto.service}`);
@@ -26,6 +28,27 @@ function checkAccessibilityStatus() {
   return true;
 }
 
+async function checkFloatyStatus() {
+  const isOpened = await checkFloaty();
+
+  toastLog(`悬浮窗服务状态: ${isOpened}`);
+
+  ui.floatyBtn.visibility = 0;
+
+  if (!isOpened) {
+    ui.floatyStatusCheck.visibility = 0;
+    ui.floatyStatusSuccess.visibility = 8;
+
+    ui.floatyBtn.visibility = 0;
+    return false;
+  }
+
+  ui.floatyStatusCheck.visibility = 8;
+  ui.floatyStatusSuccess.visibility = 0;
+
+  return true;
+}
+
 let threadCache: threads.Thread | null = null;
 
 function run() {
@@ -38,7 +61,7 @@ function run() {
 
   try {
     threadCache = threads.start(() => {
-      __RUN_TASK__();
+      runWithRetry();
     });
   } catch (e) {
     toastLog(e);
@@ -58,12 +81,12 @@ ui.accessibilityBtn.click(() => {
 });
 
 ui.floatyBtn.click(async () => {
-  const a = await checkFloaty();
+  const isOpened = await checkFloatyStatus();
 
-  if (!a) {
-    app.startActivity({
-      action: 'android.settings.SYSTEM_ALERT_WINDOW',
-    });
+  openAppSetting(currentPackage());
+
+  if (!isOpened) {
+    openAppSetting(currentPackage());
   }
 });
 
@@ -76,5 +99,7 @@ ui.runBtn.click(() => {
 });
 
 setTimeout(() => {
-  checkAccessibilityStatus();
+  if (checkAccessibilityStatus()) {
+    checkFloatyStatus();
+  }
 }, 1000);
