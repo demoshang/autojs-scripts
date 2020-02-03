@@ -3,8 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const { root } = require('./constants');
 const { getEntry } = require('./entry');
-const { getUiFiles } = require('./ui-files');
-const AutoJsUiPlugin = require('./ui.plugin');
+const AutoJsUiPlugin = require('./autojs-ui.plugin');
 
 module.exports = {
   entry: getEntry(),
@@ -19,10 +18,18 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.xml$/,
+        use: [
+          {
+            loader: path.resolve(__dirname, './autojs-xml.loader.js'),
+          },
+        ],
+      },
     ],
   },
   resolve: {
-    extensions: ['.ts'],
+    extensions: ['.ts', '.xml'],
   },
   plugins: [
     new CopyPlugin([
@@ -30,9 +37,9 @@ module.exports = {
         from: path.join(root, 'projects/**/*'),
         to: path.join(root, 'dist/'),
         context: 'projects/',
-        ignore: ['*.ts', '*.js', '*.xml'],
+        ignore: ['*.ts', '*.xml'],
       },
     ]),
-    new AutoJsUiPlugin(getUiFiles()),
+    new AutoJsUiPlugin(),
   ],
 };
