@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { RawSource } = require('webpack-sources');
 
+const { xmlMatchRegExp } = require('./constants');
+
 function appendHeader(source) {
   const headers = /(^|\n)\s*(['"])ui\2/.test(source) ? `"ui";` : '';
 
@@ -22,18 +24,17 @@ function transformXml(xmlContent) {
 }
 
 function appendXML(source) {
-  const regexp = /module.exports="__XML_TRANSFORM_BEGIN__([\d\D]*?)__XML_TRANSFORM_END__"/g;
-
-  return source.replace(regexp, (match, xmlPath) => {
+  return source.replace(xmlMatchRegExp, (match, quote, xmlPath) => {
     const xmlContent = fs.readFileSync(xmlPath, { encoding: 'utf8' });
 
-    return `module.exports=function(){return ${transformXml(xmlContent)}};`
+    return `(
+${xmlContent}
+)`;
   });
 }
 
 class AutoJsUiPlugin {
-  constructor() {
-  }
+  constructor() {}
 
   apply(compiler) {
     compiler.hooks.compilation.tap('AutoJsUiPlugin', (compilation) => {

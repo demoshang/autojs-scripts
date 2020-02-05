@@ -15,17 +15,16 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.xml$/,
         use: [
           {
-            loader: path.resolve(__dirname, './autojs-xml.loader.js'),
+            loader: 'ts-loader',
           },
+          {
+            loader: path.resolve(__dirname, './autojs-xml-path-resolve.loader'),
+          }
         ],
-      },
+        exclude: /node_modules/,
+      }
     ],
   },
   resolve: {

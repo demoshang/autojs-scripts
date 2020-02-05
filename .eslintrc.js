@@ -2,9 +2,6 @@ module.exports = {
   extends: ['@ofa2/eslint-config'],
   parserOptions: { project: ['./tsconfig.json'] },
   globals: {
-    __RUN_TASK__: false,
-    UI_XML_MAP: false,
-
     auto: false,
     ui: false,
     threads: false,
@@ -12,6 +9,7 @@ module.exports = {
     app: false,
     back: false,
     openAppSetting: false,
+    floaty: false,
 
     context: false,
 
