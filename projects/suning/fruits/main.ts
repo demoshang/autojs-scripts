@@ -1,11 +1,32 @@
 'ui';
 
 import layout from './layout.xml';
-import { runWithRetry } from './task';
 
 import { checkFloaty } from '../../common/check-floaty';
+import { runWithRetry } from './task';
 
 layout();
+
+async function checkFloatyStatus() {
+  const isOpened = await checkFloaty();
+
+  toastLog(`悬浮窗服务状态: ${isOpened}`);
+
+  ui.floatyBtn.visibility = 0;
+
+  if (!isOpened) {
+    ui.floatyStatusCheck.visibility = 0;
+    ui.floatyStatusSuccess.visibility = 8;
+
+    ui.floatyBtn.visibility = 0;
+    return false;
+  }
+
+  ui.floatyStatusCheck.visibility = 8;
+  ui.floatyStatusSuccess.visibility = 0;
+
+  return true;
+}
 
 function checkAccessibilityStatus() {
   toastLog(`无障碍服务状态: ${!!auto.service}`);
@@ -25,26 +46,7 @@ function checkAccessibilityStatus() {
   ui.waring.visibility = 8;
   ui.runBtn.visibility = 0;
 
-  return true;
-}
-
-async function checkFloatyStatus() {
-  const isOpened = await checkFloaty();
-
-  toastLog(`悬浮窗服务状态: ${isOpened}`);
-
-  ui.floatyBtn.visibility = 0;
-
-  if (!isOpened) {
-    ui.floatyStatusCheck.visibility = 0;
-    ui.floatyStatusSuccess.visibility = 8;
-
-    ui.floatyBtn.visibility = 0;
-    return false;
-  }
-
-  ui.floatyStatusCheck.visibility = 8;
-  ui.floatyStatusSuccess.visibility = 0;
+  checkFloatyStatus();
 
   return true;
 }
@@ -83,8 +85,6 @@ ui.accessibilityBtn.click(() => {
 ui.floatyBtn.click(async () => {
   const isOpened = await checkFloatyStatus();
 
-  openAppSetting(currentPackage());
-
   if (!isOpened) {
     openAppSetting(currentPackage());
   }
@@ -99,7 +99,5 @@ ui.runBtn.click(() => {
 });
 
 setTimeout(() => {
-  if (checkAccessibilityStatus()) {
-    checkFloatyStatus();
-  }
-}, 1000);
+  checkAccessibilityStatus();
+}, 100);
