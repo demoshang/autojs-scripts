@@ -1,8 +1,7 @@
 'ui';
 
-import layout from './layout.xml';
-
 import { checkFloaty } from '../../common/check-floaty';
+import layout from './layout.xml';
 import { runWithRetry } from './task';
 
 layout();
