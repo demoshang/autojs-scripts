@@ -12,7 +12,7 @@ async function checkFloaty() {
 
   floatyThreads.waitFor();
 
-  return new Promise((resolve) => {
+  return new Promise<boolean>((resolve) => {
     const interval = setInterval(() => {
       if (hadPermission) {
         resolve(hadPermission);

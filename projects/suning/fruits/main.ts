@@ -7,8 +7,12 @@ import { runWithRetry } from './task';
 
 layout();
 
-async function checkFloatyStatus() {
-  const isOpened = await checkFloaty();
+async function checkFloatyStatus(justShow = false) {
+  let isOpened = false;
+
+  if (!justShow) {
+    isOpened = await checkFloaty();
+  }
 
   toastLog(`悬浮窗服务状态: ${isOpened}`);
 
@@ -46,7 +50,7 @@ function checkAccessibilityStatus() {
   ui.waring.visibility = 8;
   ui.runBtn.visibility = 0;
 
-  checkFloatyStatus();
+  checkFloatyStatus(true);
 
   return true;
 }
