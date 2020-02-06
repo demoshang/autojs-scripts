@@ -103,7 +103,7 @@ declare interface UiObject {
 declare interface UiCollection {
     size(): number;
     get(i: number): UiObject;
-    each(func: (obj: UiObject) => void): void;
+    forEach(func: (obj: UiObject) => void): void;
     empty(): boolean;
     nonEmpty(): boolean;
     find(selector): UiCollection;

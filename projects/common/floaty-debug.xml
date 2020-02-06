@@ -1,0 +1,14 @@
+<!-- wrap: floaty.rawWindow -->
+
+<frame>
+  <img id="img0" radius="{{__ARG0__.radius}}" w="{{__ARG0__.width}}" h="{{__ARG0__.height}}" tint="{{__ARG0__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img1" radius="{{__ARG1__.radius}}" w="{{__ARG1__.width}}" h="{{__ARG1__.height}}" tint="{{__ARG1__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img2" radius="{{__ARG2__.radius}}" w="{{__ARG2__.width}}" h="{{__ARG2__.height}}" tint="{{__ARG2__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img3" radius="{{__ARG3__.radius}}" w="{{__ARG3__.width}}" h="{{__ARG3__.height}}" tint="{{__ARG3__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img4" radius="{{__ARG4__.radius}}" w="{{__ARG4__.width}}" h="{{__ARG4__.height}}" tint="{{__ARG4__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img5" radius="{{__ARG5__.radius}}" w="{{__ARG5__.width}}" h="{{__ARG5__.height}}" tint="{{__ARG5__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img6" radius="{{__ARG6__.radius}}" w="{{__ARG6__.width}}" h="{{__ARG6__.height}}" tint="{{__ARG6__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img7" radius="{{__ARG7__.radius}}" w="{{__ARG7__.width}}" h="{{__ARG7__.height}}" tint="{{__ARG7__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img8" radius="{{__ARG8__.radius}}" w="{{__ARG8__.width}}" h="{{__ARG8__.height}}" tint="{{__ARG8__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <img id="img9" radius="{{__ARG9__.radius}}" w="{{__ARG9__.width}}" h="{{__ARG9__.height}}" tint="{{__ARG9__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+</frame>

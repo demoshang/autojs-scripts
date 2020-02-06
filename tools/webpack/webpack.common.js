@@ -15,7 +15,13 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: {
+          loader: 'ts-loader',
+          options: {
+            // 6133: declared but its value is never read
+            ignoreDiagnostics: [6133],
+          },
+        },
         exclude: /node_modules/,
       },
       {

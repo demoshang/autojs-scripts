@@ -5,6 +5,14 @@ interface Image {
     getHeight(): number;
     saveTo(path: string): void;
     pixel(x: number, y: number): number;
+    recycle(): void;
+}
+
+interface MatchTemplateOptions {
+    threshold?: number, 
+    region?: [number, number, number, number], 
+    max?: number, 
+    level?: number
 }
 
 
@@ -16,6 +24,7 @@ declare namespace images {
     function save(image: Image, path: string): void;
     function read(path: string): Image;
     function load(url: string): Image;
+    function matchTemplate(img: Image, template: Image, options?: MatchTemplateOptions):{points: Point[], matches:{point: Point, similarity: number}[]};
     interface FindColorOptions {
         region?: [number, number] | [number, number, number, number];
         threshold?: number;

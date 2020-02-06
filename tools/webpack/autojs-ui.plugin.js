@@ -27,7 +27,20 @@ function appendXML(source) {
   return source.replace(regexp, (match, xmlPath) => {
     const xmlContent = fs.readFileSync(xmlPath, { encoding: 'utf8' });
 
-    return `module.exports=function(){return ${transformXml(xmlContent)}};`
+    return `module.exports = function() {
+      global.__ARGS__ = [].slice.call(arguments); 
+      global.__ARG0__ = global.__ARGS__[0]; 
+      global.__ARG1__ = global.__ARGS__[1]; 
+      global.__ARG2__ = global.__ARGS__[2]; 
+      global.__ARG3__ = global.__ARGS__[3]; 
+      global.__ARG4__ = global.__ARGS__[4]; 
+      global.__ARG5__ = global.__ARGS__[5]; 
+      global.__ARG6__ = global.__ARGS__[6]; 
+      global.__ARG7__ = global.__ARGS__[7]; 
+      global.__ARG8__ = global.__ARGS__[8]; 
+      global.__ARG9__ = global.__ARGS__[9]; 
+      return ${transformXml(xmlContent)}};
+`
   });
 }
 

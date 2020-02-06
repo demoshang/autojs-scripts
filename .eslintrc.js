@@ -12,6 +12,13 @@ module.exports = {
     app: false,
     back: false,
     openAppSetting: false,
+    images: false,
+    device: false,
+    open: false,
+    press: false,
+    click: false,
+    swipe: false,
+    gesture: false,
 
     context: false,
 
