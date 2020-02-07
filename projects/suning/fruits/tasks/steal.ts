@@ -1,8 +1,7 @@
-import { getCaptureImage } from '../../../common/image';
-import { getPosition, findAndClick } from './find-click';
-import { floatyDebug } from '../../../common/floaty-debug';
 import { delayCheck } from '../../../common/delay-check';
+import { getCaptureImage } from '../../../common/image';
 import { collectAnimal } from './animal';
+import { getPosition } from './find-click';
 import { pressClose } from './press-close';
 
 function getStealRandomPosition() {

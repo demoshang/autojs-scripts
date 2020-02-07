@@ -1,7 +1,5 @@
 import { delayCheck } from '../../../common/delay-check';
 import { getTaskCount } from '../../../common/get-task-count';
-import { openSuning } from '../../../common/open-app';
-import { findAndClick } from './find-click';
 import { pressClose } from './press-close';
 
 function isInTask() {

@@ -15,5 +15,7 @@
 
   <button id="floatyBtn" style="Widget.AppCompat.Button.Colored" text="检测/打开悬浮窗设置" visibility="gone" />
 
+  <button id="consoleBtn" style="Widget.AppCompat.Button.Colored" text="打开日志" />
+
   <button id="runBtn" style="Widget.AppCompat.Button.Colored" text="启动脚本" visibility="gone" />
 </vertical>

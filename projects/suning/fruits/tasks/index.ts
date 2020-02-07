@@ -1,12 +1,12 @@
-import { delayCheck } from '../../common/delay-check';
-import { killApp } from '../../common/kill-app';
-import { openSuning } from '../../common/open-app';
-import { retryRun } from '../../common/retry-run';
-import { addAnimals, collectAnimal } from './sub-tasks/animal';
-import { collectCoin } from './sub-tasks/coin';
-import { goShop } from './sub-tasks/go-shop';
-import { weed } from './sub-tasks/weed';
-import { steal } from './sub-tasks/steal';
+import { delayCheck } from '../../../common/delay-check';
+import { killApp } from '../../../common/kill-app';
+import { openSuning } from '../../../common/open-app';
+import { retryRun } from '../../../common/retry-run';
+import { addAnimals, collectAnimal } from './animal';
+import { collectCoin } from './coin';
+import { goShop } from './go-shop';
+import { weed } from './weed';
+import { steal } from './steal';
 
 const suningApplicationId = 'com.suning.mobile.ebuy';
 
@@ -42,6 +42,7 @@ function runWithRetry(retries = 3) {
       steal();
     },
     () => {
+      sleep(500);
       killApp(suningApplicationId);
     },
     retries
