@@ -1,6 +1,7 @@
 'ui';
 
 import { checkFloaty } from '../../common/check-floaty';
+import { getCaptureImage } from '../../common/image';
 import layout from './layout.xml';
 import { runWithRetry } from './task';
 
@@ -64,8 +65,12 @@ function run() {
     threadCache = null;
   }
 
+  app.startActivity('console');
+
   try {
     threadCache = threads.start(() => {
+      getCaptureImage();
+
       runWithRetry();
     });
   } catch (e) {
