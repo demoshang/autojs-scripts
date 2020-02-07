@@ -10,12 +10,18 @@ function getPosition(
 ) {
   const m1 = images.matchTemplate(screenImage, template, options);
 
-  return m1.matches.map(({ point }) => {
-    return {
-      x: point.x + 5,
-      y: point.y + 5,
-    };
-  });
+  return m1.matches
+    .filter(({ point }) => {
+      // 上面的任务栏
+      return point.y > 100;
+    })
+    .map(({ point, similarity }) => {
+      return {
+        x: point.x + 5,
+        y: point.y + 5,
+        similarity,
+      };
+    });
 }
 
 type PositionFn = (screenImage: Image) => { x: number; y: number }[];
@@ -26,15 +32,17 @@ type CollectParams =
     }
   | PositionFn;
 
-function collect(
+function findAndClick(
   config: { image: Image; options: MatchTemplateOptions },
-  lastPositionsLen?: number
+  lastPositionsLen?: number,
+  afterRun?: Function
 ): void;
-function collect(
+function findAndClick(
   positionFn: (screenImage: Image) => { x: number; y: number }[],
-  lastPositionsLen?: number
+  lastPositionsLen?: number,
+  afterRun?: Function
 ): void;
-function collect(fnOrParams: CollectParams, lastPositionsLen = 0): void {
+function findAndClick(fnOrParams: CollectParams, lastPositionsLen = 0, afterRun?: Function): void {
   const screenImage = getCaptureImage();
 
   let positions;
@@ -45,10 +53,11 @@ function collect(fnOrParams: CollectParams, lastPositionsLen = 0): void {
     positions = getPosition(screenImage, fnOrParams.image, fnOrParams.options);
   }
 
+  floatyDebug(1000, ...positions);
+
   positions.forEach(({ x, y }) => {
     toastLog(`press: ${JSON.stringify({ x, y })}`);
 
-    floatyDebug(1000, { radius: 10, x, y });
     press(x, y, 100);
     sleep(1000);
 
@@ -58,8 +67,11 @@ function collect(fnOrParams: CollectParams, lastPositionsLen = 0): void {
 
   screenImage.recycle();
   if (positions.length !== lastPositionsLen) {
-    collect(fnOrParams as PositionFn, positions.length);
+    if (afterRun) {
+      afterRun();
+    }
+    findAndClick(fnOrParams as PositionFn, positions.length, afterRun);
   }
 }
 
-export { getPosition, collect };
+export { getPosition, findAndClick };

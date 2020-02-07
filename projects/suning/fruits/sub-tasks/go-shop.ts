@@ -1,7 +1,8 @@
 import { delayCheck } from '../../../common/delay-check';
 import { getTaskCount } from '../../../common/get-task-count';
 import { openSuning } from '../../../common/open-app';
-import { collect } from './collect';
+import { findAndClick } from './find-click';
+import { pressClose } from './press-close';
 
 function isInTask() {
   const key = '农庄评价任务';
@@ -82,13 +83,7 @@ function goShop() {
   runTask('视频(');
   runTask('会场(');
 
-  const image = images.read('./assets/match-template/close.png');
-  collect({
-    image,
-    options: { threshold: 0.5 },
-  });
-
-  image.recycle();
+  pressClose();
 }
 
 export { goShop };

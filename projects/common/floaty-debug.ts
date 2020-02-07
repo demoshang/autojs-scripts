@@ -1,16 +1,46 @@
 import xml from './floaty-debug.xml';
 
-function floatyDebug(
-  timeout = 3000,
-  ...args: { radius?: number; color?: string; x?: number; y?: number }[]
-) {
+interface DebugPosition {
+  radius?: number;
+  color?: string;
+  x?: number;
+  y?: number;
+}
+
+let floatyWindow: any;
+
+function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugPosition[]): void {
+  let timeout = 5000;
+
+  if (typeof timeoutOrPosition === 'undefined') {
+    return;
+  }
+  if (typeof timeoutOrPosition === 'number') {
+    timeout = timeoutOrPosition;
+  } else {
+    args.unshift(timeoutOrPosition);
+  }
+
+  console.info('positons: ', args);
+
+  if (floatyWindow) {
+    floatyWindow.close();
+    floatyWindow = null;
+  }
+
+  setTimeout(() => {
+    if (floatyWindow) {
+      floatyWindow.close();
+    }
+  }, timeout);
+
   const xmlParams = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     .map(() => {
       return {
-        radius: 0,
+        radius: 10,
         color: 'red',
-        x: 0,
-        y: 100,
+        x: -100,
+        y: -100,
       };
     })
     .map((item, index) => {
@@ -29,20 +59,17 @@ function floatyDebug(
       };
     });
 
-  const w = xml(...xmlParams);
-  w.setSize(-1, -1);
-  w.setTouchable(false);
+  floatyWindow = xml(...xmlParams);
+
+  floatyWindow.setSize(-1, -1);
+  floatyWindow.setTouchable(false);
 
   ui.run(() => {
     xmlParams.forEach(({ x, y }, i) => {
-      w[`img${i}`].x = x;
-      w[`img${i}`].y = y;
+      floatyWindow[`img${i}`].x = x;
+      floatyWindow[`img${i}`].y = y;
     });
   });
-
-  setTimeout(() => {
-    w.close();
-  }, timeout);
 }
 
 export { floatyDebug };

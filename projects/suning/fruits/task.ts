@@ -5,7 +5,8 @@ import { retryRun } from '../../common/retry-run';
 import { addAnimals, collectAnimal } from './sub-tasks/animal';
 import { collectCoin } from './sub-tasks/coin';
 import { goShop } from './sub-tasks/go-shop';
-import { imageCheck } from './image-check';
+import { weed } from './sub-tasks/weed';
+import { steal } from './sub-tasks/steal';
 
 const suningApplicationId = 'com.suning.mobile.ebuy';
 
@@ -25,6 +26,9 @@ function runWithRetry(retries = 3) {
       toastLog('做任务');
       goShop();
 
+      toastLog('除草');
+      weed();
+
       toastLog('领取任务金币');
       collectCoin();
 
@@ -33,6 +37,9 @@ function runWithRetry(retries = 3) {
 
       toastLog('饲养宠物');
       addAnimals();
+
+      toastLog('偷金币');
+      steal();
     },
     () => {
       killApp(suningApplicationId);

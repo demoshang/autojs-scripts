@@ -1,9 +1,9 @@
-import { collect } from './collect';
+import { findAndClick } from './find-click';
 
 function collectAnimal() {
   const catchImage = images.read('./assets/match-template/catch.png');
 
-  collect({
+  findAndClick({
     image: catchImage,
     options: { threshold: 0.5 },
   });
@@ -13,7 +13,7 @@ function collectAnimal() {
 
 function addAnimals() {
   const addImage = images.read('./assets/match-template/add.png');
-  collect(
+  findAndClick(
     {
       image: addImage,
       options: { threshold: 0.5 },
