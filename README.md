@@ -3,9 +3,9 @@
 ## 说明
 
 1. 支持 `typescript` 开发
-2. 由于 ts 不支持 `Auto.js` 中 `用户界面(UI)` 相关函数(如 `ui.layout(xml)`), 需要特殊转换
-   2.1 将 `xml` 独立成文件, 如 `layout.xml`
-   2.2 在 `xml` 文件 头部添加注释 `<!-- wrap: 调用方法 -->`, 如:
+2. 由于 ts 不支持 `Auto.js` 中 `用户界面(UI)` 相关函数(如 `ui.layout(xml)`), 需要特殊转换  
+   2.1 将 `xml` 独立成文件, 如 `layout.xml`  
+   2.2 在 `xml` 文件 头部添加注释 `<!-- wrap: 调用方法 -->`, 如:  
 
    ```xml
    <!-- wrap: ui.layout -->
@@ -16,9 +16,9 @@
    </frame>
    ```
 
-   2.3 `xml` 文件中可以使用变量 `__ARGS__`, `__ARG0__` ... `__ARG9__`
+   2.3 `xml` 文件中可以使用变量 `__ARGS__`, `__ARG0__` ... `__ARG9__`  
 
-   2.4 在 `.ts` 文件中使用
+   2.4 在 `.ts` 文件中使用  
 
    ```ts
    import layout from './layout.xml';
