@@ -56,8 +56,8 @@ declare interface UiSelector {
     multiLine(b: boolean): UiSelector;
     findOne(): UiObject;
     findOne(timeout: number): UiObject;
-    findOnce(): UiObject;
-    findOnce(i: number): UiObject;
+    findOnce(): UiObject | null;
+    findOnce(i: number): UiObject | null;
     find(): UiCollection;
     untilFind(): UiCollection;
     exists(): boolean;
@@ -94,7 +94,7 @@ declare interface UiObject {
     id(): string;
     text(): string;
     findByText(str: string): UiCollection;
-    findOne(selector): UiObject;
+    findOne(selector): UiObject | null;
     find(selector): UiCollection;
     visibility: 0 | 8;
     setTextColor(text: number): boolean;

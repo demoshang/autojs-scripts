@@ -22,6 +22,7 @@
 
 interface Context {
   startActivity(intent: any): void;
+  getResources(): any;
 }
 
 declare global {

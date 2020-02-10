@@ -1,14 +1,44 @@
 <!-- wrap: floaty.rawWindow -->
 
 <frame>
-  <img id="img0" radius="{{__ARG0__.radius}}" w="{{__ARG0__.width}}" h="{{__ARG0__.height}}" tint="{{__ARG0__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img1" radius="{{__ARG1__.radius}}" w="{{__ARG1__.width}}" h="{{__ARG1__.height}}" tint="{{__ARG1__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img2" radius="{{__ARG2__.radius}}" w="{{__ARG2__.width}}" h="{{__ARG2__.height}}" tint="{{__ARG2__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img3" radius="{{__ARG3__.radius}}" w="{{__ARG3__.width}}" h="{{__ARG3__.height}}" tint="{{__ARG3__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img4" radius="{{__ARG4__.radius}}" w="{{__ARG4__.width}}" h="{{__ARG4__.height}}" tint="{{__ARG4__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img5" radius="{{__ARG5__.radius}}" w="{{__ARG5__.width}}" h="{{__ARG5__.height}}" tint="{{__ARG5__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img6" radius="{{__ARG6__.radius}}" w="{{__ARG6__.width}}" h="{{__ARG6__.height}}" tint="{{__ARG6__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img7" radius="{{__ARG7__.radius}}" w="{{__ARG7__.width}}" h="{{__ARG7__.height}}" tint="{{__ARG7__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img8" radius="{{__ARG8__.radius}}" w="{{__ARG8__.width}}" h="{{__ARG8__.height}}" tint="{{__ARG8__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
-  <img id="img9" radius="{{__ARG9__.radius}}" w="{{__ARG9__.width}}" h="{{__ARG9__.height}}" tint="{{__ARG9__.color}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  <frame id="frame0" w="{{__ARG0__.width}}" h="{{__ARG0__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG0__.alpha}}" bg="{{__ARG0__.color}}"></frame>
+    <img radius="{{__ARG0__.radius}}" tint="{{__ARG0__.color}}" alpha="{{__ARG0__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame1" w="{{__ARG1__.width}}" h="{{__ARG1__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG1__.alpha}}" bg="{{__ARG1__.color}}"></frame>
+    <img radius="{{__ARG1__.radius}}" tint="{{__ARG1__.color}}" alpha="{{__ARG1__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame2" w="{{__ARG2__.width}}" h="{{__ARG2__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG2__.alpha}}" bg="{{__ARG2__.color}}"></frame>
+    <img radius="{{__ARG2__.radius}}" tint="{{__ARG2__.color}}" alpha="{{__ARG2__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame3" w="{{__ARG3__.width}}" h="{{__ARG3__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG3__.alpha}}" bg="{{__ARG3__.color}}"></frame>
+    <img radius="{{__ARG3__.radius}}" tint="{{__ARG3__.color}}" alpha="{{__ARG3__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame4" w="{{__ARG4__.width}}" h="{{__ARG4__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG4__.alpha}}" bg="{{__ARG4__.color}}"></frame>
+    <img radius="{{__ARG4__.radius}}" tint="{{__ARG4__.color}}" alpha="{{__ARG4__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame5" w="{{__ARG5__.width}}" h="{{__ARG5__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG5__.alpha}}" bg="{{__ARG5__.color}}"></frame>
+    <img radius="{{__ARG5__.radius}}" tint="{{__ARG5__.color}}" alpha="{{__ARG5__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame6" w="{{__ARG6__.width}}" h="{{__ARG6__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG6__.alpha}}" bg="{{__ARG6__.color}}"></frame>
+    <img radius="{{__ARG6__.radius}}" tint="{{__ARG6__.color}}" alpha="{{__ARG6__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame7" w="{{__ARG7__.width}}" h="{{__ARG7__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG7__.alpha}}" bg="{{__ARG7__.color}}"></frame>
+    <img radius="{{__ARG7__.radius}}" tint="{{__ARG7__.color}}" alpha="{{__ARG7__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame8" w="{{__ARG8__.width}}" h="{{__ARG8__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG8__.alpha}}" bg="{{__ARG8__.color}}"></frame>
+    <img radius="{{__ARG8__.radius}}" tint="{{__ARG8__.color}}" alpha="{{__ARG8__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame9" w="{{__ARG9__.width}}" h="{{__ARG9__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG9__.alpha}}" bg="{{__ARG9__.color}}"></frame>
+    <img radius="{{__ARG9__.radius}}" tint="{{__ARG9__.color}}" alpha="{{__ARG9__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
 </frame>

@@ -26,6 +26,7 @@ declare function exit(): void;
 declare function random(): number;
 declare function random(min: number, max: number): number;
 
+declare function text(str: string): UiSelector;
 declare function textContains(str: string): UiSelector;
 declare function textStartsWith(prefix: string): UiSelector;
 declare function textEndsWith(suffix: string): UiSelector;

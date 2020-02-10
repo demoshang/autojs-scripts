@@ -34,6 +34,7 @@ module.exports = {
     exit: false,
     random: false,
     random: false,
+    text: false,
     textContains: false,
     textStartsWith: false,
     textEndsWith: false,
