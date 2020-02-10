@@ -33,7 +33,7 @@ jobs:
       - name: build
         working-directory: ./dist
         run: |
-          npx @s4p/autojs-replace-inrt "./Auto.js" "./suning/fruits"
+          npx @s4p/autojs-replace-inrt "./Auto.js" "./all"
           cd "./Auto.js"
           git status
 

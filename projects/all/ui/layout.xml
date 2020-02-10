@@ -1,0 +1,23 @@
+<!-- wrap: ui.layout -->
+
+<vertical>
+  <appbar>
+    <toolbar title="状态监测界面" />
+  </appbar>
+  <text gravity="center" id="accessibilityStatusCheck" text="需要 无障碍服务" textSize="40sp" textColor="red" />
+  <text gravity="center" id="accessibilityStatusSuccess" text="无障碍服务正常" textSize="40sp" textColor="green" visibility="gone" />
+  <text gravity="center" id="waring" text="如果无障碍服务已经启动, 但是依然显示本行警告, 请重启手机" textColor="red" />
+
+  <button id="accessibilityBtn" style="Widget.AppCompat.Button.Colored" text="检测/打开无障碍设置" />
+
+  <text gravity="center" id="floatyStatusCheck" text="需要 悬浮窗服务" textSize="40sp" textColor="red" visibility="gone" />
+  <text gravity="center" id="floatyStatusSuccess" text="悬浮窗服务正常" textSize="40sp" textColor="green" visibility="gone" />
+
+  <button id="floatyBtn" style="Widget.AppCompat.Button.Colored" text="检测/打开悬浮窗设置" visibility="gone" />
+
+  <button id="consoleBtn" style="Widget.AppCompat.Button.Colored" text="打开日志" />
+
+  <button id="runJDBtn" style="Widget.AppCompat.Button.Colored" text="启动[京东]脚本" visibility="gone" />
+  <button id="runSNBtn" style="Widget.AppCompat.Button.Colored" text="启动[苏宁]脚本" visibility="gone" />
+  <button id="runALLBtn" style="Widget.AppCompat.Button.Colored" text="启动所有脚本" visibility="gone" />
+</vertical>

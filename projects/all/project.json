@@ -1,0 +1,11 @@
+{
+  "name": "自动化脚本",
+  "packageName": "com.shang.autojs.all",
+  "logo": "./assets/ic_launcher.png",
+  "splash": "./assets/gakki.png",
+
+  "main": "main.js",
+  "versionName": "0.1.0",
+  "versionCode": 700,
+  "ignore": []
+}
