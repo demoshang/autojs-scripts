@@ -28,7 +28,13 @@ function killApp(applicationId: string, timeout = 10000, delay = 1000) {
   ele = textContains('OK').findOnce() || textContains('确定').findOnce();
   ele?.click();
 
-  sleep(3000);
+  sleep(1000);
+
+  app.startActivity('settings');
+  sleep(1000);
+  back();
+
+  sleep(2000);
 }
 
 export { killApp };

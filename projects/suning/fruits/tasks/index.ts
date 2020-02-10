@@ -7,6 +7,7 @@ import { collectCoin } from './coin';
 import { goShop } from './go-shop';
 import { weed } from './weed';
 import { steal } from './steal';
+import { pressClose } from './press-close';
 
 const suningApplicationId = 'com.suning.mobile.ebuy';
 
@@ -23,6 +24,12 @@ function runWithRetry(retries = 3) {
         throw new Error('open suning page failed');
       }
 
+      toastLog('收集宠物');
+      collectAnimal();
+
+      toastLog('饲养宠物');
+      addAnimals();
+
       toastLog('做任务');
       goShop();
 
@@ -32,12 +39,6 @@ function runWithRetry(retries = 3) {
       toastLog('领取任务金币');
       collectCoin();
 
-      toastLog('收集宠物');
-      collectAnimal();
-
-      toastLog('饲养宠物');
-      addAnimals();
-
       toastLog('偷金币');
       steal();
     },
@@ -45,6 +46,7 @@ function runWithRetry(retries = 3) {
       sleep(500);
       killApp(suningApplicationId);
     },
+    '苏宁',
     retries
   );
 }

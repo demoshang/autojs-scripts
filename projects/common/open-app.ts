@@ -20,7 +20,7 @@ function openSuning(page: string, sleepTime?: number) {
   openPage(url, sleepTime);
 }
 
-function openJDMain(timeout = 15000, delay = 1000): boolean {
+function openJDMain(timeout = 10000, delay = 500): boolean {
   app.startActivity({
     action: 'android.intent.action.VIEW',
     packageName: jdApplicationId,

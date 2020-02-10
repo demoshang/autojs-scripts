@@ -136,6 +136,7 @@ function runWithRetry(retries = 3) {
       sleep(500);
       killApp(jdApplicationId);
     },
+    '京东',
     retries
   );
 }

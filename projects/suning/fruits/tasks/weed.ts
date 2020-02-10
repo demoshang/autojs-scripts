@@ -13,12 +13,13 @@ function weed() {
     },
     undefined,
     () => {
-      sleep(3000);
       pressClose();
     }
   );
 
   weedImage.recycle();
+
+  pressClose();
 }
 
 export { weed };
