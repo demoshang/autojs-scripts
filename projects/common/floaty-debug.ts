@@ -13,7 +13,8 @@ const statusBarHeight = (() => {
   return 0;
 })();
 
-let floatyWindow: any;
+let floatyWindow: any = null;
+let thread: threads.Thread | null = null;
 
 function resolveHidden() {
   return {
@@ -109,17 +110,6 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
     })
   );
 
-  if (floatyWindow) {
-    floatyWindow.close();
-    floatyWindow = null;
-  }
-
-  setTimeout(() => {
-    if (floatyWindow) {
-      floatyWindow.close();
-    }
-  }, timeout);
-
   const hidden = resolveHidden();
 
   // 强制设置长度为 10
@@ -168,8 +158,17 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
       };
     });
 
-  floatyWindow = xml(...xmlParams);
+  if (floatyWindow) {
+    floatyWindow.close();
+    floatyWindow = null;
+  }
 
+  if (thread) {
+    thread.interrupt();
+    thread = null;
+  }
+
+  floatyWindow = xml(...xmlParams);
   floatyWindow.setSize(-1, -1);
   floatyWindow.setTouchable(false);
 
@@ -180,6 +179,15 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
       // 悬浮窗和顶部的距离(状态栏)
       ele.y = y - statusBarHeight;
     });
+  });
+
+  thread = threads.start(() => {
+    setTimeout(() => {
+      if (floatyWindow) {
+        floatyWindow.close();
+        floatyWindow = null;
+      }
+    }, timeout);
   });
 }
 
