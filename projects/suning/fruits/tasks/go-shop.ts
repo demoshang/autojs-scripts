@@ -19,7 +19,15 @@ function isInTask() {
   return !!textContains(key).findOnce();
 }
 
-function runTask(taskPrefix: string | RegExp) {
+function runTask(
+  taskPrefix: string | RegExp,
+  lastResult?: {
+    total: number;
+    completed: number;
+    left: number;
+    retries: number;
+  }
+) {
   if (!isInTask()) {
     throw new Error('不在任务界面');
   }
@@ -47,6 +55,13 @@ function runTask(taskPrefix: string | RegExp) {
     return;
   }
 
+  if (lastResult && lastResult.left === taskCount.left) {
+    if (lastResult.retries > 3) {
+      toastLog(`⚠️警告: ${taskName} 任务失败`);
+      return;
+    }
+  }
+
   const goBtn = uiObj.parent().findOne(textContains('去完成'));
   const finishBtn = uiObj.parent().findOne(textContains('已完成'));
   if (!goBtn) {
@@ -66,7 +81,10 @@ function runTask(taskPrefix: string | RegExp) {
   back();
   sleep(1000);
 
-  runTask(taskPrefix);
+  runTask(taskPrefix, {
+    ...taskCount,
+    retries: ((lastResult && lastResult.retries) || 0) + 1,
+  });
 }
 
 function goShop() {
