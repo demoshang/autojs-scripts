@@ -1,4 +1,5 @@
-import { isRect, isRegExp } from '../../../common/type-check';
+import { isRect, isRegExp } from './type-check';
+import { floatyDebug } from './floaty-debug';
 
 function boundsClick(rect?: Rect, delay?: number): boolean;
 function boundsClick(ele?: UiObject | null, delay?: number): boolean;
@@ -28,6 +29,8 @@ function boundsClick(param?: Rect | UiObject | string | RegExp | null, delay = 2
   if (!bounds) {
     return false;
   }
+
+  floatyDebug(bounds);
 
   click(bounds.centerX(), bounds.centerY());
   sleep(delay);

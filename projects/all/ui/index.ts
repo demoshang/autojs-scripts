@@ -161,11 +161,7 @@ ui.emitter.on('resume', () => {
 });
 
 ui.emitter.on('exit', () => {
-  if (threadCache) {
-    toastLog('停止上次残留中....');
-    threadCache.interrupt();
-    threadCache = null;
-  }
+  threads.shutDownAll();
 });
 
 btns.forEach(({ id, type }) => {

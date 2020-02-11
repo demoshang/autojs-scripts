@@ -1,4 +1,4 @@
-import { boundsClick } from './click-ele-bounds';
+import { boundsClick } from '../../../common/click-ele-bounds';
 
 function getTaskPanelCloseEle() {
   return className('android.view.View')
@@ -9,8 +9,8 @@ function getTaskPanelCloseEle() {
     ?.get(2);
 }
 
-function close() {
+function closeTaskPanel() {
   boundsClick(getTaskPanelCloseEle());
 }
 
-export { close };
+export { closeTaskPanel };

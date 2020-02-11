@@ -80,6 +80,8 @@ function resolveRadius(item: Radius) {
   };
 }
 
+function floatyDebug(timeout: number, ...args: DebugPosition[]): void;
+function floatyDebug(...args: DebugPosition[]): void;
 function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugPosition[]): void {
   let timeout = 3000;
 
@@ -93,7 +95,6 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
   }
 
   console.info(
-    'positons: ',
     args.map((item) => {
       if (isUiObject(item)) {
         return resolveRect(item.bounds());
