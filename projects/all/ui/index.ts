@@ -2,11 +2,12 @@ import './head';
 
 import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
 import { getCaptureImage } from '../../common/image';
+import { killApp } from '../../common/kill-app';
+import { muteRestoreMusic } from '../../common/mute';
+import { jdApplicationId, suningApplicationId } from '../../common/open-app';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
 import layout from './layout.xml';
-import { killApp } from '../../common/kill-app';
-import { suningApplicationId, jdApplicationId } from '../../common/open-app';
 
 layout();
 
@@ -100,6 +101,8 @@ function run(type: string) {
 
   try {
     threadCache = threads.start(() => {
+      const restoreMusic = muteRestoreMusic();
+
       if (type === 'jd') {
         JDRun();
       } else if (type === 'sn') {
@@ -114,8 +117,11 @@ function run(type: string) {
         SNRun();
         killApp(suningApplicationId);
       } else {
+        restoreMusic();
         throw new Error('启动任务失败, 无法识别任务类型');
       }
+
+      restoreMusic();
     });
   } catch (e) {
     toastLog(e);

@@ -20,15 +20,6 @@
 /// <reference path="./modules/ui.d.ts" />
 /// <reference path="./modules/threads.d.ts" />
 
-interface Context {
-  startActivity(intent: any): void;
-  getResources(): any;
-}
-
-declare global {
-  const context: Context;
-}
-
 export { };
 
 

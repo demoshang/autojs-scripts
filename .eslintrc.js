@@ -6,6 +6,8 @@ module.exports = {
     Settings: false,
     Uri: false,
     Intent: false,
+    Context: false,
+    AudioManager: false,
 
     // autojs 自带的
     auto: false,
