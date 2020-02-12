@@ -1,11 +1,12 @@
 const merge = require('webpack-merge');
-const path = require('path');
 const common = require('./webpack.common.js');
 
 module.exports = merge.smart(common, {
-  devtool: '#@nosources-source-map',
-  mode: 'development',
-
+  devtool: 'none',
+  mode: 'production',
+  performance: {
+    maxAssetSize: 5120000,
+  },
   module: {
     rules: [
       {

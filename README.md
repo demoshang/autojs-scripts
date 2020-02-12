@@ -76,8 +76,7 @@
 
 ## 打包
 
-1. 由于 `Auto.js` 中 `用户界面(UI)` 相关函数(如 `ui.layout(xml)`), 所以 `webpack` 不能开启 `mode=production`
-2. 构建成单独 `App` 请看 [.github/workflows/build.yml](./.github/workflows/build.yml)
+- 构建成单独 `App` 请看 [.github/workflows/build.yml](./.github/workflows/build.yml)
 
 ## Thanks
 
