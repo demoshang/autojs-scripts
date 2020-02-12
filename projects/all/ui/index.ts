@@ -109,8 +109,6 @@ function run(type: string) {
     threadCache = null;
   }
 
-  app.startActivity('console');
-
   try {
     threadCache = threads.start(() => {
       if (type === 'jd') {
@@ -122,6 +120,10 @@ function run(type: string) {
         getCaptureImage();
 
         JDRun();
+
+        app.startActivity('console');
+        sleep(1000);
+        back();
 
         SNRun();
       } else {

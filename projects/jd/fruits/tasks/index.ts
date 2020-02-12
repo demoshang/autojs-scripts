@@ -43,7 +43,11 @@ function goToPage() {
 
 function goToTask() {
   const key = '领水滴';
-  if (textContains(key).findOnce()) {
+  if (
+    delayCheck(2000, 500, () => {
+      return textContains(key).findOnce();
+    })
+  ) {
     return;
   }
 
@@ -51,7 +55,7 @@ function goToTask() {
 
   console.info('点击按钮 [领取(c88963830485cf49)]');
   // 领水任务
-  boundsClick('c88963830485cf49', 5000);
+  boundsClick('c88963830485cf49');
 
   console.info(`检查文字 [${key}]`);
   if (!textContains(key).findOnce()) {
@@ -60,6 +64,12 @@ function goToTask() {
 }
 
 function checkPopup() {
+  if (text('三餐福利时间到了').findOnce()) {
+    boundsClick('去领取');
+    toastLog('三餐福利时间到了');
+    sleep(2000);
+  }
+
   boundsClick('明天再来');
   boundsClick('继续领水滴');
   boundsClick('签到领水滴');
