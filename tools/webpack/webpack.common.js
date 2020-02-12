@@ -14,18 +14,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            // 6133: declared but its value is never read
-            // 6192: All imports in import declaration are unused.
-            ignoreDiagnostics: [6133, 6192],
-          },
-        },
-        exclude: /node_modules/,
-      },
-      {
         test: /\.xml$/,
         use: [
           {

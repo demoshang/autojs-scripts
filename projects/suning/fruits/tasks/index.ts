@@ -5,9 +5,8 @@ import { retryRun } from '../../../common/retry-run';
 import { addAnimals, collectAnimal } from './animal';
 import { collectCoin } from './coin';
 import { goShop } from './go-shop';
-import { weed } from './weed';
 import { steal } from './steal';
-import { pressClose } from './press-close';
+import { weed } from './weed';
 
 const suningApplicationId = 'com.suning.mobile.ebuy';
 

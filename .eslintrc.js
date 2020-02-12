@@ -55,5 +55,7 @@ module.exports = {
     classNameEndsWith: false,
     classNameMatches: false,
   },
-  rules: {},
+  rules: {
+    'no-console': ['off'],
+  },
 };
