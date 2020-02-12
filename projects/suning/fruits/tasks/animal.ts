@@ -1,4 +1,5 @@
 import { findAndClick } from './find-click';
+import { delayCheck } from '../../../common/delay-check';
 
 function collectAnimal() {
   const catchImage = images.read('./assets/match-template/catch.png');
@@ -13,15 +14,23 @@ function collectAnimal() {
 
 function addAnimals() {
   const addImage = images.read('./assets/match-template/add.png');
-  findAndClick(
-    {
-      image: addImage,
-      options: { threshold: 0.5 },
-    },
-    1
-  );
 
-  const ele = textMatches(/成熟:\s*\d+小时/).findOnce();
+  const ele = delayCheck(
+    10000,
+    1000,
+    () => {
+      return textMatches(/成熟:\s*\d+小时/).findOnce();
+    },
+    () => {
+      findAndClick(
+        {
+          image: addImage,
+          options: { threshold: 0.5 },
+        },
+        1
+      );
+    }
+  );
 
   if (!ele) {
     toastLog('不需要养殖动物');

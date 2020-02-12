@@ -26,6 +26,7 @@ function runTask(
     completed: number;
     left: number;
     retries: number;
+    max: number;
   }
 ) {
   if (!isInTask()) {
@@ -56,7 +57,7 @@ function runTask(
   }
 
   if (lastResult && lastResult.left === taskCount.left) {
-    if (lastResult.retries > 3) {
+    if (lastResult.retries > lastResult.max) {
       toastLog(`⚠️警告: ${taskName} 任务失败`);
       return;
     }
@@ -84,6 +85,7 @@ function runTask(
   runTask(taskPrefix, {
     ...taskCount,
     retries: ((lastResult && lastResult.retries) || 0) + 1,
+    max: ((lastResult && lastResult.max) || taskCount.left) + 1,
   });
 }
 
@@ -95,7 +97,7 @@ function goShop() {
     throw new Error('open suning page failed');
   }
 
-  runTask(/.*(店铺|店)\(\d\/\d\).*/);
+  runTask(/(.*(店铺|店)\(\d\/\d\).*)|(逛.*\(\d\/\d\).*)/);
   runTask('视频(');
   runTask('会场(');
 
