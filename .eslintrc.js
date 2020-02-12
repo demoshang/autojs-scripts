@@ -2,9 +2,12 @@ module.exports = {
   extends: ['@ofa2/eslint-config'],
   parserOptions: { project: ['./tsconfig.json'] },
   globals: {
-    __RUN_TASK__: false,
-    UI_XML_MAP: false,
+    // 引入 android class
+    Settings: false,
+    Uri: false,
+    Intent: false,
 
+    // autojs 自带的
     auto: false,
     ui: false,
     threads: false,
@@ -21,6 +24,8 @@ module.exports = {
     gesture: false,
 
     context: false,
+    importClass: false,
+    android: false,
 
     sleep: false,
     currentPackage: false,

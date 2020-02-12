@@ -1,10 +1,10 @@
 import './head';
 
-import layout from './layout.xml';
-import { checkFloaty } from '../../common/check-floaty';
+import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
 import { getCaptureImage } from '../../common/image';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
+import layout from './layout.xml';
 
 layout();
 
@@ -13,7 +13,6 @@ enum Status {
   invisible = 8,
 }
 
-let canCheckFloaty = false;
 const status: { [key: string]: boolean } = {};
 
 const btns = [
@@ -66,7 +65,6 @@ function render() {
     renderFloaty('hidden');
   } else {
     renderAccessibility(true);
-
     renderFloaty(status.floaty);
   }
 
@@ -82,19 +80,8 @@ function render() {
 }
 
 async function checkStatus() {
-  if (auto.service === null) {
-    status.accessibility = false;
-
-    status.floaty = false;
-  } else {
-    status.accessibility = true;
-
-    if (!canCheckFloaty) {
-      status.floaty = false;
-    } else {
-      status.floaty = await checkFloaty();
-    }
-  }
+  status.accessibility = !!auto.service;
+  status.floaty = checkFloaty();
 
   render();
 }
@@ -150,11 +137,10 @@ ui.accessibilityBtn.click(async () => {
 });
 
 ui.floatyBtn.click(async () => {
-  canCheckFloaty = true;
   await checkStatus();
 
   if (!status.floaty) {
-    openAppSetting(currentPackage());
+    openFloatySetting();
   }
 });
 
