@@ -5,6 +5,8 @@ import { getCaptureImage } from '../../common/image';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
 import layout from './layout.xml';
+import { killApp } from '../../common/kill-app';
+import { suningApplicationId, jdApplicationId } from '../../common/open-app';
 
 layout();
 
@@ -107,12 +109,10 @@ function run(type: string) {
         getCaptureImage();
 
         JDRun();
-
-        app.startActivity('console');
-        sleep(1000);
-        back();
+        killApp(jdApplicationId);
 
         SNRun();
+        killApp(suningApplicationId);
       } else {
         throw new Error('启动任务失败, 无法识别任务类型');
       }

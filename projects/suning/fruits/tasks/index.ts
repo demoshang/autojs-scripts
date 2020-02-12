@@ -1,14 +1,12 @@
 import { delayCheck } from '../../../common/delay-check';
 import { killApp } from '../../../common/kill-app';
-import { openSuning } from '../../../common/open-app';
+import { openSuning, suningApplicationId } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { addAnimals, collectAnimal } from './animal';
 import { collectCoin } from './coin';
 import { goShop } from './go-shop';
 import { steal } from './steal';
 import { weed } from './weed';
-
-const suningApplicationId = 'com.suning.mobile.ebuy';
 
 function runWithRetry(retries = 3) {
   retryRun(

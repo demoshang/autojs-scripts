@@ -1,6 +1,7 @@
 import { delayCheck } from './delay-check';
 
 const jdApplicationId = 'com.jingdong.app.mall';
+const suningApplicationId = 'com.suning.mobile.ebuy';
 
 function openPage(url: string, sleepTime = 0) {
   const i = app.intent({
@@ -32,4 +33,4 @@ function openJDMain(timeout = 10000, delay = 500): boolean {
   });
 }
 
-export { jdApplicationId, openPage, openSuning, openJDMain };
+export { suningApplicationId, jdApplicationId, openPage, openSuning, openJDMain };
