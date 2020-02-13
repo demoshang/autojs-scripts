@@ -9,33 +9,32 @@ import { closeTaskPanel } from './close-task-panel';
 function goToPage() {
   toastLog('尝试进入 [东东农场] 页面');
 
-  console.info('搜索按钮 [我的]');
-  const bounds = desc('我的')
-    .findOnce()
-    ?.bounds();
+  const fruitsBtn = delayCheck(
+    10000,
+    1000,
+    () => {
+      toastLog('搜索按钮 [东东农场]');
+      return (
+        currentPackage() === jdApplicationId &&
+        textContains('东东农场')
+          .findOnce()
+          ?.parent()
+      );
+    },
+    () => {
+      toastLog('搜索按钮 [我的]');
+      boundsClick(desc('我的').findOnce());
+    }
+  );
 
-  if (!bounds) {
-    throw new Error('not in jd main page');
+  if (!fruitsBtn) {
+    throw new Error('[东东农场] 页面未找到');
   }
 
-  boundsClick(bounds, 1000);
+  toastLog('点击 [东东农场]');
+  boundsClick(fruitsBtn);
 
-  console.info('搜索按钮 [东东农场]');
-  const ele = delayCheck(3000, 500, () => {
-    return textContains('东东农场').findOnce();
-  });
-
-  if (!ele) {
-    throw new Error('can not find fruits btn');
-  }
-
-  const fruitsBounds = ele.bounds();
-
-  console.info('点击 [东东农场]');
-
-  boundsClick(fruitsBounds);
-
-  console.info('等待按钮 [领取(c88963830485cf49)]');
+  toastLog('等待进入 [东东农场]');
   delayCheck(15000, 1000, () => {
     return textContains('c88963830485cf49').findOnce();
   });
@@ -83,6 +82,8 @@ function doTasks() {
 
   // 弹出框处理
   checkPopup();
+
+  goToTask();
 
   toastLog('[每日首次浇水]');
   // 每日首次浇水
@@ -172,7 +173,7 @@ function runWithRetry(retries = 3) {
       sleep(2000);
     },
     () => {
-      sleep(500);
+      sleep(1000);
       killApp(jdApplicationId);
     },
     '京东',
