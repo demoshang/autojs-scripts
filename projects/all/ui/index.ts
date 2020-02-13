@@ -130,6 +130,7 @@ function run(type: string) {
 
 events.on('exit', () => {
   toastLog('结束运行');
+  threads.shutDownAll();
 });
 
 ui.accessibilityBtn.click(async () => {
