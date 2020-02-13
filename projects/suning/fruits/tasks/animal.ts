@@ -17,7 +17,7 @@ function addAnimals() {
 
   const ele = delayCheck(
     10000,
-    1000,
+    1500,
     () => {
       return textMatches(/成熟:\s*\d+小时/).findOnce();
     },

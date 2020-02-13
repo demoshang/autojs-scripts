@@ -49,7 +49,7 @@ function stealRandom(
   sleep(1000);
   click(stealRandomPosition.x, stealRandomPosition.y);
 
-  const result = delayCheck(15000, 500, () => {
+  const result = delayCheck(10000, 500, () => {
     return textContains('TA的成就').findOnce();
   });
 
@@ -60,8 +60,10 @@ function stealRandom(
     back();
     sleep(3000);
     stealRandom(taskPosition, stealRandomPosition);
-  } else {
+  } else if (textContains('去TA的农场偷金币').findOnce()) {
     pressClose();
+  } else {
+    throw new Error('进入TA的农场失败');
   }
 }
 

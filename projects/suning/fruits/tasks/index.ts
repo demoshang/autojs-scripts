@@ -7,6 +7,7 @@ import { collectCoin } from './coin';
 import { goShop } from './go-shop';
 import { steal } from './steal';
 import { weed } from './weed';
+import { throwWhenNotInPackage } from './is-in-package';
 
 function runWithRetry(retries = 3) {
   retryRun(
@@ -24,17 +25,27 @@ function runWithRetry(retries = 3) {
       toastLog('收集宠物');
       collectAnimal();
 
+      throwWhenNotInPackage();
+
       toastLog('饲养宠物');
       addAnimals();
+
+      throwWhenNotInPackage();
 
       toastLog('做任务');
       goShop();
 
+      throwWhenNotInPackage();
+
       toastLog('除草');
       weed();
 
+      throwWhenNotInPackage();
+
       toastLog('领取任务金币');
       collectCoin();
+
+      throwWhenNotInPackage();
 
       toastLog('偷金币');
       steal();

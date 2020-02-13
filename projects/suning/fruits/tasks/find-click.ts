@@ -56,13 +56,8 @@ function findAndClick(fnOrParams: CollectParams, lastPositionsLen = 0, afterRun?
   floatyDebug(1000, ...positions);
 
   positions.forEach(({ x, y }) => {
-    toastLog(`press: ${JSON.stringify({ x, y })}`);
-
     press(x, y, 100);
     sleep(1000);
-
-    // const clip = images.clip(screenImage, x - 100, y - 100, 200, 200);
-    // images.save(clip, `/storage/emulated/0/Scripts/temp/coin.${i}.png`);
   });
 
   screenImage.recycle();
