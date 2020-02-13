@@ -95,6 +95,10 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
     args.unshift(timeoutOrPosition);
   }
 
+  if (!args.length) {
+    return;
+  }
+
   console.info(
     args.map((item) => {
       if (isUiObject(item)) {
