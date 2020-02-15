@@ -50,7 +50,11 @@ function runTask(
   }
   const taskName = taskDetailEle.text();
   const taskCount = getTaskCount(taskName);
-  toastLog(`${taskPrefix} 任务: ${taskName}${JSON.stringify(taskCount)}`);
+  toastLog(
+    `${taskPrefix} 任务: ${taskName}
+    taskCount:  ${JSON.stringify(taskCount)}
+    lastResult: ${JSON.stringify(lastResult)}`
+  );
 
   if (taskCount.left === 0) {
     return;
@@ -85,7 +89,7 @@ function runTask(
   runTask(taskPrefix, {
     ...taskCount,
     retries: ((lastResult && lastResult.retries) || 0) + 1,
-    max: ((lastResult && lastResult.max) || taskCount.left) + 1,
+    max: (lastResult && lastResult.max) || taskCount.left + 1,
   });
 }
 
