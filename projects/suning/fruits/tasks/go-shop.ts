@@ -101,7 +101,7 @@ function goShop() {
     throw new Error('open suning page failed');
   }
 
-  runTask(/(.*(店铺|店)\(\d\/\d\).*)|(逛.*\(\d\/\d\).*)/);
+  runTask(/(.*(店铺|店)\(\d+\/\d+\).*)|(逛.*\(\d+\/\d+\).*)/);
   runTask('视频(');
   runTask('会场(');
 
