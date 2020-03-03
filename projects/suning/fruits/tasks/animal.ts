@@ -1,13 +1,23 @@
-import { findAndClick } from './find-click';
 import { delayCheck } from '../../../common/delay-check';
+import { findAndClick } from './find-click';
 
 function collectAnimal() {
   const catchImage = images.read('./assets/match-template/catch.png');
 
-  findAndClick({
-    image: catchImage,
-    options: { threshold: 0.5 },
-  });
+  findAndClick(
+    {
+      image: catchImage,
+      options: { threshold: 0.5 },
+    },
+    undefined,
+    () => {
+      if (textContains('请完成下方拼图验证').findOnce()) {
+        throw new Error('出现滑动验证, 无法处理');
+      }
+
+      sleep(1000);
+    }
+  );
 
   catchImage.recycle();
 }
