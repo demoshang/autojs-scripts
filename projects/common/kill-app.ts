@@ -10,7 +10,8 @@ function killApp(applicationId: string, timeout = 10000, delay = 1000) {
       return (
         textContains('FORCE STOP').findOnce() ||
         textContains('Force stop').findOnce() ||
-        textContains('强制停止').findOnce()
+        textContains('强制停止').findOnce() ||
+        textContains('强行停止').findOnce()
       );
     },
     () => {
