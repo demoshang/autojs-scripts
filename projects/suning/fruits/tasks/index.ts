@@ -5,9 +5,10 @@ import { retryRun } from '../../../common/retry-run';
 import { addAnimals, collectAnimal } from './animal';
 import { collectCoin } from './coin';
 import { goShop } from './go-shop';
+import { throwWhenNotInPackage } from './is-in-package';
+import { pressClose } from './press-close';
 import { steal } from './steal';
 import { weed } from './weed';
-import { throwWhenNotInPackage } from './is-in-package';
 
 function runWithRetry(retries = 3) {
   retryRun(
@@ -21,6 +22,8 @@ function runWithRetry(retries = 3) {
       if (!isOpenSuccess) {
         throw new Error('open suning page failed');
       }
+
+      pressClose();
 
       toastLog('收集宠物');
       collectAnimal();
