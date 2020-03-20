@@ -1,9 +1,9 @@
+import { boundsClick } from '../../../common/click-ele-bounds';
 import { delayCheck } from '../../../common/delay-check';
 import { killApp } from '../../../common/kill-app';
 import { jdApplicationId, openJDMain } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { myScroll } from '../../../common/scroll';
-import { boundsClick } from '../../../common/click-ele-bounds';
 import { closeTaskPanel } from './close-task-panel';
 
 function goToPage() {
@@ -14,12 +14,10 @@ function goToPage() {
     1000,
     () => {
       toastLog('搜索按钮 [东东农场]');
-      return (
-        currentPackage() === jdApplicationId &&
-        textContains('东东农场')
-          .findOnce()
-          ?.parent()
-      );
+      console.info('currentPackage: ', currentPackage());
+      return textContains('东东农场')
+        .findOnce()
+        ?.parent();
     },
     () => {
       toastLog('搜索按钮 [我的]');
