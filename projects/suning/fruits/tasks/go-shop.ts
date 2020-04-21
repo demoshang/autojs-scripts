@@ -1,5 +1,8 @@
 import { delayCheck } from '../../../common/delay-check';
 import { getTaskCount } from '../../../common/get-task-count';
+import { checkInScreen } from '../../../common/in-screen';
+import { myScroll } from '../../../common/scroll';
+import { getUiObject } from '../../../common/ui-object';
 import { pressClose } from './press-close';
 
 function isInTask() {
@@ -19,8 +22,29 @@ function isInTask() {
   return !!textContains(key).findOnce();
 }
 
+function doTask(uiObj?: UiObject) {
+  const goBtn = uiObj?.findOne(textContains('去完成'));
+  const finishBtn = uiObj?.findOne(textContains('已完成'));
+  if (!goBtn) {
+    if (finishBtn) {
+      return;
+    }
+
+    throw new Error('未找到任务按钮');
+  }
+
+  goBtn.click();
+  // 等待页面渲染
+  sleep(2000);
+
+  sleep(15000);
+
+  back();
+  sleep(1000);
+}
+
 function runTask(
-  taskPrefix: string | RegExp,
+  taskPrefix: string | RegExp | UiObject | null,
   lastResult?: {
     total: number;
     completed: number;
@@ -33,12 +57,7 @@ function runTask(
     throw new Error('不在任务界面');
   }
 
-  let uiObj: UiObject | null = null;
-  if (typeof taskPrefix === 'string') {
-    uiObj = textContains(taskPrefix).findOnce();
-  } else {
-    uiObj = textMatches(taskPrefix).findOnce();
-  }
+  const uiObj = getUiObject(taskPrefix);
 
   if (!uiObj) {
     throw new Error(`未找到任务详情: ${taskPrefix}`);
@@ -51,7 +70,7 @@ function runTask(
   const taskName = taskDetailEle.text();
   const taskCount = getTaskCount(taskName);
   toastLog(
-    `${taskPrefix} 任务: ${taskName}
+    `任务: ${taskName}
     taskCount:  ${JSON.stringify(taskCount)}
     lastResult: ${JSON.stringify(lastResult)}`
   );
@@ -67,24 +86,7 @@ function runTask(
     }
   }
 
-  const goBtn = uiObj.parent().findOne(textContains('去完成'));
-  const finishBtn = uiObj.parent().findOne(textContains('已完成'));
-  if (!goBtn) {
-    if (finishBtn) {
-      return;
-    }
-
-    throw new Error(`未找到任务按钮: ${taskPrefix}`);
-  }
-
-  goBtn.click();
-  // 等待页面渲染
-  sleep(2000);
-
-  sleep(15000);
-
-  back();
-  sleep(1000);
+  doTask(uiObj.parent());
 
   runTask(taskPrefix, {
     ...taskCount,
@@ -101,9 +103,30 @@ function goShop() {
     throw new Error('open suning page failed');
   }
 
-  runTask(/(.*(店铺|店)\(\d+\/\d+\).*)|(逛.*\(\d+\/\d+\).*)/);
-  runTask('视频(');
-  runTask(/(.*会场\(.*)|(.*工厂\(.*)/);
+  const shopEle = getUiObject(/(.*(店铺|店)\(\d+\/\d+\).*)|(逛.*\(\d+\/\d+\).*)/);
+  runTask(shopEle);
+
+  const videoEle = getUiObject('视频(');
+  runTask(videoEle);
+
+  const meetingEle = getUiObject(/(.*会场\(.*)|(.*工厂\(.*)/);
+  runTask(meetingEle);
+
+  const anchorEle = getUiObject('点赞主播');
+
+  const list = [shopEle, videoEle, meetingEle, anchorEle, anchorEle, anchorEle];
+
+  let ele;
+  while (list.length) {
+    ele = getUiObject('逛苏宁金融频道')?.parent();
+    if (checkInScreen(ele)) {
+      break;
+    }
+
+    myScroll(list.shift()?.parent(), 1000);
+  }
+
+  doTask(ele);
 
   pressClose();
 }

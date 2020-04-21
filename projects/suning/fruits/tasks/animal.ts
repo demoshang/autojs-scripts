@@ -1,5 +1,6 @@
 import { delayCheck } from '../../../common/delay-check';
 import { findAndClick } from './find-click';
+import { pressClose } from './press-close';
 
 function collectAnimal() {
   const catchImage = images.read('./assets/match-template/catch.png');
@@ -7,7 +8,7 @@ function collectAnimal() {
   findAndClick(
     {
       image: catchImage,
-      options: { threshold: 0.5 },
+      options: { threshold: 0.7 },
     },
     undefined,
     () => {
@@ -32,6 +33,8 @@ function addAnimals() {
       return textMatches(/成熟:\s*\d+小时/).findOnce();
     },
     () => {
+      pressClose();
+
       findAndClick(
         {
           image: addImage,
