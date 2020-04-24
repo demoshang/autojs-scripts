@@ -38,7 +38,25 @@ function goToPage() {
   });
 }
 
+function checkPopup() {
+  if (text('三餐福利时间到了').findOnce()) {
+    boundsClick('去领取');
+    toastLog('三餐福利时间到了');
+    sleep(2000);
+  }
+
+  boundsClick('明天再来');
+  boundsClick('继续领水滴');
+  boundsClick('签到领水滴');
+  boundsClick('我知道了');
+  boundsClick('我知道了');
+  boundsClick('43a8dd0495e5c21c');
+  boundsClick('立即领取');
+}
+
 function goToTask() {
+  checkPopup();
+
   const key = '领水滴';
   if (
     delayCheck(2000, 500, () => {
@@ -60,27 +78,7 @@ function goToTask() {
   }
 }
 
-function checkPopup() {
-  if (text('三餐福利时间到了').findOnce()) {
-    boundsClick('去领取');
-    toastLog('三餐福利时间到了');
-    sleep(2000);
-  }
-
-  boundsClick('明天再来');
-  boundsClick('继续领水滴');
-  boundsClick('签到领水滴');
-  boundsClick('我知道了');
-  boundsClick('我知道了');
-  boundsClick('立即领取');
-}
-
 function doTasks() {
-  goToTask();
-
-  // 弹出框处理
-  checkPopup();
-
   goToTask();
 
   toastLog('[每日首次浇水]');
