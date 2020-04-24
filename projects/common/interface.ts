@@ -26,4 +26,4 @@ export interface RectWithWH extends BasePosition {
   h: number;
 }
 
-export type DebugPosition = Bounds | Radius | RectWithWH | Rect | UiObject | null;
+export type DebugPosition = Bounds | Radius | RectWithWH | Rect | UiObject | null | undefined;

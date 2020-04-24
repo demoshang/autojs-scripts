@@ -41,4 +41,84 @@
     <frame w="*" h="*" alpha="{{__ARG9__.alpha}}" bg="{{__ARG9__.color}}"></frame>
     <img radius="{{__ARG9__.radius}}" tint="{{__ARG9__.color}}" alpha="{{__ARG9__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
   </frame>
+  <frame id="frame10" w="{{__ARG10__.width}}" h="{{__ARG10__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG10__.alpha}}" bg="{{__ARG10__.color}}"></frame>
+    <img radius="{{__ARG10__.radius}}" tint="{{__ARG10__.color}}" alpha="{{__ARG10__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame11" w="{{__ARG11__.width}}" h="{{__ARG11__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG11__.alpha}}" bg="{{__ARG11__.color}}"></frame>
+    <img radius="{{__ARG11__.radius}}" tint="{{__ARG11__.color}}" alpha="{{__ARG11__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame12" w="{{__ARG12__.width}}" h="{{__ARG12__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG12__.alpha}}" bg="{{__ARG12__.color}}"></frame>
+    <img radius="{{__ARG12__.radius}}" tint="{{__ARG12__.color}}" alpha="{{__ARG12__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame13" w="{{__ARG13__.width}}" h="{{__ARG13__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG13__.alpha}}" bg="{{__ARG13__.color}}"></frame>
+    <img radius="{{__ARG13__.radius}}" tint="{{__ARG13__.color}}" alpha="{{__ARG13__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame14" w="{{__ARG14__.width}}" h="{{__ARG14__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG14__.alpha}}" bg="{{__ARG14__.color}}"></frame>
+    <img radius="{{__ARG14__.radius}}" tint="{{__ARG14__.color}}" alpha="{{__ARG14__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame15" w="{{__ARG15__.width}}" h="{{__ARG15__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG15__.alpha}}" bg="{{__ARG15__.color}}"></frame>
+    <img radius="{{__ARG15__.radius}}" tint="{{__ARG15__.color}}" alpha="{{__ARG15__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame16" w="{{__ARG16__.width}}" h="{{__ARG16__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG16__.alpha}}" bg="{{__ARG16__.color}}"></frame>
+    <img radius="{{__ARG16__.radius}}" tint="{{__ARG16__.color}}" alpha="{{__ARG16__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame17" w="{{__ARG17__.width}}" h="{{__ARG17__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG17__.alpha}}" bg="{{__ARG17__.color}}"></frame>
+    <img radius="{{__ARG17__.radius}}" tint="{{__ARG17__.color}}" alpha="{{__ARG17__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame18" w="{{__ARG18__.width}}" h="{{__ARG18__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG18__.alpha}}" bg="{{__ARG18__.color}}"></frame>
+    <img radius="{{__ARG18__.radius}}" tint="{{__ARG18__.color}}" alpha="{{__ARG18__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame19" w="{{__ARG19__.width}}" h="{{__ARG19__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG19__.alpha}}" bg="{{__ARG19__.color}}"></frame>
+    <img radius="{{__ARG19__.radius}}" tint="{{__ARG19__.color}}" alpha="{{__ARG19__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame20" w="{{__ARG20__.width}}" h="{{__ARG20__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG20__.alpha}}" bg="{{__ARG20__.color}}"></frame>
+    <img radius="{{__ARG20__.radius}}" tint="{{__ARG20__.color}}" alpha="{{__ARG20__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame21" w="{{__ARG21__.width}}" h="{{__ARG21__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG21__.alpha}}" bg="{{__ARG21__.color}}"></frame>
+    <img radius="{{__ARG21__.radius}}" tint="{{__ARG21__.color}}" alpha="{{__ARG21__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame22" w="{{__ARG22__.width}}" h="{{__ARG22__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG22__.alpha}}" bg="{{__ARG22__.color}}"></frame>
+    <img radius="{{__ARG22__.radius}}" tint="{{__ARG22__.color}}" alpha="{{__ARG22__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame23" w="{{__ARG23__.width}}" h="{{__ARG23__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG23__.alpha}}" bg="{{__ARG23__.color}}"></frame>
+    <img radius="{{__ARG23__.radius}}" tint="{{__ARG23__.color}}" alpha="{{__ARG23__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame24" w="{{__ARG24__.width}}" h="{{__ARG24__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG24__.alpha}}" bg="{{__ARG24__.color}}"></frame>
+    <img radius="{{__ARG24__.radius}}" tint="{{__ARG24__.color}}" alpha="{{__ARG24__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame25" w="{{__ARG25__.width}}" h="{{__ARG25__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG25__.alpha}}" bg="{{__ARG25__.color}}"></frame>
+    <img radius="{{__ARG25__.radius}}" tint="{{__ARG25__.color}}" alpha="{{__ARG25__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame26" w="{{__ARG26__.width}}" h="{{__ARG26__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG26__.alpha}}" bg="{{__ARG26__.color}}"></frame>
+    <img radius="{{__ARG26__.radius}}" tint="{{__ARG26__.color}}" alpha="{{__ARG26__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame27" w="{{__ARG27__.width}}" h="{{__ARG27__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG27__.alpha}}" bg="{{__ARG27__.color}}"></frame>
+    <img radius="{{__ARG27__.radius}}" tint="{{__ARG27__.color}}" alpha="{{__ARG27__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame28" w="{{__ARG28__.width}}" h="{{__ARG28__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG28__.alpha}}" bg="{{__ARG28__.color}}"></frame>
+    <img radius="{{__ARG28__.radius}}" tint="{{__ARG28__.color}}" alpha="{{__ARG28__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
+  <frame id="frame29" w="{{__ARG29__.width}}" h="{{__ARG29__.height}}">
+    <frame w="*" h="*" alpha="{{__ARG29__.alpha}}" bg="{{__ARG29__.color}}"></frame>
+    <img radius="{{__ARG29__.radius}}" tint="{{__ARG29__.color}}" alpha="{{__ARG29__.radiusAlpha}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" />
+  </frame>
 </frame>

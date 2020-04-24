@@ -81,18 +81,42 @@ function resolveRadius(item: Radius) {
   };
 }
 
+type ClickCallback<T> = (debugPosition: T, index: number) => void;
+
+function floatyDebug<T>(clickCallback: ClickCallback<T>, ...args: T[]): void;
+function floatyDebug<T>(
+  clickCallback: (debugPosition: T, index: number) => void,
+  timeout: number,
+  ...args: T[]
+): void;
 function floatyDebug(timeout: number, ...args: DebugPosition[]): void;
 function floatyDebug(...args: DebugPosition[]): void;
-function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugPosition[]): void {
+function floatyDebug(
+  arg1?: ClickCallback<any> | number | DebugPosition,
+  arg2?: number | DebugPosition,
+  ...args: DebugPosition[]
+): void {
   let timeout = 3000;
 
-  if (typeof timeoutOrPosition === 'undefined') {
+  let clickCallback: ClickCallback<any> | undefined;
+
+  if (typeof arg1 === 'undefined') {
     return;
   }
-  if (typeof timeoutOrPosition === 'number') {
-    timeout = timeoutOrPosition;
+  if (typeof arg1 === 'number') {
+    timeout = arg1;
+  } else if (typeof arg1 === 'function') {
+    clickCallback = arg1;
   } else {
-    args.unshift(timeoutOrPosition);
+    args.unshift(arg1);
+  }
+
+  if (typeof arg2 === 'undefined') {
+    // do nothing
+  } else if (typeof arg2 === 'number') {
+    timeout = arg2;
+  } else {
+    args.unshift(arg2);
   }
 
   if (!args.length) {
@@ -116,13 +140,13 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
 
   const hidden = resolveHidden();
 
-  // 强制设置长度为 10
-  if (args.length > 10) {
-    console.warn('too many pints, only show 10 point');
+  // 强制设置长度为 30
+  if (args.length > 30) {
+    console.warn('too many pints, only show 30 point');
     // eslint-disable-next-line no-param-reassign
-    args.length = 10;
+    args.length = 30;
   } else {
-    while (args.length < 10) {
+    while (args.length < 30) {
       args.push(hidden);
     }
   }
@@ -174,7 +198,10 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
 
   floatyWindow = xml(...xmlParams);
   floatyWindow.setSize(-1, -1);
-  floatyWindow.setTouchable(false);
+
+  if (!clickCallback) {
+    floatyWindow.setTouchable(false);
+  }
 
   ui.run(() => {
     xmlParams.forEach(({ x, y }, i) => {
@@ -182,6 +209,12 @@ function floatyDebug(timeoutOrPosition?: number | DebugPosition, ...args: DebugP
       ele.x = x;
       // 悬浮窗和顶部的距离(状态栏)
       ele.y = y - statusBarHeight;
+
+      ele.click(() => {
+        if (clickCallback) {
+          clickCallback(args[i], i);
+        }
+      });
     });
   });
 
