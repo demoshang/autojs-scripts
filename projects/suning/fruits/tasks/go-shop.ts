@@ -35,7 +35,7 @@ function doTask(uiObj?: UiObject) {
 
   goBtn.click();
   // 等待页面渲染
-  sleep(2000);
+  sleep(5000);
 
   sleep(15000);
 
