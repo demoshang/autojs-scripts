@@ -35,11 +35,17 @@ function doTask(uiObj?: UiObject) {
 
   goBtn.click();
   // 等待页面渲染
-  sleep(5000);
+  sleep(4000);
 
-  sleep(15000);
+  // 苏宁无法处理
+  if (textContains('来晚啦').findOnce()) {
+    back();
+  } else {
+    // 等待倒计时完成
+    sleep(17000);
+    back();
+  }
 
-  back();
   sleep(1000);
 }
 
