@@ -34,6 +34,7 @@ interface AndroidClass {
   };
   content: {
     Context: Context;
+    Intent: Intent;
   };
   media: {
     AudioManager: AudioManager;
@@ -41,11 +42,14 @@ interface AndroidClass {
 }
 
 declare class Intent {
-  static FLAG_ACTIVITY_NEW_TASK: string;
+  static FLAG_ACTIVITY_NEW_TASK: number;
+
+  static parseUri(uri: string, flags: number): Intent;
 
   constructor(setting: string, uri: string);
 
-  addFlags(flag: string): void;
+  addFlags(flag: number): void;
+
 }
 
 declare const context: Context;
