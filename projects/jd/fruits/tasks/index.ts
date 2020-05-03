@@ -138,6 +138,7 @@ function doTasks() {
 
     if (goEle) {
       boundsClick(goEle);
+      sleep(12000);
       back();
 
       goToTask();
