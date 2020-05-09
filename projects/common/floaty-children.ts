@@ -31,7 +31,10 @@ function filterChildren(parent: UiObject, fn: (o: UiObject) => boolean) {
   return list.filter(fn);
 }
 
-function floatyChildren(parent: UiObject, timeout = 5000) {
+function floatyChildren(parent?: UiObject | null, timeout = 5000) {
+  if (!parent) {
+    return;
+  }
   const arr = filterChildren(parent, (o) => {
     const text = o.text();
     const id = o.id();
