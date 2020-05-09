@@ -6,9 +6,9 @@ import { getUiObject } from '../../../common/ui-object';
 import { pressClose } from './press-close';
 
 function isInTask() {
-  const key = '农庄评价任务';
+  const reg = /.*\d+金币/;
 
-  if (textContains(key).findOnce()) {
+  if (textMatches(reg).findOnce()) {
     return true;
   }
 
@@ -19,7 +19,7 @@ function isInTask() {
 
   ele.click();
   sleep(3000);
-  return !!textContains(key).findOnce();
+  return !!textMatches(reg).findOnce();
 }
 
 function doTask(uiObj?: UiObject) {
