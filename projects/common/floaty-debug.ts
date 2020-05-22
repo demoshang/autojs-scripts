@@ -123,7 +123,7 @@ function floatyDebug(
     return;
   }
 
-  console.info(
+  console.log(
     args.map((item) => {
       if (isUiObject(item)) {
         return resolveRect(item.bounds());

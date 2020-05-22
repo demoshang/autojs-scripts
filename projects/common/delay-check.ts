@@ -18,4 +18,17 @@ function delayCheck<T>(timeout: number, delay: number, checkFn: () => T, runFn?:
   return false;
 }
 
-export { delayCheck };
+function delayRun(delay: number, runFn: Function, checkFn: () => boolean, retries = 3) {
+  let left = retries;
+  while (left > 0) {
+    if (!checkFn()) {
+      left -= 1;
+      sleep(delay);
+    } else {
+      left = 0;
+      runFn();
+    }
+  }
+}
+
+export { delayCheck, delayRun };

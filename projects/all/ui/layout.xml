@@ -18,6 +18,7 @@
   <button id="consoleBtn" style="Widget.AppCompat.Button.Colored" text="打开日志" />
 
   <button id="runJDBtn" style="Widget.AppCompat.Button.Colored" text="启动[京东]脚本" visibility="gone" />
+  <button id="runJD618Btn" style="Widget.AppCompat.Button.Colored" text="启动[京东618]脚本" visibility="gone" />
   <button id="runSNBtn" style="Widget.AppCompat.Button.Colored" text="启动[苏宁]脚本" visibility="gone" />
   <button id="runALLBtn" style="Widget.AppCompat.Button.Colored" text="启动所有脚本" visibility="gone" />
 </vertical>

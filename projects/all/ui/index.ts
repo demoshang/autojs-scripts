@@ -6,6 +6,7 @@ import { killApp } from '../../common/kill-app';
 import { muteRestoreMusic } from '../../common/mute';
 import { jdApplicationId, suningApplicationId } from '../../common/open-app';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
+import { runWithRetry as JD618Run } from '../../jd/200618/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
 import layout from './layout.xml';
 
@@ -26,6 +27,10 @@ const btns = [
   {
     id: 'runJDBtn',
     type: 'jd',
+  },
+  {
+    id: 'runJD618Btn',
+    type: 'jd618',
   },
   {
     id: 'runSNBtn',
@@ -105,11 +110,19 @@ function run(type: string) {
 
       if (type === 'jd') {
         JDRun();
+        killApp(jdApplicationId);
+      } else if (type === 'jd618') {
+        JD618Run();
+        killApp(jdApplicationId);
       } else if (type === 'sn') {
         getCaptureImage();
         SNRun();
+        killApp(suningApplicationId);
       } else if (type === 'all') {
         getCaptureImage();
+
+        JD618Run();
+        killApp(jdApplicationId);
 
         JDRun();
         killApp(jdApplicationId);

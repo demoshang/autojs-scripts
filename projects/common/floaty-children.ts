@@ -44,7 +44,7 @@ function floatyChildren(parent?: UiObject | null, timeout = 5000) {
 
   floatyDebug(
     (ele) => {
-      const text = ele.text();
+      const text = ele.text() || ele.id();
       setClip(text);
       toastLog(`复制成功 ${text}`);
     },
