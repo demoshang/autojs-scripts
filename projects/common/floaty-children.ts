@@ -31,22 +31,36 @@ function filterChildren(parent: UiObject, fn: (o: UiObject) => boolean) {
   return list.filter(fn);
 }
 
-function floatyChildren(parent?: UiObject | null, timeout = 5000) {
-  if (!parent) {
-    return;
-  }
-  const arr = filterChildren(parent, (o) => {
+function floatyChildren(
+  parent?: UiObject | null,
+  timeout = 5000,
+  filter: (ele: UiObject) => any = (o) => {
     const text = o.text();
     const id = o.id();
 
     return !!(text || id);
-  });
+  }
+) {
+  if (!parent) {
+    return;
+  }
+
+  const arr = filterChildren(parent, filter);
 
   floatyDebug(
     (ele) => {
-      const text = ele.text() || ele.id();
-      setClip(text);
-      toastLog(`复制成功 ${text}`);
+      const text = ele.text();
+      if (text) {
+        setClip(text);
+        toastLog(`复制text成功 ${text}`);
+        return;
+      }
+
+      const id = ele.id();
+      if (id) {
+        setClip(id);
+        toastLog(`复制id成功 ${id}`);
+      }
     },
     timeout,
     ...arr

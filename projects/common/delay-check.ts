@@ -25,7 +25,7 @@ function delayRun(delay: number, runFn: Function, checkFn: () => boolean, retrie
       left -= 1;
       sleep(delay);
     } else {
-      left = 0;
+      left = retries;
       runFn();
     }
   }

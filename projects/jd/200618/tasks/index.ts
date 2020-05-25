@@ -41,6 +41,22 @@ function checkIsInTask() {
   return !!textContains('任务每日0点刷新').findOnce();
 }
 
+function throwIfNotInTask() {
+  if (!checkIsInTask()) {
+    throw new Error('任务面板打开失败');
+  }
+}
+
+function checkIsInActivity() {
+  return !!textContains('做任务领金币').findOnce();
+}
+
+function throwIfNotInActivity() {
+  if (!checkIsInActivity()) {
+    throw new Error('活动打开失败');
+  }
+}
+
 function collectCoin() {
   let ele = idContains('goldElfin').findOnce();
 
@@ -125,12 +141,6 @@ function toFinishTask(
   });
 }
 
-function throwIfNotInTask() {
-  if (!checkIsInTask()) {
-    throw new Error('任务面板打开失败');
-  }
-}
-
 function openTask() {
   if (textContains('任务每日0点刷新').findOnce()) {
     console.info('在任务面板中');
@@ -148,6 +158,16 @@ function openTask() {
   throwIfNotInTask();
 }
 
+function closeTask() {
+  if (checkIsInTask()) {
+    boundsClick(textContains('x6YonE079h84lBpxnX4CVJaqei7TKx8AAAAASUVORK5CYII=').findOnce());
+  }
+
+  if (checkIsInTask() || !checkIsInActivity()) {
+    throw new Error('close task failed');
+  }
+}
+
 function signIn() {
   toastLog('签到');
   boundsClick(textContains('签到').findOnce());
@@ -160,8 +180,17 @@ function popup() {
 
 function loopCollectCoin() {
   toastLog('金币采集');
+
+  if (checkIsInTask()) {
+    closeTask();
+  }
+
+  if (checkIsInTask()) {
+    throw new Error('not in CollectCoin page');
+  }
+
   delayRun(
-    1000,
+    3000,
     () => {
       collectCoin();
     },
@@ -195,11 +224,15 @@ function runWithRetry(retries = 3) {
       }
       goToPage();
 
+      throwIfNotInActivity();
+
       popup();
 
       loopCollectCoin();
 
       popup();
+
+      throwIfNotInActivity();
 
       doTasks();
 
