@@ -1,4 +1,5 @@
 import { isUiObject } from './type-check';
+import { statusBarHeight } from './floaty-debug';
 
 function checkInScreen(item?: UiObject | Rect | null) {
   if (!item) {
@@ -13,7 +14,14 @@ function checkInScreen(item?: UiObject | Rect | null) {
     rect = item;
   }
 
-  return rect.centerY() < device.height && rect.centerX() < device.width;
+  console.info({
+    centerY: rect.centerY(),
+    centerX: rect.centerX(),
+    height: device.height,
+    width: device.width,
+  });
+
+  return rect.centerY() < device.height - statusBarHeight && rect.centerX() < device.width;
 }
 
 export { checkInScreen };

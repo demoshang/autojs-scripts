@@ -69,4 +69,4 @@ function floatyChildren(
   sleep(timeout);
 }
 
-export { floatyChildren };
+export { floatyChildren, collection2array };

@@ -228,4 +228,4 @@ function floatyDebug(
   });
 }
 
-export { floatyDebug };
+export { floatyDebug, statusBarHeight };

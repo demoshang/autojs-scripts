@@ -1,10 +1,13 @@
 import { boundsClick } from '../../../common/click-ele-bounds';
 import { delayCheck, delayRun } from '../../../common/delay-check';
+import { collection2array } from '../../../common/floaty-children';
 import { floatyDebug } from '../../../common/floaty-debug';
 import { getTaskCount, getTaskDelay } from '../../../common/get-task-count';
+import { checkInScreen } from '../../../common/in-screen';
 import { killApp } from '../../../common/kill-app';
 import { jdApplicationId, openJDMain } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
+import { myScroll } from '../../../common/scroll';
 import { getUiObject } from '../../../common/ui-object';
 
 function goToPage() {
@@ -176,6 +179,7 @@ function signIn() {
 function popup() {
   toastLog('弹出框处理');
   boundsClick(textContains('立即签到').findOnce());
+  boundsClick(textContains('继续叠蛋糕').findOnce());
 }
 
 function loopCollectCoin() {
@@ -200,6 +204,79 @@ function loopCollectCoin() {
   );
 }
 
+function doSeriesTask(
+  taskName: string | RegExp,
+  lastResult?: {
+    total: number;
+    completed: number;
+    left: number;
+    retries: number;
+    max: number;
+  }
+) {
+  const ele = getUiObject(taskName)
+    ?.parent()
+    .parent();
+
+  if (!ele) {
+    return;
+  }
+
+  const taskBtn = ele.findOne(textContains('去完成'));
+  const taskCount = getTaskCount(ele, taskName);
+
+  if (taskCount.left === 0) {
+    return;
+  }
+
+  if (lastResult && lastResult.left === taskCount.left) {
+    if (lastResult.retries > lastResult.max) {
+      toastLog(`⚠️警告: ${taskName} 任务失败`);
+      return;
+    }
+  }
+
+  console.info({
+    taskCount,
+    retries: lastResult?.retries,
+    max: lastResult?.max,
+  });
+
+  boundsClick(taskBtn);
+
+  if (!getUiObject('浏览以下')) {
+    console.warn('进入任务失败');
+    return;
+  }
+
+  const arr = collection2array(textMatches(/¥\d+\.\d{2,2}/).find());
+
+  arr.slice(0, 5).forEach((item, index) => {
+    if (!checkInScreen(item)) {
+      myScroll(arr[index - 1].parent().parent(), 1000);
+    }
+
+    floatyDebug(item.parent());
+    boundsClick(item);
+    back();
+    sleep(1500);
+  });
+
+  // 返回任务界面
+  boundsClick(idContains('fe').findOnce());
+  sleep(3000);
+
+  if (!checkIsInTask()) {
+    throw new Error('不在任务面板');
+  }
+
+  doSeriesTask(taskName, {
+    ...taskCount,
+    retries: ((lastResult && lastResult.retries) || 0) + 1,
+    max: (lastResult && lastResult.max) || taskCount.left + 1,
+  });
+}
+
 function doTasks() {
   openTask();
 
@@ -212,6 +289,9 @@ function doTasks() {
   toFinishTask(/去逛.*店.*/);
   toFinishTask(/.*去逛.*\d+秒.*[\d-]+金币.*/);
   toFinishTask(/.*浏览\d+秒.*可得[\d-]+金币.*/);
+  toFinishTask(/.*浏览可得[\d-]+金币.*/);
+
+  doSeriesTask('成功浏览5个商品可得');
 }
 
 function runWithRetry(retries = 3) {
