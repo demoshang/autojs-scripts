@@ -7,7 +7,7 @@ import { checkInScreen } from '../../../common/in-screen';
 import { killApp } from '../../../common/kill-app';
 import { jdApplicationId, openJDMain } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
-import { myScroll } from '../../../common/scroll';
+import { myScroll, scrollIn } from '../../../common/scroll';
 import { getUiObject } from '../../../common/ui-object';
 
 function goToPage() {
@@ -178,8 +178,8 @@ function signIn() {
 
 function popup() {
   toastLog('弹出框处理');
-  boundsClick(textContains('立即签到').findOnce());
   boundsClick(textContains('继续叠蛋糕').findOnce());
+  boundsClick(textContains('立即签到').findOnce());
 }
 
 function loopCollectCoin() {
@@ -202,6 +202,128 @@ function loopCollectCoin() {
       return !!idContains('goldElfin').findOnce();
     }
   );
+}
+
+function addToCart() {
+  const arr = collection2array(idContains('cart_').find());
+
+  arr.slice(0, 5).forEach((item) => {
+    scrollIn(item);
+
+    const ele = idContains(item.id()).findOnce();
+    boundsClick(ele);
+    sleep(1000);
+  });
+}
+
+function cleanCart() {
+  if (
+    currentActivity() !== 'com.jingdong.app.mall.MainFrameActivity' ||
+    !className('android.view.View')
+      .descContains('购物车')
+      .findOnce()
+  ) {
+    killApp(jdApplicationId);
+    if (!openJDMain()) {
+      throw new Error('open jd failed');
+    }
+  }
+
+  const editBtn = delayCheck(
+    10000,
+    1000,
+    () => {
+      toastLog('搜索按钮 [编辑]');
+      return textContains('编辑').findOnce();
+    },
+    () => {
+      toastLog('搜索按钮 [购物车]');
+      boundsClick(descContains('购物车').findOnce());
+    }
+  );
+
+  if (!editBtn) {
+    throw new Error('[购物车] 页面未找到');
+  }
+
+  toastLog('点击 [编辑]');
+  boundsClick(editBtn);
+
+  toastLog('[编辑]');
+  sleep(1000);
+
+  for (let i = 0; i < 10; i += 1) {
+    boundsClick(textMatches(/^删除$/).findOnce());
+    sleep(1000);
+
+    if (textContains('确认要删除这').findOnce()) {
+      boundsClick(textContains('确定').findOnce());
+      sleep(1000);
+    } else {
+      break;
+    }
+  }
+}
+
+function doCartTask(
+  taskName: string | RegExp,
+  lastResult?: {
+    total: number;
+    completed: number;
+    left: number;
+    retries: number;
+    max: number;
+  }
+) {
+  const ele = getUiObject(taskName)
+    ?.parent()
+    .parent();
+
+  if (!ele) {
+    return;
+  }
+
+  const taskBtn = ele.findOne(textContains('去完成'));
+  const taskCount = getTaskCount(ele, taskName);
+
+  if (taskCount.left === 0) {
+    return;
+  }
+
+  if (lastResult && lastResult.left === taskCount.left) {
+    if (lastResult.retries > lastResult.max) {
+      toastLog(`⚠️警告: ${taskName} 任务失败`);
+      return;
+    }
+  }
+
+  console.info({
+    taskCount,
+    retries: lastResult?.retries,
+    max: lastResult?.max,
+  });
+
+  boundsClick(taskBtn);
+
+  if (!getUiObject(taskName)) {
+    console.warn('进入任务失败');
+  }
+
+  addToCart();
+
+  // 返回任务界面
+  boundsClick(idContains('fe').findOnce());
+  sleep(3000);
+
+  if (!checkIsInTask()) {
+    throw new Error('不在任务面板');
+  }
+
+  doCartTask(taskName, {
+    ...taskCount,
+    retries: ((lastResult && lastResult.retries) || 0) + 1,
+    max: (lastResult && lastResult.max) || taskCount.left + 1,
+  });
 }
 
 function doSeriesTask(
@@ -315,6 +437,10 @@ function runWithRetry(retries = 3) {
       throwIfNotInActivity();
 
       doTasks();
+
+      doCartTask(/.*成功加购\d+个.*/);
+
+      cleanCart();
 
       sleep(2000);
     },
