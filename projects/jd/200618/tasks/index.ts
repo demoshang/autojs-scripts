@@ -62,9 +62,11 @@ function throwIfNotInActivity() {
 
 function collectCoin() {
   let ele = idContains('goldElfin').findOnce();
+  let nu = 0;
 
-  while (ele !== null) {
+  while (ele !== null && nu < 10) {
     boundsClick(ele, 100);
+    nu += 1;
     ele = idContains('goldElfin').findOnce();
   }
 }
@@ -199,6 +201,12 @@ function loopCollectCoin() {
       collectCoin();
     },
     () => {
+      popup();
+
+      if (checkIsInTask()) {
+        closeTask();
+      }
+
       return !!idContains('goldElfin').findOnce();
     }
   );
