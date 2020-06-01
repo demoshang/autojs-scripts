@@ -53,4 +53,9 @@ function scrollIn(
   sleep(sleepMs);
 }
 
-export { scroll as myScroll, scrollOut, scrollIn };
+function scrollPage(swipeDuration = 1000) {
+  const x = device.width / 2;
+  swipe(x, device.height / 2, x, device.height / 4, swipeDuration);
+}
+
+export { scroll as myScroll, scrollOut, scrollIn, scrollPage };

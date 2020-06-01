@@ -2,6 +2,7 @@ import { delayCheck } from './delay-check';
 
 const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';
+const taobaoId = 'com.taobao.taobao';
 
 function openPage(url: string, sleepTime = 0) {
   const i = app.intent({
@@ -33,4 +34,27 @@ function openJDMain(timeout = 10000, delay = 500): boolean {
   });
 }
 
-export { suningApplicationId, jdApplicationId, openPage, openSuning, openJDMain };
+function openTaoBaoMain(timeout = 10000, delay = 500): boolean {
+  app.startActivity({
+    action: 'android.intent.action.VIEW',
+    packageName: taobaoId,
+    className: 'com.taobao.tao.TBMainActivity',
+  });
+
+  return !!delayCheck(timeout, delay, () => {
+    return (
+      currentPackage() === taobaoId &&
+      (textContains('天猫超市').findOnce() || textContains('天猫新品').findOnce())
+    );
+  });
+}
+
+export {
+  suningApplicationId,
+  jdApplicationId,
+  taobaoId,
+  openPage,
+  openSuning,
+  openJDMain,
+  openTaoBaoMain,
+};

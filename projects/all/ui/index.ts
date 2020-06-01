@@ -4,10 +4,11 @@ import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
 import { getCaptureImage } from '../../common/image';
 import { killApp } from '../../common/kill-app';
 import { muteRestoreMusic } from '../../common/mute';
-import { jdApplicationId, suningApplicationId } from '../../common/open-app';
-import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
+import { jdApplicationId, suningApplicationId, taobaoId } from '../../common/open-app';
 import { runWithRetry as JD618Run } from '../../jd/200618/tasks';
+import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
+import { runWithRetry as taoBao618Run } from '../../taobao/200618/tasks';
 import layout from './layout.xml';
 
 layout();
@@ -31,6 +32,10 @@ const btns = [
   {
     id: 'runJD618Btn',
     type: 'jd618',
+  },
+  {
+    id: 'runTaoBao618Btn',
+    type: 'taoBao618',
   },
   {
     id: 'runSNBtn',
@@ -114,6 +119,9 @@ function run(type: string) {
       } else if (type === 'jd618') {
         JD618Run(6);
         killApp(jdApplicationId);
+      } else if (type === 'taoBao618') {
+        taoBao618Run();
+        killApp(taobaoId);
       } else if (type === 'sn') {
         getCaptureImage();
         SNRun();
@@ -126,6 +134,9 @@ function run(type: string) {
 
         JDRun();
         killApp(jdApplicationId);
+
+        taoBao618Run(6);
+        killApp(taobaoId);
 
         SNRun();
         killApp(suningApplicationId);
