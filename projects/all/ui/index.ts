@@ -112,7 +112,7 @@ function run(type: string) {
         JDRun();
         killApp(jdApplicationId);
       } else if (type === 'jd618') {
-        JD618Run();
+        JD618Run(6);
         killApp(jdApplicationId);
       } else if (type === 'sn') {
         getCaptureImage();
@@ -121,7 +121,7 @@ function run(type: string) {
       } else if (type === 'all') {
         getCaptureImage();
 
-        JD618Run();
+        JD618Run(6);
         killApp(jdApplicationId);
 
         JDRun();
