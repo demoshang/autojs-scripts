@@ -130,7 +130,7 @@ function toFinishTask(
     return;
   }
 
-  sleep(3000);
+  sleep(10000);
   sleep(delay);
 
   const isInTask = delayCheck(
