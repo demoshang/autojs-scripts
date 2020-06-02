@@ -1,12 +1,10 @@
 import { boundsClick } from '../../../common/click-ele-bounds';
 import { delayCheck } from '../../../common/delay-check';
 import { collection2array } from '../../../common/floaty-children';
-import { floatyDebug } from '../../../common/floaty-debug';
-import { getTaskCount, getTaskDelay } from '../../../common/get-task-count';
 import { killApp } from '../../../common/kill-app';
+import { loopRunTask } from '../../../common/loop-run-task';
 import { openTaoBaoMain, taobaoId } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
-import { scrollPage } from '../../../common/scroll';
 
 function goToPage() {
   toastLog('尝试进入 [瓜分10亿] 页面');
@@ -75,91 +73,28 @@ function openTask() {
   throwIfNotInTask();
 }
 
-function toFinishTask(
-  ele: UiObject,
-  taskName: string,
-  lastResult?: {
-    total: number;
-    completed: number;
-    left: number;
-    retries: number;
-    max: number;
-  }
-) {
-  floatyDebug(ele);
-
-  if (!ele.text()) {
-    return;
-  }
-
-  const taskBtn = ele?.findOne(textMatches(/去(完成|浏览)/));
-  const taskCount = getTaskCount(ele, taskName);
-  const delay = getTaskDelay(ele);
-
-  if (taskCount.left === 0) {
-    return;
-  }
-
-  if (lastResult && lastResult.left === taskCount.left) {
-    if (lastResult.retries > lastResult.max) {
-      toastLog(`⚠️警告: ${taskName} 任务失败`);
-      return;
-    }
-  } else if (lastResult && lastResult.left + 1 === taskCount.left) {
-    // eslint-disable-next-line no-param-reassign
-    lastResult.retries = 0;
-  }
-
-  console.info({
-    taskCount,
-    delay,
-    retries: lastResult?.retries,
-    max: lastResult?.max,
-  });
-
-  boundsClick(taskBtn);
-
-  scrollPage();
-
-  sleep(3000);
-  sleep(delay);
-
-  if (!textContains('任务完成').findOnce()) {
-    console.warn('任务 未 完成, 延迟3秒');
-    sleep(3000);
-  }
-
-  const isInTask = delayCheck(
-    4000,
-    1000,
-    () => {
-      return checkIsInTask();
-    },
-    () => {
-      back();
-      sleep(1000);
-    }
-  );
-
-  if (!isInTask) {
-    throw new Error('不在任务面板');
-  }
-
-  toFinishTask(ele, taskName, {
-    ...taskCount,
-    retries: ((lastResult && lastResult.retries) || 0) + 1,
-    max: (lastResult && lastResult.max) || taskCount.left + 1,
-  });
+function signIn() {
+  toastLog('签到');
+  boundsClick(textStartsWith('签到').findOnce());
 }
 
 function doTasks() {
   openTask();
 
-  collection2array(textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find()).forEach((ele, index) => {
+  signIn();
+
+  collection2array(textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find()).forEach((ele) => {
     const parent = ele.parent();
 
     if (parent.findOne(textMatches(/去(完成|浏览)/))) {
-      toFinishTask(parent, `${index}`);
+      loopRunTask({
+        ele: parent,
+        name: ele.text(),
+        checkIsInTask,
+        getBtn: (o) => {
+          return o.findOne(textMatches(/去(完成|浏览)/));
+        },
+      });
     }
   });
 }
