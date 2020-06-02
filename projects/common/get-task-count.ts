@@ -4,9 +4,9 @@ interface TaskCountResult {
   left: number;
 }
 
-function getTaskCount(ele?: UiObject, taskName?: string | RegExp): TaskCountResult;
-function getTaskCount(text?: string, taskName?: string | RegExp): TaskCountResult;
-function getTaskCount(item?: string | UiObject, taskName?: string | RegExp) {
+function getTaskCount(ele?: UiObject): TaskCountResult | null;
+function getTaskCount(text?: string): TaskCountResult | null;
+function getTaskCount(item?: string | UiObject): TaskCountResult | null {
   let text = '';
   if (!item) {
     text = '';
@@ -18,7 +18,7 @@ function getTaskCount(item?: string | UiObject, taskName?: string | RegExp) {
 
   console.info('=======task detail', text);
   if (!/(\d+)\/(\d+)/.test(text)) {
-    throw new Error(`未找到任务数  ${text} ${taskName?.toString()}`);
+    return null;
   }
 
   const completed = parseInt(`${RegExp.$1}`, 10);

@@ -92,8 +92,18 @@ function toFinishTask(
   floatyDebug(ele);
 
   const taskBtn = ele?.findOne(textContains('去完成'));
-  const taskCount = getTaskCount(ele, taskName);
+  const taskCount = getTaskCount(ele);
   const delay = getTaskDelay(ele);
+
+  if (!taskBtn) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
+    return;
+  }
+
+  if (!taskCount) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
+    return;
+  }
 
   if (taskCount.left === 0) {
     return;
@@ -292,7 +302,17 @@ function doCartTask(
   }
 
   const taskBtn = ele.findOne(textContains('去完成'));
-  const taskCount = getTaskCount(ele, taskName);
+  const taskCount = getTaskCount(ele);
+
+  if (!taskBtn) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
+    return;
+  }
+
+  if (!taskCount) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
+    return;
+  }
 
   if (taskCount.left === 0) {
     return;
@@ -353,7 +373,17 @@ function doSeriesTask(
   }
 
   const taskBtn = ele.findOne(textContains('去完成'));
-  const taskCount = getTaskCount(ele, taskName);
+  const taskCount = getTaskCount(ele);
+
+  if (!taskBtn) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
+    return;
+  }
+
+  if (!taskCount) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
+    return;
+  }
 
   if (taskCount.left === 0) {
     return;
@@ -451,6 +481,8 @@ function runWithRetry(retries = 3) {
       cleanCart();
 
       sleep(2000);
+
+      throw new Error('强制重试');
     },
     () => {
       sleep(1000);

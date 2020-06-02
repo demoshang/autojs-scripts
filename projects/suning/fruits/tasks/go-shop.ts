@@ -81,6 +81,11 @@ function runTask(
     lastResult: ${JSON.stringify(lastResult)}`
   );
 
+  if (!taskCount) {
+    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
+    return;
+  }
+
   if (taskCount.left === 0) {
     return;
   }
