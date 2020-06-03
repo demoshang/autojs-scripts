@@ -7,6 +7,7 @@ import { muteRestoreMusic } from '../../common/mute';
 import { jdApplicationId, suningApplicationId, taobaoId } from '../../common/open-app';
 import { runWithRetry as JD618Run } from '../../jd/200618/tasks';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
+import { runWithRetry as SN618Run } from '../../suning/200618/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
 import { runWithRetry as taoBao618Run } from '../../taobao/200618/tasks';
 import layout from './layout.xml';
@@ -40,6 +41,10 @@ const btns = [
   {
     id: 'runSNBtn',
     type: 'sn',
+  },
+  {
+    id: 'runSN618Btn',
+    type: 'sn618',
   },
 ];
 
@@ -125,6 +130,9 @@ function run(type: string) {
       } else if (type === 'sn') {
         getCaptureImage();
         SNRun();
+        killApp(suningApplicationId);
+      } else if (type === 'sn618') {
+        SN618Run();
         killApp(suningApplicationId);
       } else if (type === 'all') {
         getCaptureImage();

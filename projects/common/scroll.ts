@@ -33,8 +33,8 @@ function scrollIn(
   }
 
   const bounds = ele.bounds();
-  const x = bounds.left + bounds.width() / 2;
-  let y = bounds.centerY();
+  const x = bounds.centerX();
+  let y = bounds.bottom;
   if (y >= 0) {
     // eslint-disable-next-line no-param-reassign
     step *= -1;

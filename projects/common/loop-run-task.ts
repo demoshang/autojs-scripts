@@ -11,11 +11,12 @@ function loopRunTask({
   getBtn = (o: UiObject) => {
     return o.findOne(textMatches(/去(完成|浏览)/));
   },
-  runTask = (taskBtn, delay) => {
+  runTask = (taskBtn, delay, pre, after) => {
     boundsClick(taskBtn);
-    sleep(3000);
+    sleep(pre);
     scrollPage();
     sleep(delay);
+    sleep(after);
   },
   waitFinished = () => {
     delayCheck(5000, 1000, () => {
@@ -44,12 +45,14 @@ function loopRunTask({
     retries: 0,
     max: 3,
   },
+  preMs = 3000,
+  afterMs = 0,
 }: {
   ele?: UiObject | null;
   checkIsInTask: () => boolean;
   name?: string;
   getBtn?: (o: UiObject) => UiObject | undefined | null;
-  runTask?: (taskBtn: UiObject, delay: number) => void;
+  runTask?: (taskBtn: UiObject, delay: number, perMs: number, afterMs: number) => void;
   waitFinished?: () => void;
   checkBackToTask?: (checkIsInTask: () => boolean) => boolean;
   lastResult?: {
@@ -59,6 +62,8 @@ function loopRunTask({
     retries: number;
     max: number;
   };
+  preMs?: number;
+  afterMs?: number;
 }) {
   floatyDebug(ele);
 
@@ -104,7 +109,7 @@ function loopRunTask({
     retries: lastResult.retries,
   });
 
-  runTask(taskBtn, delay);
+  runTask(taskBtn, delay, preMs, lastResult.retries * afterMs);
 
   waitFinished();
 
