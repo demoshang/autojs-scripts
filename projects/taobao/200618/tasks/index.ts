@@ -24,7 +24,10 @@ function goToPage() {
           .findOnce()
           ?.parent()
           .parent()
-          .parent();
+          .parent() ||
+        descContains('首页')
+          .findOnce()
+          ?.parent();
 
       if (!ele) {
         return;
@@ -47,7 +50,7 @@ function goToPage() {
 }
 
 function checkIsInTask() {
-  return !!textContains('淘宝成就点').findOnce();
+  return !!textContains('邀请好友一起玩').findOnce();
 }
 
 function throwIfNotInTask() {
@@ -76,6 +79,17 @@ function openTask() {
 function signIn() {
   toastLog('签到');
   boundsClick(textStartsWith('签到').findOnce());
+}
+
+function popup() {
+  const ele = text('确认').findOnce();
+
+  if (ele) {
+    boundsClick(ele);
+    sleep(2000);
+  }
+
+  boundsClick(textContains('收下').findOnce());
 }
 
 function doTasks() {
@@ -112,6 +126,8 @@ function runWithRetry(retries = 3) {
         throw new Error('open taoBao failed');
       }
       goToPage();
+
+      popup();
 
       doTasks();
 

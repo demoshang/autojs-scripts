@@ -44,7 +44,9 @@ function openTaoBaoMain(timeout = 10000, delay = 500): boolean {
   return !!delayCheck(timeout, delay, () => {
     return (
       currentPackage() === taobaoId &&
-      (textContains('天猫超市').findOnce() || textContains('天猫新品').findOnce())
+      (textContains('天猫超市').findOnce() ||
+        textContains('天猫新品').findOnce() ||
+        descContains('首页').findOnce())
     );
   });
 }

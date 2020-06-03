@@ -1,6 +1,10 @@
 import { floatyDebug } from './floaty-debug';
 
-function collection2array(collection: UiCollection) {
+function collection2array(collection?: UiCollection) {
+  if (!collection) {
+    return [];
+  }
+
   const arr: UiObject[] = [];
   collection.forEach((o) => {
     arr.push(o);

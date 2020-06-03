@@ -29,7 +29,7 @@ function scrollIn(
   { sleepMs = 0, swipeDuration = 1000, step = device.height / 4, max = 5 } = {}
 ) {
   if (!ele) {
-    return;
+    return undefined;
   }
 
   const bounds = ele.bounds();
@@ -51,6 +51,8 @@ function scrollIn(
   }
 
   sleep(sleepMs);
+
+  return { x, y };
 }
 
 function scrollPage(swipeDuration = 1000) {
