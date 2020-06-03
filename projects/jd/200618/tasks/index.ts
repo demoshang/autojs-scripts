@@ -271,7 +271,7 @@ function cleanCart() {
   sleep(1000);
 
   for (let i = 0; i < 10; i += 1) {
-    boundsClick(textMatches(/^删除$/).findOnce());
+    boundsClick(collection2array(textMatches(/^删除$/).find()).pop());
     sleep(1000);
 
     if (textContains('确认要删除这').findOnce()) {
