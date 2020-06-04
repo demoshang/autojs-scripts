@@ -14,10 +14,15 @@ function goToPage() {
     1000,
     () => {
       toastLog('搜索按钮 [瓜分10亿]');
-      return textContains('瓜分10亿').findOnce();
+      return collection2array(
+        descContains('买买买')
+          .findOnce()
+          ?.parent()
+          .children()
+      )[10];
     },
     () => {
-      toastLog('搜索按钮 [我的]');
+      toastLog('搜索按钮 [首页]');
       const ele =
         id('android:id/tabs').findOnce() ||
         id('com.taobao.taobao:id/iv_btn_background')
@@ -33,7 +38,7 @@ function goToPage() {
         return;
       }
 
-      const btn = collection2array(ele.children()).pop();
+      const btn = collection2array(ele.children()).shift();
       boundsClick(btn);
     }
   );
