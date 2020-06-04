@@ -2,9 +2,10 @@ import { boundsClick } from '../../../common/click-ele-bounds';
 import { delayCheck, delayRun } from '../../../common/delay-check';
 import { collection2array } from '../../../common/floaty-children';
 import { floatyDebug } from '../../../common/floaty-debug';
-import { getTaskCount, getTaskDelay } from '../../../common/get-task-count';
+import { getTaskCount } from '../../../common/get-task-count';
 import { checkInScreen } from '../../../common/in-screen';
 import { killApp } from '../../../common/kill-app';
+import { loopRunTask } from '../../../common/loop-run-task';
 import { jdApplicationId, openJDMain } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { myScroll, scrollIn } from '../../../common/scroll';
@@ -71,88 +72,27 @@ function collectCoin() {
   }
 }
 
-function toFinishTask(
-  taskName: string | RegExp,
-  lastResult?: {
-    total: number;
-    completed: number;
-    left: number;
-    retries: number;
-    max: number;
-  }
-) {
-  const ele = getUiObject(taskName)
-    ?.parent()
-    ?.parent();
-
-  if (!ele) {
-    return;
-  }
-
-  floatyDebug(ele);
-
-  const taskBtn = ele?.findOne(textContains('去完成'));
-  const taskCount = getTaskCount(ele);
-  const delay = getTaskDelay(ele);
-
-  if (!taskBtn) {
-    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
-    return;
-  }
-
-  if (!taskCount) {
-    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
-    return;
-  }
-
-  if (taskCount.left === 0) {
-    return;
-  }
-
-  if (lastResult && lastResult.left === taskCount.left) {
-    if (lastResult.retries > lastResult.max) {
-      toastLog(`⚠️警告: ${taskName} 任务失败`);
-      return;
-    }
-  }
-
-  console.info({
-    taskCount,
-    delay,
-    retries: lastResult?.retries,
-    max: lastResult?.max,
-  });
-
-  boundsClick(taskBtn);
-
-  if (getUiObject(taskName)) {
-    console.warn('进入任务失败');
-    return;
-  }
-
-  sleep(3000);
-  sleep(delay);
-
-  const isInTask = delayCheck(
-    4000,
-    1000,
-    () => {
-      return checkIsInTask();
+function toFinishTask(taskName: string | RegExp) {
+  loopRunTask({
+    getEle: () => {
+      return getUiObject(taskName)
+        ?.parent()
+        ?.parent();
     },
-    () => {
-      back();
+    name: taskName.toString(),
+    checkIsInTask,
+    getBtn: (ele) => {
+      return ele?.findOne(textContains('去完成'));
+    },
+    waitFinished: () => {
+      delayCheck(8000, 500, () => {
+        return !!(descMatches(/.*恭喜完成.*/).findOnce() || textMatches(/.*恭喜完成.*/).findOnce());
+      });
+    },
+    afterMs: 3000,
+    afterBack: () => {
       sleep(1000);
-    }
-  );
-
-  if (!isInTask) {
-    throw new Error('不在任务面板');
-  }
-
-  toFinishTask(taskName, {
-    ...taskCount,
-    retries: ((lastResult && lastResult.retries) || 0) + 1,
-    max: (lastResult && lastResult.max) || taskCount.left + 1,
+    },
   });
 }
 

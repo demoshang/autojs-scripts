@@ -6,6 +6,7 @@ import { scrollPage } from './scroll';
 
 function loopRunTask({
   ele,
+  getEle,
   name,
   checkIsInTask,
   getBtn = (o: UiObject) => {
@@ -47,8 +48,10 @@ function loopRunTask({
   },
   preMs = 3000,
   afterMs = 0,
+  afterBack = () => {},
 }: {
   ele?: UiObject | null;
+  getEle?: () => UiObject | null | undefined;
   checkIsInTask: () => boolean;
   name?: string;
   getBtn?: (o: UiObject) => UiObject | undefined | null;
@@ -64,15 +67,19 @@ function loopRunTask({
   };
   preMs?: number;
   afterMs?: number;
+  afterBack?: () => void;
 }) {
+  if (getEle) {
+    // eslint-disable-next-line no-param-reassign
+    ele = getEle() || ele;
+  }
+
   floatyDebug(ele);
 
   if (!ele) {
     console.warn(`no ${name} task found`);
     return;
   }
-
-  toastLog(ele.text());
 
   const taskBtn = getBtn(ele);
   const taskCount = getTaskCount(ele);
@@ -111,7 +118,9 @@ function loopRunTask({
 
   runTask(taskBtn, delay, preMs, lastResult.retries * afterMs);
 
-  waitFinished();
+  if (delay >= 2000) {
+    waitFinished();
+  }
 
   const isInTask = checkBackToTask(checkIsInTask);
 
@@ -119,8 +128,11 @@ function loopRunTask({
     throw new Error('不在任务面板');
   }
 
+  afterBack();
+
   loopRunTask({
     ele,
+    getEle,
     name,
     checkIsInTask,
     getBtn,

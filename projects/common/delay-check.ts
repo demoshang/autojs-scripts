@@ -1,15 +1,25 @@
-function delayCheck<T>(timeout: number, delay: number, checkFn: () => T, runFn?: Function) {
+function delayCheck<T>(
+  timeout: number,
+  delay: number,
+  checkFn: () => T,
+  runFn?: Function,
+  checkFirst = true
+) {
   while (timeout > 0) {
     // eslint-disable-next-line no-param-reassign
     timeout -= delay;
 
-    if (runFn) {
+    if (checkFirst && runFn) {
       runFn();
     }
 
     const result = checkFn();
     if (result) {
       return result;
+    }
+
+    if (!checkFirst && runFn) {
+      runFn();
     }
 
     sleep(delay);
