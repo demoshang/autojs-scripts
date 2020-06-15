@@ -357,7 +357,7 @@ function doSeriesTask(
     }
 
     floatyDebug(item.parent());
-    boundsClick(item);
+    boundsClick(collection2array(textMatches(/¥\d+\.\d{2,2}/).find())[index]);
     back();
     sleep(1500);
   });
