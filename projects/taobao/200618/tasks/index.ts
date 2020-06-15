@@ -14,12 +14,7 @@ function goToPage() {
     1000,
     () => {
       toastLog('搜索按钮 [瓜分10亿]');
-      return collection2array(
-        descContains('买买买')
-          .findOnce()
-          ?.parent()
-          .children()
-      )[10];
+      return textContains('瓜分10亿').findOnce();
     },
     () => {
       toastLog('搜索按钮 [首页]');
@@ -38,7 +33,7 @@ function goToPage() {
         return;
       }
 
-      const btn = collection2array(ele.children()).shift();
+      const btn = collection2array(ele.children()).pop();
       boundsClick(btn);
     }
   );
@@ -112,6 +107,9 @@ function doTasks() {
         checkIsInTask,
         getBtn: (o) => {
           return o.findOne(textMatches(/去(完成|浏览)/));
+        },
+        afterBack: () => {
+          sleep(1000);
         },
       });
     }
