@@ -4,6 +4,54 @@ import { floatyDebug } from './floaty-debug';
 import { getTaskCount, getTaskDelay } from './get-task-count';
 import { scrollPage } from './scroll';
 
+interface LastResult {
+  total: number;
+  completed: number;
+  left: number;
+  retries: number;
+  max: number;
+}
+
+function loopCheck(
+  name: string | undefined | null,
+  lastResult: LastResult,
+  ele: UiObject | undefined | null,
+  getBtn: Function
+) {
+  if (!ele) {
+    throw new Error(`no ${name} task found`);
+  }
+
+  const taskBtn = getBtn(ele);
+  const taskCount = getTaskCount(ele);
+  const delay = getTaskDelay(ele);
+
+  if (!taskBtn) {
+    throw new Error(`[${name}] 未找到任务按钮`);
+  }
+
+  if (!taskCount) {
+    throw new Error(`[${name}] 未找到任务数据`);
+  }
+
+  if (lastResult.left !== taskCount.left) {
+    // eslint-disable-next-line no-param-reassign
+    lastResult.retries = 0;
+  }
+
+  console.info({
+    taskCount,
+    delay,
+    retries: lastResult.retries,
+  });
+
+  return {
+    taskCount,
+    delay,
+    taskBtn,
+  };
+}
+
 function loopRunTask({
   ele,
   getEle,
@@ -58,17 +106,16 @@ function loopRunTask({
   runTask?: (taskBtn: UiObject, delay: number, perMs: number, afterMs: number) => void;
   waitFinished?: () => void;
   checkBackToTask?: (checkIsInTask: () => boolean) => boolean;
-  lastResult?: {
-    total: number;
-    completed: number;
-    left: number;
-    retries: number;
-    max: number;
-  };
+  lastResult?: LastResult;
   preMs?: number;
   afterMs?: number;
   afterBack?: () => void;
 }) {
+  if (lastResult.retries > lastResult.max) {
+    toastLog(`⚠️警告: ${name} 任务失败, 重试过多`);
+    return;
+  }
+
   if (getEle) {
     // eslint-disable-next-line no-param-reassign
     ele = getEle() || ele;
@@ -76,22 +123,32 @@ function loopRunTask({
 
   floatyDebug(ele);
 
-  if (!ele) {
-    console.warn(`no ${name} task found`);
-    return;
-  }
+  let taskCount;
+  let delay;
+  let taskBtn;
 
-  const taskBtn = getBtn(ele);
-  const taskCount = getTaskCount(ele);
-  const delay = getTaskDelay(ele);
+  try {
+    ({ taskCount, delay, taskBtn } = loopCheck(name, lastResult, ele, getBtn));
+  } catch (e) {
+    console.warn(e);
+    toastLog(`⚠️警告: ${e.message}`);
 
-  if (!taskBtn) {
-    toastLog(`⚠️警告: ${name} 任务失败, 未找到任务按钮`);
-    return;
-  }
+    loopRunTask({
+      ele,
+      getEle,
+      name,
+      checkIsInTask,
+      getBtn,
+      runTask,
+      waitFinished,
+      checkBackToTask,
+      lastResult: {
+        ...lastResult,
+        retries: lastResult.retries + 1,
+        max: lastResult.max,
+      },
+    });
 
-  if (!taskCount) {
-    toastLog(`⚠️警告: ${name} 任务失败, 未找到任务数据`);
     return;
   }
 
@@ -99,22 +156,6 @@ function loopRunTask({
     console.info(`${name} 任务完成, ${JSON.stringify(taskCount)}`);
     return;
   }
-
-  if (lastResult.left === taskCount.left) {
-    if (lastResult.retries > lastResult.max) {
-      toastLog(`⚠️警告: ${name} 任务失败, 重试过多`);
-      return;
-    }
-  } else {
-    // eslint-disable-next-line no-param-reassign
-    lastResult.retries = 0;
-  }
-
-  console.info({
-    taskCount,
-    delay,
-    retries: lastResult.retries,
-  });
 
   runTask(taskBtn, delay, preMs, lastResult.retries * afterMs);
 
