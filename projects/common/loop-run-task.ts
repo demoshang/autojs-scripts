@@ -3,6 +3,7 @@ import { delayCheck } from './delay-check';
 import { floatyDebug } from './floaty-debug';
 import { getTaskCount, getTaskDelay } from './get-task-count';
 import { scrollPage } from './scroll';
+import { tl } from './toast';
 
 interface LastResult {
   total: number;
@@ -112,7 +113,7 @@ function loopRunTask({
   afterBack?: () => void;
 }) {
   if (lastResult.retries > lastResult.max) {
-    toastLog(`⚠️警告: ${name} 任务失败, 重试过多`);
+    tl(`⚠️警告: ${name} 任务失败, 重试过多`);
     return;
   }
 
@@ -131,7 +132,7 @@ function loopRunTask({
     ({ taskCount, delay, taskBtn } = loopCheck(name, lastResult, ele, getBtn));
   } catch (e) {
     console.warn(e);
-    toastLog(`⚠️警告: ${e.message}`);
+    tl(`⚠️警告: ${e.message}`);
 
     loopRunTask({
       ele,

@@ -2,6 +2,7 @@ import { delayCheck } from '../../../common/delay-check';
 import { killApp } from '../../../common/kill-app';
 import { openSuning, suningApplicationId } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
+import { tl } from '../../../common/toast';
 import { addAnimals, collectAnimal } from './animal';
 import { collectCoin } from './coin';
 import { goShop } from './go-shop';
@@ -24,27 +25,27 @@ function runWithRetry(retries = 3) {
 
       pressClose();
 
-      toastLog('收集宠物');
+      tl('收集宠物');
       collectAnimal();
 
       throwWhenNotInPackage();
 
-      toastLog('饲养宠物');
+      tl('饲养宠物');
       addAnimals();
 
       throwWhenNotInPackage();
 
-      toastLog('做任务');
+      tl('做任务');
       goShop();
 
       throwWhenNotInPackage();
 
-      toastLog('领取任务金币');
+      tl('领取任务金币');
       collectCoin();
 
       throwWhenNotInPackage();
 
-      toastLog('偷金币');
+      tl('偷金币');
       steal();
     },
     () => {

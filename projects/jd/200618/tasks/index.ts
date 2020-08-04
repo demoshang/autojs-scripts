@@ -9,23 +9,24 @@ import { loopRunTask } from '../../../common/loop-run-task';
 import { jdApplicationId, openJDMain } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { myScroll, scrollIn } from '../../../common/scroll';
+import { tl } from '../../../common/toast';
 import { getUiObject } from '../../../common/ui-object';
 
 function goToPage() {
-  toastLog('尝试进入 [叠蛋糕] 页面');
+  tl('尝试进入 [叠蛋糕] 页面');
 
   const cakeBtn = delayCheck(
     10000,
     1000,
     () => {
-      toastLog('搜索按钮 [叠蛋糕]');
+      tl('搜索按钮 [叠蛋糕]');
       console.info('currentPackage: ', currentPackage());
       return textContains('叠蛋糕')
         .findOnce()
         ?.parent();
     },
     () => {
-      toastLog('搜索按钮 [我的]');
+      tl('搜索按钮 [我的]');
       boundsClick(desc('我的').findOnce());
     }
   );
@@ -34,10 +35,10 @@ function goToPage() {
     throw new Error('[叠蛋糕] 页面未找到');
   }
 
-  toastLog('点击 [叠蛋糕]');
+  tl('点击 [叠蛋糕]');
   boundsClick(cakeBtn);
 
-  toastLog('等待进入 [叠蛋糕]');
+  tl('等待进入 [叠蛋糕]');
   sleep(3000);
 }
 
@@ -124,18 +125,18 @@ function closeTask() {
 }
 
 function signIn() {
-  toastLog('签到');
+  tl('签到');
   boundsClick(textContains('签到').findOnce());
 }
 
 function popup() {
-  toastLog('弹出框处理');
+  tl('弹出框处理');
   boundsClick(textContains('继续叠蛋糕').findOnce());
   boundsClick(textContains('立即签到').findOnce());
 }
 
 function loopCollectCoin() {
-  toastLog('金币采集');
+  tl('金币采集');
 
   if (checkIsInTask()) {
     closeTask();
@@ -191,11 +192,11 @@ function cleanCart() {
     10000,
     1000,
     () => {
-      toastLog('搜索按钮 [编辑]');
+      tl('搜索按钮 [编辑]');
       return textContains('编辑').findOnce();
     },
     () => {
-      toastLog('搜索按钮 [购物车]');
+      tl('搜索按钮 [购物车]');
       boundsClick(descContains('购物车').findOnce());
     }
   );
@@ -204,10 +205,10 @@ function cleanCart() {
     throw new Error('[购物车] 页面未找到');
   }
 
-  toastLog('点击 [编辑]');
+  tl('点击 [编辑]');
   boundsClick(editBtn);
 
-  toastLog('[编辑]');
+  tl('[编辑]');
   sleep(1000);
 
   for (let i = 0; i < 10; i += 1) {
@@ -245,12 +246,12 @@ function doCartTask(
   const taskCount = getTaskCount(ele);
 
   if (!taskBtn) {
-    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
+    tl(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
     return;
   }
 
   if (!taskCount) {
-    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
+    tl(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
     return;
   }
 
@@ -260,7 +261,7 @@ function doCartTask(
 
   if (lastResult && lastResult.left === taskCount.left) {
     if (lastResult.retries > lastResult.max) {
-      toastLog(`⚠️警告: ${taskName} 任务失败`);
+      tl(`⚠️警告: ${taskName} 任务失败`);
       return;
     }
   }
@@ -316,12 +317,12 @@ function doSeriesTask(
   const taskCount = getTaskCount(ele);
 
   if (!taskBtn) {
-    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
+    tl(`⚠️警告: ${taskName} 任务失败, 未找到任务按钮`);
     return;
   }
 
   if (!taskCount) {
-    toastLog(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
+    tl(`⚠️警告: ${taskName} 任务失败, 未找到任务数据`);
     return;
   }
 
@@ -331,7 +332,7 @@ function doSeriesTask(
 
   if (lastResult && lastResult.left === taskCount.left) {
     if (lastResult.retries > lastResult.max) {
-      toastLog(`⚠️警告: ${taskName} 任务失败`);
+      tl(`⚠️警告: ${taskName} 任务失败`);
       return;
     }
   }
@@ -397,7 +398,7 @@ function doTasks() {
 function runWithRetry(retries = 3) {
   retryRun(
     () => {
-      toastLog('打开京东中');
+      tl('打开京东中');
       const isOpenSuccess = openJDMain();
       if (!isOpenSuccess) {
         throw new Error('open jd failed');

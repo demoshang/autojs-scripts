@@ -1,5 +1,6 @@
 import { delayCheck } from '../../../common/delay-check';
 import { getCaptureImage } from '../../../common/image';
+import { tl } from '../../../common/toast';
 import { collectAnimal } from './animal';
 import { getPosition } from './find-click';
 import { pressClose } from './press-close';
@@ -76,7 +77,7 @@ function steal() {
   const stealRandomPosition = getStealRandomPosition();
 
   stealRandom(taskPosition, stealRandomPosition);
-  toastLog('done');
+  tl('done');
 }
 
 export { steal };

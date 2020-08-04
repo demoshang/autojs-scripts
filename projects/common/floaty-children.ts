@@ -1,4 +1,5 @@
 import { floatyDebug } from './floaty-debug';
+import { tl } from './toast';
 
 function collection2array(collection?: UiCollection) {
   if (!collection) {
@@ -56,14 +57,14 @@ function floatyChildren(
       const text = ele.text();
       if (text) {
         setClip(text);
-        toastLog(`复制text成功 ${text}`);
+        tl(`复制text成功 ${text}`);
         return;
       }
 
       const id = ele.id();
       if (id) {
         setClip(id);
-        toastLog(`复制id成功 ${id}`);
+        tl(`复制id成功 ${id}`);
       }
     },
     timeout,

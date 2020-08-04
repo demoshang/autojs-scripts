@@ -5,6 +5,7 @@ import { getCaptureImage } from '../../common/image';
 import { killApp } from '../../common/kill-app';
 import { muteRestoreMusic } from '../../common/mute';
 import { jdApplicationId, suningApplicationId } from '../../common/open-app';
+import { tl } from '../../common/toast';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
 import layout from './layout.xml';
@@ -94,7 +95,7 @@ let threadCache: threads.Thread | null = null;
 function run(type: string) {
   // 停止上次可能在运行的脚本
   if (threadCache) {
-    toastLog('停止上次残留中....');
+    tl('停止上次残留中....');
     threadCache.interrupt();
     threadCache = null;
   }
@@ -126,12 +127,12 @@ function run(type: string) {
       restoreMusic();
     });
   } catch (e) {
-    toastLog(e);
+    tl(e);
   }
 }
 
 events.on('exit', () => {
-  toastLog('结束运行');
+  tl('结束运行');
   threads.shutDownAll();
 });
 

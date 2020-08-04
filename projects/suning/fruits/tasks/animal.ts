@@ -1,4 +1,5 @@
 import { delayCheck } from '../../../common/delay-check';
+import { tl } from '../../../common/toast';
 import { findAndClick } from './find-click';
 import { pressClose } from './press-close';
 import { throwVerification } from './verification-check';
@@ -45,7 +46,7 @@ function addAnimals() {
   );
 
   if (!ele) {
-    toastLog('不需要养殖动物');
+    tl('不需要养殖动物');
     return;
   }
 

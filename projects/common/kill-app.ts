@@ -1,7 +1,8 @@
 import { delayCheck } from './delay-check';
+import { tl } from './toast';
 
 function killApp(applicationId: string, timeout = 10000, delay = 1000) {
-  toastLog(`停止应用${applicationId}中...`);
+  tl(`停止应用${applicationId}中...`);
 
   let ele = delayCheck(
     timeout,

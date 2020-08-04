@@ -39,6 +39,7 @@ interface AndroidClass {
   media: {
     AudioManager: AudioManager;
   };
+  [key: string]: any
 }
 
 declare class Intent {

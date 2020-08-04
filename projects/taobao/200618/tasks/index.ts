@@ -5,19 +5,20 @@ import { killApp } from '../../../common/kill-app';
 import { loopRunTask } from '../../../common/loop-run-task';
 import { openTaoBaoMain, taobaoId } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
+import { tl } from '../../../common/toast';
 
 function goToPage() {
-  toastLog('尝试进入 [瓜分10亿] 页面');
+  tl('尝试进入 [瓜分10亿] 页面');
 
   const pageBtn = delayCheck(
     10000,
     1000,
     () => {
-      toastLog('搜索按钮 [瓜分10亿]');
+      tl('搜索按钮 [瓜分10亿]');
       return textContains('瓜分10亿').findOnce();
     },
     () => {
-      toastLog('搜索按钮 [首页]');
+      tl('搜索按钮 [首页]');
       const ele =
         id('android:id/tabs').findOnce() ||
         id('com.taobao.taobao:id/iv_btn_background')
@@ -42,10 +43,10 @@ function goToPage() {
     throw new Error('[瓜分10亿] 页面未找到');
   }
 
-  toastLog('点击 [瓜分10亿]');
+  tl('点击 [瓜分10亿]');
   boundsClick(pageBtn);
 
-  toastLog('等待进入 [瓜分10亿]');
+  tl('等待进入 [瓜分10亿]');
   sleep(3000);
 }
 
@@ -77,7 +78,7 @@ function openTask() {
 }
 
 function signIn() {
-  toastLog('签到');
+  tl('签到');
   boundsClick(textStartsWith('签到').findOnce());
 }
 
@@ -128,7 +129,7 @@ function runWithRetry(retries = 3) {
       sleep(1000);
       back();
 
-      toastLog('打开淘宝中');
+      tl('打开淘宝中');
       const isOpenSuccess = openTaoBaoMain();
       if (!isOpenSuccess) {
         throw new Error('open taoBao failed');

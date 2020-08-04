@@ -6,6 +6,7 @@ import { killApp } from '../../../common/kill-app';
 import { openSuning, suningApplicationId } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { scrollIn, scrollOut, scrollPage } from '../../../common/scroll';
+import { tl } from '../../../common/toast';
 
 function runTask(position: { x: number; y: number }, delay = 10) {
   click(position.x, position.y);
@@ -81,7 +82,7 @@ function runWithRetry(retries = 3) {
       app.startActivity('settings');
       sleep(1000);
       back();
-      toastLog('打开苏宁中');
+      tl('打开苏宁中');
       openSuning('https://c.m.suning.com/snWhale.html#/', 5000);
 
       const isSuccess = delayCheck(15000, 1000, () => {

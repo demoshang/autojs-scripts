@@ -2,6 +2,7 @@ import { delayCheck } from '../../../common/delay-check';
 import { getTaskDelay } from '../../../common/get-task-count';
 import { checkInScreen } from '../../../common/in-screen';
 import { scrollIn } from '../../../common/scroll';
+import { tl } from '../../../common/toast';
 import { getUiObject } from '../../../common/ui-object';
 import { pressClose } from './press-close';
 
@@ -70,7 +71,7 @@ function runTask(
 }
 
 function goShop() {
-  toastLog('开始');
+  tl('开始');
 
   const isOpenSuccess = delayCheck(15000, 1000, isInTask);
   if (!isOpenSuccess) {
