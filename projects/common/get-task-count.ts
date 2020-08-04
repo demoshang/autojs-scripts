@@ -32,20 +32,20 @@ function getTaskCount(item?: string | UiObject): TaskCountResult | null {
   };
 }
 
-function getTaskDelay(item?: string | UiObject, taskName?: string | RegExp) {
+function getTaskDelay(item?: string | UiObject, taskName?: string | RegExp, defaultDelay = 1000) {
   let text = '';
   if (!item) {
     text = '';
   } else if (typeof item === 'string') {
     text = item;
   } else {
-    text = item?.findOne(textMatches(/.*\d+秒.*/))?.text() || '';
+    text = item?.findOne(textMatches(/.*\d+(秒|s).*/))?.text() || '';
   }
 
-  if (!/(\d+)秒/.test(text)) {
+  if (!/(\d+)(秒|s)/.test(text)) {
     console.warn(`没有时间限制 ${text}  ${taskName?.toString()}`);
 
-    return 1000;
+    return defaultDelay;
   }
 
   const seconds = parseInt(`${RegExp.$1}`, 10);

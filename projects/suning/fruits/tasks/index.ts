@@ -8,7 +8,6 @@ import { goShop } from './go-shop';
 import { throwWhenNotInPackage } from './is-in-package';
 import { pressClose } from './press-close';
 import { steal } from './steal';
-import { weed } from './weed';
 
 function runWithRetry(retries = 3) {
   retryRun(
@@ -37,11 +36,6 @@ function runWithRetry(retries = 3) {
 
       toastLog('做任务');
       goShop();
-
-      throwWhenNotInPackage();
-
-      toastLog('除草');
-      weed();
 
       throwWhenNotInPackage();
 

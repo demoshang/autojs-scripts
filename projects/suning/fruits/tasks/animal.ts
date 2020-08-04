@@ -1,6 +1,7 @@
 import { delayCheck } from '../../../common/delay-check';
 import { findAndClick } from './find-click';
 import { pressClose } from './press-close';
+import { throwVerification } from './verification-check';
 
 function collectAnimal() {
   const catchImage = images.read('./assets/match-template/catch.png');
@@ -12,9 +13,7 @@ function collectAnimal() {
     },
     undefined,
     () => {
-      if (textContains('请完成下方拼图验证').findOnce()) {
-        throw new Error('出现滑动验证, 无法处理');
-      }
+      throwVerification();
 
       sleep(1000);
     }

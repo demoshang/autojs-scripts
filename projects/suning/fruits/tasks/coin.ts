@@ -1,4 +1,5 @@
 import { findAndClick } from './find-click';
+import { throwVerification } from './verification-check';
 
 function collectCoin() {
   const coinImage = images.read('./assets/match-template/coin.png');
@@ -13,6 +14,7 @@ function collectCoin() {
     },
     undefined,
     () => {
+      throwVerification();
       sleep(3000);
     }
   );
