@@ -3,7 +3,7 @@ import { delayCheck } from '../../../common/delay-check';
 import { killApp } from '../../../common/kill-app';
 import { jdApplicationId, openJDMain } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
-import { myScroll } from '../../../common/scroll';
+import { myScroll, scrollIn } from '../../../common/scroll';
 import { closeTaskPanel } from './close-task-panel';
 
 function goToPage() {
@@ -125,7 +125,7 @@ function doTasks() {
   sleep(1000);
 
   // 浏览
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 8; i += 1) {
     goToTask();
 
     toastLog(`[浏览 ${i}]`);
@@ -134,9 +134,11 @@ function doTasks() {
       ?.parent()
       ?.parent();
 
-    const goEle = taskDetailPanel?.findOne(textContains('去逛逛'));
+    let goEle = taskDetailPanel?.findOne(textContains('去逛逛'));
 
     if (goEle) {
+      scrollIn(goEle);
+      goEle = taskDetailPanel?.findOne(textContains('去逛逛'));
       boundsClick(goEle);
       sleep(12000);
       back();
@@ -146,11 +148,6 @@ function doTasks() {
 
     toastLog('去领取');
     boundsClick(text('去领取').findOnce());
-
-    if (taskDetailPanel) {
-      myScroll(taskDetailPanel);
-      sleep(1000);
-    }
   }
 
   goToTask();
