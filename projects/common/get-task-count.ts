@@ -4,9 +4,9 @@ interface TaskCountResult {
   left: number;
 }
 
-function getTaskCount(ele?: UiObject): TaskCountResult | null;
+function getTaskCount(ele?: UiObject | null): TaskCountResult | null;
 function getTaskCount(text?: string): TaskCountResult | null;
-function getTaskCount(item?: string | UiObject): TaskCountResult | null {
+function getTaskCount(item?: string | UiObject | null): TaskCountResult | null {
   let text = '';
   if (!item) {
     text = '';

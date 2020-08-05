@@ -8,6 +8,7 @@ import { jdApplicationId, suningApplicationId } from '../../common/open-app';
 import { tl } from '../../common/toast';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
+import { runWithRetry as SNWhaleRun } from '../../suning/whale';
 import layout from './layout.xml';
 
 layout();
@@ -31,6 +32,10 @@ const btns = [
   {
     id: 'runSNBtn',
     type: 'sn',
+  },
+  {
+    id: 'runSNWhaleBtn',
+    type: 'snWhale',
   },
 ];
 
@@ -111,6 +116,9 @@ function run(type: string) {
         getCaptureImage();
         SNRun();
         killApp(suningApplicationId);
+      } else if (type === 'snWhale') {
+        SNWhaleRun();
+        killApp(suningApplicationId);
       } else if (type === 'all') {
         getCaptureImage();
 
@@ -118,6 +126,9 @@ function run(type: string) {
         killApp(jdApplicationId);
 
         SNRun();
+        killApp(suningApplicationId);
+
+        SNWhaleRun();
         killApp(suningApplicationId);
       } else {
         restoreMusic();

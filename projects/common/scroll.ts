@@ -1,4 +1,15 @@
 import { checkInScreen } from './in-screen';
+import { isUiObject } from './type-check';
+
+interface ScrollInOptions {
+  sleepMs?: number;
+  swipeDuration?: number;
+  step?: number;
+  max?: number;
+}
+
+type GetUiObject = () => UiObject | null | undefined;
+type ScrollResult = { x: number; y: number } | undefined | null;
 
 function scroll(ele?: UiObject | null, sleepMs = 0) {
   if (!ele) {
@@ -24,7 +35,7 @@ function scrollOut(ele?: UiObject | null, { sleepMs = 0, swipeDuration = 1000, o
   sleep(sleepMs);
 }
 
-function scrollIn(
+function scrollInWithStaticUiObject(
   ele?: UiObject | null,
   { sleepMs = 0, swipeDuration = 1000, step = device.height / 4, max = 5 } = {}
 ) {
@@ -41,7 +52,7 @@ function scrollIn(
   }
 
   for (let i = 0; i < max; i += 1) {
-    console.log(i, 'is in screen: ', checkInScreen({ x, y }), x, y);
+    console.log('scrollInWithStaticUiObject', i, 'is in screen: ', checkInScreen({ x, y }), x, y);
     if (checkInScreen({ x, y })) {
       break;
     }
@@ -53,6 +64,51 @@ function scrollIn(
   sleep(sleepMs);
 
   return { x, y };
+}
+
+function scrollInWithDynamicUiObject(fn: GetUiObject, options?: ScrollInOptions) {
+  const max = (options && options.max) || 5;
+
+  // 最终结果
+  let data;
+
+  for (let i = 0; i < max; i += 1) {
+    const ele = fn();
+
+    // 在屏幕内了
+    if (checkInScreen(ele)) {
+      break;
+    }
+
+    data = scrollInWithStaticUiObject(ele, { ...options, max: 1 });
+
+    // 滚动失败
+    if (!data) {
+      break;
+    }
+  }
+
+  const ele = fn();
+  return checkInScreen(ele) ? ele : undefined;
+}
+
+function scrollIn(fn: GetUiObject, options?: ScrollInOptions): UiObject | undefined;
+function scrollIn(ele?: UiObject | null, options?: ScrollInOptions): ScrollResult;
+function scrollIn(ele?: any, options?: ScrollInOptions): ScrollResult | UiObject {
+  let data;
+  if (typeof ele === 'function') {
+    data = scrollInWithDynamicUiObject(ele, options);
+  } else {
+    data = scrollInWithStaticUiObject(ele, options);
+  }
+
+  if (isUiObject(data)) {
+    return data;
+  }
+  if (checkInScreen(data)) {
+    return data;
+  }
+  return undefined;
 }
 
 function scrollPage(swipeDuration = 1000) {

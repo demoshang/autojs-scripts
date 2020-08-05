@@ -5,19 +5,24 @@ const showToast = (() => {
   let lastTimer: any;
 
   return (msg: string, duration = 3500) => {
-    ui.run(() => {
+    if (myToast) {
+      myToast.cancel();
+    }
+
+    if (lastTimer) {
+      clearTimeout(lastTimer);
+    }
+
+    lastTimer = setTimeout(() => {
       if (myToast) {
         myToast.cancel();
-        clearTimeout(lastTimer);
       }
+    }, duration);
 
+    ui.run(() => {
       const Toast = new android.widget.Toast(context);
       myToast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
       myToast.show();
-
-      lastTimer = setTimeout(() => {
-        myToast.cancel();
-      }, duration);
     });
   };
 })();
@@ -37,6 +42,7 @@ function tl(...msg: any[]) {
       }
     })
     .join('; ');
+
   showToast(text);
 }
 
