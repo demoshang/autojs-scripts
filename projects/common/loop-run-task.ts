@@ -1,7 +1,11 @@
 import { boundsClick } from './click-ele-bounds';
 import { delayCheck } from './delay-check';
 import { floatyDebug } from './floaty-debug';
-import { getTaskCount, getTaskDelay } from './get-task-count';
+import {
+  getTaskCount as defaultGetTaskCount,
+  getTaskDelay as defaultGetTaskDelay,
+  TaskCountResult,
+} from './get-task-count';
 import { scrollPage } from './scroll';
 import { tl } from './toast';
 
@@ -13,12 +17,28 @@ interface LastResult {
   max: number;
 }
 
-function loopCheck(
-  name: string | undefined | null,
-  lastResult: LastResult,
-  ele: UiObject | undefined | null,
-  getBtn: Function
-) {
+function loopCheck({
+  name,
+  lastResult,
+  ele,
+  getBtn,
+  getTaskCount = defaultGetTaskCount,
+  getTaskDelay = defaultGetTaskDelay,
+}: {
+  name: string | undefined | null;
+  lastResult: LastResult;
+  ele: UiObject | undefined | null;
+  getBtn: Function;
+  getTaskCount?: {
+    (ele?: UiObject | null | undefined): TaskCountResult | null;
+    (text?: string | undefined): TaskCountResult | null;
+  };
+  getTaskDelay?: (
+    item?: string | UiObject | undefined,
+    taskName?: string | RegExp | undefined,
+    defaultDelay?: number
+  ) => number;
+}) {
   if (!ele) {
     throw new Error(`no ${name} task found`);
   }
@@ -39,12 +59,6 @@ function loopCheck(
     // eslint-disable-next-line no-param-reassign
     lastResult.retries = 0;
   }
-
-  console.info({
-    taskCount,
-    delay,
-    retries: lastResult.retries,
-  });
 
   return {
     taskCount,
@@ -129,7 +143,7 @@ function loopRunTask({
   let taskBtn;
 
   try {
-    ({ taskCount, delay, taskBtn } = loopCheck(name, lastResult, ele, getBtn));
+    ({ taskCount, delay, taskBtn } = loopCheck({ name, lastResult, ele, getBtn }));
   } catch (e) {
     console.warn(e);
     tl(`⚠️警告: ${e.message}`);
@@ -189,4 +203,4 @@ function loopRunTask({
   });
 }
 
-export { loopRunTask };
+export { loopCheck, loopRunTask };

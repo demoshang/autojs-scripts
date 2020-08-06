@@ -1,6 +1,6 @@
 import { floatyDebug } from './floaty-debug';
-import { tl } from './toast';
 import { checkInScreen } from './in-screen';
+import { tl } from './toast';
 
 type ChildrenFilter =
   | ((ele: UiObject) => any)
@@ -30,24 +30,41 @@ function collection2array(collection?: UiCollection) {
   return arr;
 }
 
-function filterChildren(parent: UiObject, fn: (o: UiObject) => boolean) {
-  const parents: UiObject[] = [parent];
+function filterChildren(
+  parent: UiObject,
+  fn: (o: UiObject) => boolean,
+  maxDepth = Number.MAX_SAFE_INTEGER
+) {
+  const parents: { item: UiObject; depth: number }[] = [
+    {
+      item: parent,
+      depth: 0,
+    },
+  ];
   const list: UiObject[] = [];
 
   while (parents.length) {
-    const next = parents.pop();
+    const next = parents.shift();
 
     if (next === undefined) {
       break;
     }
 
-    list.push(next);
+    const { item, depth } = next;
+    list.push(item);
 
-    if (next.childCount() > 0) {
-      const children = collection2array(next.children());
-      parents.push(...children);
+    if (depth < maxDepth && item.childCount() > 0) {
+      const children = collection2array(item.children());
+      parents.push(
+        ...children.map((o) => {
+          return { item: o, depth: depth + 1 };
+        })
+      );
     }
   }
+
+  // 删除第一个 parent
+  list.shift();
 
   return list.filter(fn);
 }
@@ -121,44 +138,62 @@ function convertFilter(filterType: ChildrenFilter) {
   }
 }
 
-function floatyChildren(parent?: UiObject | null, filter?: ChildrenFilter, timeout = 1000) {
+function floatyCopy(ele: UiObject) {
+  const text = ele.text();
+  const id = ele.id();
+
+  if (text) {
+    setClip(text);
+    tl(`复制text成功 ${text}`);
+    return;
+  }
+
+  if (id) {
+    setClip(id);
+    tl(`复制id成功 ${id}`);
+  }
+}
+
+function floatyChildren(
+  parent?: UiObject | null,
+  {
+    filter,
+    concurrence = false,
+    timeout = 1000,
+    depth,
+  }: { concurrence?: boolean; filter?: ChildrenFilter; timeout?: number; depth?: number } = {}
+) {
   if (!parent) {
     tl('没有父元素...');
     return;
   }
 
-  const children = filterChildren(parent, convertFilter(filter));
+  const children = filterChildren(parent, convertFilter(filter), depth);
 
   floatyDebug(parent);
   tl('子元素有', children.length);
 
-  sleep(2000);
+  sleep(1000);
 
-  children.forEach((item, index) => {
-    tl(index, item.id() || item.text());
-
-    const text = item.text();
-    const id = item.id();
-
+  if (concurrence) {
     floatyDebug(
-      () => {
-        if (text) {
-          setClip(text);
-          tl(`复制text成功 ${text}`);
-          return;
-        }
-
-        if (id) {
-          setClip(id);
-          tl(`复制id成功 ${id}`);
-        }
+      (item, index) => {
+        floatyCopy(item);
+        tl(index, { id: item.id(), text: item.text() });
       },
       timeout,
-      item
+      ...children
     );
-
     sleep(timeout);
-  });
+  } else {
+    children.forEach((item, index) => {
+      tl(index, { id: item.id(), text: item.text() });
+
+      floatyDebug(floatyCopy, timeout, item);
+
+      sleep(timeout);
+    });
+  }
 
   tl('floatyChildren 结束');
 }

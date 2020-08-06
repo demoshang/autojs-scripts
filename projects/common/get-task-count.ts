@@ -1,4 +1,4 @@
-interface TaskCountResult {
+export interface TaskCountResult {
   total: number;
   completed: number;
   left: number;

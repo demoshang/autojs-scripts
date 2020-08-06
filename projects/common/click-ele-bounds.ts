@@ -1,20 +1,26 @@
 import { floatyDebug } from './floaty-debug';
-import { isRect, isRegExp } from './type-check';
+import { Radius } from './interface';
+import { isRadius, isRect, isRegExp } from './type-check';
 
-type Position = (bounds: Rect) => { x: number; y: number };
+type Position = (bounds: Rect | Radius) => { x: number; y: number };
 
 function boundsClick(rect?: Rect, delay?: number, position?: Position): boolean;
 function boundsClick(ele?: UiObject | null, delay?: number, position?: Position): boolean;
 function boundsClick(str?: string, delay?: number, position?: Position): boolean;
 function boundsClick(reg?: RegExp, delay?: number, position?: Position): boolean;
+function boundsClick(radius?: Radius, delay?: number, position?: Position): boolean;
 function boundsClick(
-  param?: Rect | UiObject | string | RegExp | null,
+  param?: Rect | Radius | UiObject | string | RegExp | null,
   delay = 2000,
-  position = (bounds: Rect) => {
-    return { x: bounds.centerX(), y: bounds.centerY() };
+  position = (bounds: Rect | Radius) => {
+    if (isRect(bounds)) {
+      return { x: bounds.centerX(), y: bounds.centerY() };
+    }
+
+    return bounds;
   }
 ): boolean {
-  let bounds: Rect | undefined;
+  let bounds: Rect | Radius | undefined;
 
   if (typeof param === 'undefined' || param === null) {
     return false;
@@ -29,6 +35,8 @@ function boundsClick(
       .findOnce()
       ?.bounds();
   } else if (isRect(param)) {
+    bounds = param;
+  } else if (isRadius(param)) {
     bounds = param;
   } else {
     bounds = param?.bounds();
