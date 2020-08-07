@@ -11,7 +11,7 @@ interface ScrollInOptions {
 type GetUiObject = () => UiObject | null | undefined;
 type ScrollResult = { x: number; y: number } | undefined | null;
 
-function scroll(ele?: UiObject | null, sleepMs = 0) {
+function scroll(ele?: UiObject | null, sleepMs = 0): void {
   if (!ele) {
     return;
   }
@@ -26,7 +26,7 @@ function scroll(ele?: UiObject | null, sleepMs = 0) {
 function scrollOut(
   ele?: UiObject | null,
   { sleepMs = 0, swipeDuration = 1000, offset = 10 } = {}
-) {
+): void {
   if (!ele) {
     return;
   }
@@ -133,7 +133,7 @@ function scrollIn(
   return undefined;
 }
 
-function scrollPage(swipeDuration = 1000) {
+function scrollPage(swipeDuration = 1000): void {
   const x = device.width / 2;
   swipe(x, device.height / 2, x, device.height / 4, swipeDuration);
 }

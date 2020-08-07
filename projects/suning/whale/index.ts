@@ -8,7 +8,7 @@ import { signIn } from './sign-in';
 import { doTask } from './task';
 import { openTaskPanel } from './task-panel';
 
-function runWithRetry(retries = 3) {
+function runWithRetry(retries = 3): void {
   retryRun(
     () => {
       openWhale();

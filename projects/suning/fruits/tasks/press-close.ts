@@ -1,6 +1,6 @@
 import { findAndClick } from './find-click';
 
-function pressClose() {
+function pressClose(): void {
   const image = images.read('./assets/match-template/close.png');
   findAndClick({
     image,

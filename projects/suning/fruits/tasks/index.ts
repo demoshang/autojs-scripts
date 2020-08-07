@@ -10,7 +10,7 @@ import { throwWhenNotInPackage } from './is-in-package';
 import { pressClose } from './press-close';
 import { steal } from './steal';
 
-function runWithRetry(retries = 3) {
+function runWithRetry(retries = 3): void {
   retryRun(
     () => {
       openSuning('https://c.m.suning.com/newFarm.html#/', 3000);

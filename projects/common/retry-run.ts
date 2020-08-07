@@ -5,7 +5,7 @@ function retryRun(
   killFn: Function,
   name = '',
   retryLimit = 3
-) {
+): boolean {
   for (let i = 0; i < retryLimit; i += 1) {
     try {
       runFn();

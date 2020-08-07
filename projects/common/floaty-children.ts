@@ -17,7 +17,7 @@ type ChildrenFilter =
   | null
   | true;
 
-function collection2array(collection?: UiCollection) {
+function collection2array(collection?: UiCollection): UiObject[] {
   if (!collection) {
     return [];
   }
@@ -167,7 +167,7 @@ function floatyChildren(
     timeout?: number;
     depth?: number;
   } = {}
-) {
+): void {
   if (!parent) {
     tl('没有父元素...');
     return;

@@ -1,7 +1,7 @@
 importClass(android.net.Uri);
 importClass(android.provider.Settings);
 
-function checkFloaty() {
+function checkFloaty(): boolean {
   try {
     return Settings.canDrawOverlays(context);
   } catch (e) {
@@ -9,7 +9,7 @@ function checkFloaty() {
   }
 }
 
-function openFloatySetting(applicationId = currentPackage()) {
+function openFloatySetting(applicationId = currentPackage()): void {
   const intent = new Intent(
     Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
     Uri.parse(`package:${applicationId}`)

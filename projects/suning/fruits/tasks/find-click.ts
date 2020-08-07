@@ -7,7 +7,11 @@ function getPosition(
   options: MatchTemplateOptions = {
     threshold: 0.5,
   }
-) {
+): {
+  x: number;
+  y: number;
+  similarity: number;
+}[] {
   const m1 = images.matchTemplate(screenImage, template, options);
 
   return m1.matches

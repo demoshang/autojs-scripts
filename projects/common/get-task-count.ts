@@ -36,7 +36,7 @@ function getTaskDelay(
   item?: string | UiObject,
   taskName?: string | RegExp,
   defaultDelay = 1000
-) {
+): number {
   let text = '';
   if (!item) {
     text = '';

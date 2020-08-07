@@ -1,7 +1,7 @@
 import { findAndClick } from './find-click';
 import { pressClose } from './press-close';
 
-function weed() {
+function weed(): void {
   const weedImage = images.read('./assets/match-template/weed.png');
 
   findAndClick(

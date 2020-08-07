@@ -1,12 +1,12 @@
-import { isUiObject, isRect } from './type-check';
 import { statusBarHeight } from './floaty-debug';
+import { isRect, isUiObject } from './type-check';
 
 interface Position {
   x: number;
   y: number;
 }
 
-function checkInScreen(item?: UiObject | Rect | Position | null) {
+function checkInScreen(item?: UiObject | Rect | Position | null): boolean {
   if (!item) {
     return false;
   }

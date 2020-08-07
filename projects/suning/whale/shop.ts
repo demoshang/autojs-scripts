@@ -39,7 +39,7 @@ function runTask(taskBtn: UiObject, delay = 10) {
   sleep(delay);
 }
 
-function doShop() {
+function doShop(): void {
   // 苏宁刷新不够及时, 导致会获取上一次的数据, 所以30个店铺需要60次
   for (let i = 0; i < 60; i += 1) {
     tl(`第 ${i} 次处理`);

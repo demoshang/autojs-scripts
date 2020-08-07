@@ -57,7 +57,7 @@ const doLive = (() => {
   };
 })();
 
-function doTask() {
+function doTask(): void {
   reopenTaskPanel();
 
   let taskNameList = collection2array(textMatches(/.*\(\d+\/\d+\).*/).find());

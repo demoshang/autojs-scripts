@@ -1,7 +1,7 @@
 import { findAndClick } from './find-click';
 import { throwVerification } from './verification-check';
 
-function collectCoin() {
+function collectCoin(): void {
   const coinImage = images.read('./assets/match-template/coin.png');
 
   findAndClick(

@@ -70,7 +70,7 @@ function runTask(
   sleep(1000);
 }
 
-function goShop() {
+function goShop(): void {
   tl('开始');
 
   const isOpenSuccess = delayCheck(15000, 1000, isInTask);

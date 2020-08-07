@@ -33,7 +33,10 @@ const getImageWithCache = (() => {
 function matchScreenMatches(
   img: Image,
   options: { threshold?: number; region?: any; max?: number }
-) {
+): {
+  point: Point;
+  similarity: number;
+}[] {
   const screenImage = getCaptureImage();
   const result = images.matchTemplate(screenImage, img, options);
 

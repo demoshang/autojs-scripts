@@ -1,6 +1,8 @@
 import { isRegExp, isUiObject } from './type-check';
 
-function getUiObject(taskPrefix?: string | RegExp | UiObject | null) {
+function getUiObject(
+  taskPrefix?: string | RegExp | UiObject | null
+): UiObject | null {
   let uiObj;
   if (typeof taskPrefix === 'string') {
     uiObj = textContains(taskPrefix).findOnce();

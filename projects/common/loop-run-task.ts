@@ -38,7 +38,11 @@ function loopCheck({
     taskName?: string | RegExp | undefined,
     defaultDelay?: number
   ) => number;
-}) {
+}): {
+  taskCount: TaskCountResult;
+  delay: number;
+  taskBtn: UiObject;
+} {
   if (!ele) {
     throw new Error(`no ${name} task found`);
   }
@@ -131,7 +135,7 @@ function loopRunTask({
   preMs?: number;
   afterMs?: number;
   afterBack?: () => void;
-}) {
+}): void {
   if (lastResult.retries > lastResult.max) {
     tl(`⚠️警告: ${name} 任务失败, 重试过多`);
     return;

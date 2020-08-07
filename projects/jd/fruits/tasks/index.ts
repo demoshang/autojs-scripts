@@ -139,7 +139,7 @@ function doTasks() {
   goToTask();
 }
 
-function runWithRetry(retries = 3) {
+function runWithRetry(retries = 3): void {
   retryRun(
     () => {
       tl('打开京东中');

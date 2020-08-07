@@ -1,16 +1,16 @@
 import { collection2array } from '../../common/floaty-children';
 
-function checkIsInTaskPanel() {
+function checkIsInTaskPanel(): boolean {
   return !!textContains('连续签到得鲸币').findOnce();
 }
 
-function throwIfNotInTask() {
+function throwIfNotInTask(): void {
   if (!checkIsInTaskPanel()) {
     throw new Error('任务面板打开失败');
   }
 }
 
-function openTaskPanel() {
+function openTaskPanel(): void {
   if (checkIsInTaskPanel()) {
     return;
   }
@@ -23,7 +23,7 @@ function openTaskPanel() {
   throwIfNotInTask();
 }
 
-function closeTaskPanel() {
+function closeTaskPanel(): void {
   if (checkIsInTaskPanel()) {
     textContains('去完成')
       .findOnce()
@@ -36,7 +36,7 @@ function closeTaskPanel() {
   }
 }
 
-function reopenTaskPanel() {
+function reopenTaskPanel(): void {
   closeTaskPanel();
   sleep(1000);
   openTaskPanel();

@@ -68,7 +68,7 @@ function stealRandom(
   }
 }
 
-function steal() {
+function steal(): void {
   const taskPosition = getTaskPosition();
 
   click(taskPosition.x, taskPosition.y);

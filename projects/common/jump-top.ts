@@ -1,4 +1,4 @@
-function jumpTop() {
+function jumpTop(): void {
   for (let i = 0; i < 10; i += 1) {
     swipe(
       device.width / 2,

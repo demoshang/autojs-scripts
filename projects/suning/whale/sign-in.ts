@@ -1,4 +1,4 @@
-function signIn() {
+function signIn(): void {
   textContains('立即签到').findOnce()?.click();
 }
 

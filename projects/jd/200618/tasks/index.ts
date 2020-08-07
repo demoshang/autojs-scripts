@@ -392,7 +392,7 @@ function doTasks() {
   doSeriesTask('成功浏览5个商品可得');
 }
 
-function runWithRetry(retries = 3) {
+function runWithRetry(retries = 3): void {
   retryRun(
     () => {
       tl('打开京东中');

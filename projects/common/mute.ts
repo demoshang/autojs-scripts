@@ -3,7 +3,7 @@ importClass(android.media.AudioManager);
 
 const audioManager = context.getSystemService(Context.AUDIO_SERVICE);
 
-function muteMusic() {
+function muteMusic(): void {
   audioManager.adjustStreamVolume(
     AudioManager.STREAM_MUSIC,
     AudioManager.ADJUST_MUTE,
@@ -11,7 +11,7 @@ function muteMusic() {
   );
 }
 
-function unMuteMusic() {
+function unMuteMusic(): void {
   audioManager.adjustStreamVolume(
     AudioManager.STREAM_MUSIC,
     AudioManager.ADJUST_UNMUTE,
@@ -19,7 +19,7 @@ function unMuteMusic() {
   );
 }
 
-function toggleMuteMusic() {
+function toggleMuteMusic(): void {
   if (audioManager.isStreamMute(AudioManager.STREAM_MUSIC)) {
     unMuteMusic();
   } else {

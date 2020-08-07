@@ -73,7 +73,7 @@ function collect() {
   }
 }
 
-function runWithRetry(retries = 3) {
+function runWithRetry(retries = 3): void {
   retryRun(
     () => {
       app.startActivity('settings');

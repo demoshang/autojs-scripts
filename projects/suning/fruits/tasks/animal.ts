@@ -4,7 +4,7 @@ import { findAndClick } from './find-click';
 import { pressClose } from './press-close';
 import { throwVerification } from './verification-check';
 
-function collectAnimal() {
+function collectAnimal(): void {
   const catchImage = images.read('./assets/match-template/catch.png');
 
   findAndClick(
@@ -23,7 +23,7 @@ function collectAnimal() {
   catchImage.recycle();
 }
 
-function addAnimals() {
+function addAnimals(): void {
   const addImage = images.read('./assets/match-template/add.png');
 
   const ele = delayCheck(

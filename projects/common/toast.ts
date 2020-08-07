@@ -27,7 +27,7 @@ const showToast = (() => {
   };
 })();
 
-function tl(...msg: any[]) {
+function tl(...msg: any[]): void {
   console.info(...msg);
 
   const text = msg

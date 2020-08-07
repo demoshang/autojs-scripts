@@ -1,6 +1,6 @@
 import { suningApplicationId } from '../../../common/open-app';
 
-function throwWhenNotInPackage() {
+function throwWhenNotInPackage(): boolean {
   return currentPackage() === suningApplicationId;
 }
 

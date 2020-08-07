@@ -14,7 +14,7 @@ function getTaskPanelCloseEle() {
   }
 }
 
-function closeTaskPanel() {
+function closeTaskPanel(): void {
   boundsClick(getTaskPanelCloseEle());
 }
 

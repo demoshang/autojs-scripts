@@ -14,7 +14,7 @@ enum Type {
 
 function detectType(obj: any): string;
 function detectType(obj: any, type: Type): boolean;
-function detectType(obj: any, type?: Type) {
+function detectType(obj: any, type?: Type): string | boolean {
   const name = {}.toString
     .call(obj)
     .split(/[\s\]]/)[1]
@@ -27,7 +27,7 @@ function detectType(obj: any, type?: Type) {
   return name;
 }
 
-function isNumber(obj: any) {
+function isNumber(obj: any): boolean {
   return detectType(obj, Type.number);
 }
 

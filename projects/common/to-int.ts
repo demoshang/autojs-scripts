@@ -1,4 +1,4 @@
-function toInt(v: string | number) {
+function toInt(v: string | number): number {
   return parseInt(`${v}`, 10);
 }
 

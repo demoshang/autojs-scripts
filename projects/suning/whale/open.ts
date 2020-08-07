@@ -2,7 +2,7 @@ import { delayCheck } from '../../common/delay-check';
 import { openSuning } from '../../common/open-app';
 import { tl } from '../../common/toast';
 
-function openWhale() {
+function openWhale(): void {
   app.startActivity('settings');
   sleep(1000);
   back();

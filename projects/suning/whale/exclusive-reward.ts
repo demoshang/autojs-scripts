@@ -5,7 +5,7 @@ function close() {
   boundsClick(position);
 }
 
-function doExclusive() {
+function doExclusive(): void {
   const obj = textContains('每天9点开启')
     .findOnce()
     ?.parent()

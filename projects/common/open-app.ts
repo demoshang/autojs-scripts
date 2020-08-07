@@ -4,7 +4,7 @@ const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';
 const taobaoId = 'com.taobao.taobao';
 
-function openPage(url: string, sleepTime = 0) {
+function openPage(url: string, sleepTime = 0): void {
   const i = app.intent({
     action: 'VIEW',
     data: url,
@@ -17,7 +17,7 @@ function openPage(url: string, sleepTime = 0) {
   }
 }
 
-function openSuning(page: string, sleepTime?: number) {
+function openSuning(page: string, sleepTime?: number): void {
   const url = `suning://m.suning.com/index?adTypeCode=1002&adId=${page}`;
   openPage(url, sleepTime);
 }
