@@ -30,7 +30,7 @@ function delayCheck<T>(
 
 function delayRun(
   delay: number,
-  runFn: () => boolean,
+  runFn: () => void,
   checkFn: () => boolean,
   retries = 3
 ): void {
