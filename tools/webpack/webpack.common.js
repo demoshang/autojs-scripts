@@ -27,14 +27,18 @@ module.exports = {
     extensions: ['.ts', '.xml'],
   },
   plugins: [
-    new CopyPlugin([
-      {
-        from: path.join(root, 'projects/**/*'),
-        to: path.join(root, 'dist/'),
-        context: 'projects/',
-        ignore: ['*.ts', '*.xml'],
-      },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.join(root, 'projects/**/*'),
+          to: path.join(root, 'dist/'),
+          context: 'projects/',
+          globOptions: {
+            ignore: ['*.ts', '*.xml'],
+          },
+        },
+      ],
+    }),
     new AutoJsUiPlugin(),
   ],
 };
