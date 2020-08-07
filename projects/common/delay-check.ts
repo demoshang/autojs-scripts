@@ -2,7 +2,7 @@ function delayCheck<T>(
   timeout: number,
   delay: number,
   checkFn: () => T,
-  runFn?: Function,
+  runFn?: () => void,
   checkFirst = true
 ): false | T {
   while (timeout > 0) {
@@ -30,7 +30,7 @@ function delayCheck<T>(
 
 function delayRun(
   delay: number,
-  runFn: Function,
+  runFn: () => boolean,
   checkFn: () => boolean,
   retries = 3
 ): void {

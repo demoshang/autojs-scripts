@@ -28,7 +28,7 @@ function loopCheck({
   name: string | undefined | null;
   lastResult: LastResult;
   ele: UiObject | undefined | null;
-  getBtn: Function;
+  getBtn: (ele: UiObject) => UiObject | null | undefined;
   getTaskCount?: {
     (ele?: UiObject | null | undefined): TaskCountResult | null;
     (text?: string | undefined): TaskCountResult | null;

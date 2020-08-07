@@ -1,8 +1,8 @@
 import { tl } from './toast';
 
 function retryRun(
-  runFn: Function,
-  killFn: Function,
+  runFn: () => void,
+  killFn: () => void,
   name = '',
   retryLimit = 3
 ): boolean {

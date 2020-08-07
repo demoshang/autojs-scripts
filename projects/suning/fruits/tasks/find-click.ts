@@ -39,17 +39,17 @@ type CollectParams =
 function findAndClick(
   config: { image: Image; options: MatchTemplateOptions },
   lastPositionsLen?: number,
-  afterRun?: Function
+  afterRun?: () => void
 ): void;
 function findAndClick(
   positionFn: (screenImage: Image) => { x: number; y: number }[],
   lastPositionsLen?: number,
-  afterRun?: Function
+  afterRun?: () => void
 ): void;
 function findAndClick(
   fnOrParams: CollectParams,
   lastPositionsLen = 0,
-  afterRun?: Function
+  afterRun?: () => void
 ): void {
   const screenImage = getCaptureImage();
 
