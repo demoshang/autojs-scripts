@@ -1,11 +1,19 @@
 import xml from './floaty-debug.xml';
 import { Bounds, DebugPosition, Radius, RectWithWH } from './interface';
 import { toInt } from './to-int';
-import { isBounds, isRadius, isRect, isRectWithWH, isUiObject } from './type-check';
+import {
+  isBounds,
+  isRadius,
+  isRect,
+  isRectWithWH,
+  isUiObject,
+} from './type-check';
 
 const { density } = context.getResources().getDisplayMetrics();
 const statusBarHeight = (() => {
-  const id = context.getResources().getIdentifier('status_bar_height', 'dimen', 'android');
+  const id = context
+    .getResources()
+    .getIdentifier('status_bar_height', 'dimen', 'android');
   if (id > 0) {
     return context.getResources().getDimensionPixelSize(id);
   }

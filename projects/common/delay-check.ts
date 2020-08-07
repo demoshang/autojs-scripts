@@ -28,7 +28,12 @@ function delayCheck<T>(
   return false;
 }
 
-function delayRun(delay: number, runFn: Function, checkFn: () => boolean, retries = 3) {
+function delayRun(
+  delay: number,
+  runFn: Function,
+  checkFn: () => boolean,
+  retries = 3
+) {
   let left = retries;
   while (left > 0) {
     if (!checkFn()) {

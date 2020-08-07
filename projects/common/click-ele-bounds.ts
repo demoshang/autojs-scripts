@@ -5,10 +5,26 @@ import { isRadius, isRect, isRegExp } from './type-check';
 type Position = (bounds: Rect | Radius) => { x: number; y: number };
 
 function boundsClick(rect?: Rect, delay?: number, position?: Position): boolean;
-function boundsClick(ele?: UiObject | null, delay?: number, position?: Position): boolean;
-function boundsClick(str?: string, delay?: number, position?: Position): boolean;
-function boundsClick(reg?: RegExp, delay?: number, position?: Position): boolean;
-function boundsClick(radius?: Radius, delay?: number, position?: Position): boolean;
+function boundsClick(
+  ele?: UiObject | null,
+  delay?: number,
+  position?: Position
+): boolean;
+function boundsClick(
+  str?: string,
+  delay?: number,
+  position?: Position
+): boolean;
+function boundsClick(
+  reg?: RegExp,
+  delay?: number,
+  position?: Position
+): boolean;
+function boundsClick(
+  radius?: Radius,
+  delay?: number,
+  position?: Position
+): boolean;
 function boundsClick(
   param?: Rect | Radius | UiObject | string | RegExp | null,
   delay = 2000,
@@ -27,13 +43,9 @@ function boundsClick(
   }
 
   if (typeof param === 'string') {
-    bounds = textContains(param)
-      .findOnce()
-      ?.bounds();
+    bounds = textContains(param).findOnce()?.bounds();
   } else if (isRegExp(param)) {
-    bounds = textMatches(param)
-      .findOnce()
-      ?.bounds();
+    bounds = textMatches(param).findOnce()?.bounds();
   } else if (isRect(param)) {
     bounds = param;
   } else if (isRadius(param)) {

@@ -161,7 +161,12 @@ function floatyChildren(
     concurrence = false,
     timeout = 1000,
     depth,
-  }: { concurrence?: boolean; filter?: ChildrenFilter; timeout?: number; depth?: number } = {}
+  }: {
+    concurrence?: boolean;
+    filter?: ChildrenFilter;
+    timeout?: number;
+    depth?: number;
+  } = {}
 ) {
   if (!parent) {
     tl('没有父元素...');

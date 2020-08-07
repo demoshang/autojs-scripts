@@ -42,7 +42,11 @@ function findAndClick(
   lastPositionsLen?: number,
   afterRun?: Function
 ): void;
-function findAndClick(fnOrParams: CollectParams, lastPositionsLen = 0, afterRun?: Function): void {
+function findAndClick(
+  fnOrParams: CollectParams,
+  lastPositionsLen = 0,
+  afterRun?: Function
+): void {
   const screenImage = getCaptureImage();
 
   let positions;

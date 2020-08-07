@@ -21,9 +21,7 @@ function goToPage() {
     () => {
       tl('搜索按钮 [叠蛋糕]');
       console.info('currentPackage: ', currentPackage());
-      return textContains('叠蛋糕')
-        .findOnce()
-        ?.parent();
+      return textContains('叠蛋糕').findOnce()?.parent();
     },
     () => {
       tl('搜索按钮 [我的]');
@@ -76,9 +74,7 @@ function collectCoin() {
 function toFinishTask(taskName: string | RegExp) {
   loopRunTask({
     getEle: () => {
-      return getUiObject(taskName)
-        ?.parent()
-        ?.parent();
+      return getUiObject(taskName)?.parent()?.parent();
     },
     name: taskName.toString(),
     checkIsInTask,
@@ -87,7 +83,10 @@ function toFinishTask(taskName: string | RegExp) {
     },
     waitFinished: () => {
       delayCheck(8000, 500, () => {
-        return !!(descMatches(/.*恭喜完成.*/).findOnce() || textMatches(/.*恭喜完成.*/).findOnce());
+        return !!(
+          descMatches(/.*恭喜完成.*/).findOnce() ||
+          textMatches(/.*恭喜完成.*/).findOnce()
+        );
       });
     },
     afterMs: 3000,
@@ -116,7 +115,11 @@ function openTask() {
 
 function closeTask() {
   if (checkIsInTask()) {
-    boundsClick(textContains('x6YonE079h84lBpxnX4CVJaqei7TKx8AAAAASUVORK5CYII=').findOnce());
+    boundsClick(
+      textContains(
+        'x6YonE079h84lBpxnX4CVJaqei7TKx8AAAAASUVORK5CYII='
+      ).findOnce()
+    );
   }
 
   if (checkIsInTask() || !checkIsInActivity()) {
@@ -178,9 +181,7 @@ function addToCart() {
 function cleanCart() {
   if (
     currentActivity() !== 'com.jingdong.app.mall.MainFrameActivity' ||
-    !className('android.view.View')
-      .descContains('购物车')
-      .findOnce()
+    !className('android.view.View').descContains('购物车').findOnce()
   ) {
     killApp(jdApplicationId);
     if (!openJDMain()) {
@@ -234,9 +235,7 @@ function doCartTask(
     max: number;
   }
 ) {
-  const ele = getUiObject(taskName)
-    ?.parent()
-    .parent();
+  const ele = getUiObject(taskName)?.parent().parent();
 
   if (!ele) {
     return;
@@ -305,9 +304,7 @@ function doSeriesTask(
     max: number;
   }
 ) {
-  const ele = getUiObject(taskName)
-    ?.parent()
-    .parent();
+  const ele = getUiObject(taskName)?.parent().parent();
 
   if (!ele) {
     return;

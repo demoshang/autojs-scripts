@@ -16,9 +16,7 @@ function goToPage() {
     () => {
       tl('搜索按钮 [东东农场]');
       console.info('currentPackage: ', currentPackage());
-      return textContains('东东农场')
-        .findOnce()
-        ?.parent();
+      return textContains('东东农场').findOnce()?.parent();
     },
     () => {
       tl('搜索按钮 [我的]');
@@ -85,10 +83,7 @@ function doTasks() {
   tl('[每日首次浇水]');
   // 每日首次浇水
   boundsClick(
-    textContains('每日首次浇水')
-      .findOnce()
-      ?.parent()
-      .findOne(text('去完成'))
+    textContains('每日首次浇水').findOnce()?.parent().findOne(text('去完成'))
   );
 
   goToTask();
@@ -96,10 +91,7 @@ function doTasks() {
   tl('领取 [每日首次浇水]');
   // 领取 每日首次浇水
   boundsClick(
-    textContains('每日首次浇水')
-      .findOnce()
-      ?.parent()
-      .findOne(text('领取'))
+    textContains('每日首次浇水').findOnce()?.parent().findOne(text('领取'))
   );
 
   goToTask();
@@ -107,10 +99,7 @@ function doTasks() {
   tl('[定时领水]');
   // 定时领水
   boundsClick(
-    textContains('定时领水')
-      .findOnce()
-      ?.parent()
-      .findOne(text('去领取'))
+    textContains('定时领水').findOnce()?.parent().findOne(text('去领取'))
   );
 
   // 弹出框处理
@@ -118,11 +107,7 @@ function doTasks() {
 
   tl('[移动下位置]');
   // 移动下位置
-  myScroll(
-    textContains('收集水滴雨')
-      .findOnce()
-      ?.parent()
-  );
+  myScroll(textContains('收集水滴雨').findOnce()?.parent());
   sleep(1000);
 
   // 浏览

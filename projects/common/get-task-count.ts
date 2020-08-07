@@ -32,7 +32,11 @@ function getTaskCount(item?: string | UiObject | null): TaskCountResult | null {
   };
 }
 
-function getTaskDelay(item?: string | UiObject, taskName?: string | RegExp, defaultDelay = 1000) {
+function getTaskDelay(
+  item?: string | UiObject,
+  taskName?: string | RegExp,
+  defaultDelay = 1000
+) {
   let text = '';
   if (!item) {
     text = '';

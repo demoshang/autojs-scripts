@@ -75,4 +75,13 @@ function isRadius(obj: any): obj is Radius {
   return false;
 }
 
-export { detectType, isNumber, isRegExp, isRect, isUiObject, isBounds, isRectWithWH, isRadius };
+export {
+  detectType,
+  isNumber,
+  isRegExp,
+  isRect,
+  isUiObject,
+  isBounds,
+  isRectWithWH,
+  isRadius,
+};

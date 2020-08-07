@@ -1,6 +1,11 @@
 import { tl } from './toast';
 
-function retryRun(runFn: Function, killFn: Function, name = '', retryLimit = 3) {
+function retryRun(
+  runFn: Function,
+  killFn: Function,
+  name = '',
+  retryLimit = 3
+) {
   for (let i = 0; i < retryLimit; i += 1) {
     try {
       runFn();

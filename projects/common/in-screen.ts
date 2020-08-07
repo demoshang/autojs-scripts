@@ -35,7 +35,10 @@ function checkInScreen(item?: UiObject | Rect | Position | null) {
   });
 
   return (
-    y + statusBarHeight < device.height && y - statusBarHeight > 0 && x > 0 && x < device.width
+    y + statusBarHeight < device.height &&
+    y - statusBarHeight > 0 &&
+    x > 0 &&
+    x < device.width
   );
 }
 

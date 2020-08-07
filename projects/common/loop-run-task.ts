@@ -85,7 +85,8 @@ function loopRunTask({
   waitFinished = () => {
     delayCheck(5000, 1000, () => {
       return !!(
-        descMatches(/.*任务.*完成.*/).findOnce() || textMatches(/.*任务.*完成.*/).findOnce()
+        descMatches(/.*任务.*完成.*/).findOnce() ||
+        textMatches(/.*任务.*完成.*/).findOnce()
       );
     });
   },
@@ -118,7 +119,12 @@ function loopRunTask({
   checkIsInTask: () => boolean;
   name?: string;
   getBtn?: (o: UiObject) => UiObject | undefined | null;
-  runTask?: (taskBtn: UiObject, delay: number, perMs: number, afterMs: number) => void;
+  runTask?: (
+    taskBtn: UiObject,
+    delay: number,
+    perMs: number,
+    afterMs: number
+  ) => void;
   waitFinished?: () => void;
   checkBackToTask?: (checkIsInTask: () => boolean) => boolean;
   lastResult?: LastResult;
@@ -143,7 +149,12 @@ function loopRunTask({
   let taskBtn;
 
   try {
-    ({ taskCount, delay, taskBtn } = loopCheck({ name, lastResult, ele, getBtn }));
+    ({ taskCount, delay, taskBtn } = loopCheck({
+      name,
+      lastResult,
+      ele,
+      getBtn,
+    }));
   } catch (e) {
     console.warn(e);
     tl(`⚠️警告: ${e.message}`);

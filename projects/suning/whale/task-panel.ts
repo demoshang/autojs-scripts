@@ -15,10 +15,7 @@ function openTaskPanel() {
     return;
   }
 
-  const parent = textContains('每天9点开启')
-    .findOnce()
-    ?.parent()
-    .parent();
+  const parent = textContains('每天9点开启').findOnce()?.parent().parent();
 
   collection2array(parent?.children())[7]?.click();
 
@@ -45,4 +42,10 @@ function reopenTaskPanel() {
   openTaskPanel();
 }
 
-export { openTaskPanel, closeTaskPanel, reopenTaskPanel, checkIsInTaskPanel, throwIfNotInTask };
+export {
+  openTaskPanel,
+  closeTaskPanel,
+  reopenTaskPanel,
+  checkIsInTaskPanel,
+  throwIfNotInTask,
+};

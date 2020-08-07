@@ -31,9 +31,11 @@ const doLive = (() => {
 
     const last = collection2array(idContains('tv_bottom_title').find()).pop();
     const data = scrollIn(() => {
-      return collection2array(idContains('tv_bottom_title').find()).find((ele) => {
-        return ele.text() === last?.text();
-      });
+      return collection2array(idContains('tv_bottom_title').find()).find(
+        (ele) => {
+          return ele.text() === last?.text();
+        }
+      );
     });
 
     tl('live for ', last?.text());
@@ -59,7 +61,9 @@ function doTask() {
   reopenTaskPanel();
 
   let taskNameList = collection2array(textMatches(/.*\(\d+\/\d+\).*/).find());
-  const taskDetailList = collection2array(textMatches(/.*获得\d+鲸币.*/).find());
+  const taskDetailList = collection2array(
+    textMatches(/.*获得\d+鲸币.*/).find()
+  );
 
   let lastResult = getLastResult();
 
@@ -145,7 +149,8 @@ function doTask() {
       lastResult = {
         ...lastResult,
         ...taskCount,
-        retries: taskCount.left === lastResult.left ? lastResult.retries + 1 : 0,
+        retries:
+          taskCount.left === lastResult.left ? lastResult.retries + 1 : 0,
       };
     }
   }

@@ -23,14 +23,11 @@ function waitFinished() {
 
 function doTasks() {
   for (let i = 0; i < 30; i += 1) {
-    const taskBtnArr = collection2array(textContains('+50').find()).filter((ele) => {
-      return (
-        ele
-          .parent()
-          .parent()
-          .text() === ele.text()
-      );
-    });
+    const taskBtnArr = collection2array(textContains('+50').find()).filter(
+      (ele) => {
+        return ele.parent().parent().text() === ele.text();
+      }
+    );
 
     const taskBtn = taskBtnArr.shift();
     const position = scrollIn(taskBtn, { max: 10 });
@@ -108,7 +105,13 @@ function runWithRetry(retries = 3) {
       floatyDebug(ele);
 
       for (let i = 0; i < 10; i += 1) {
-        swipe(device.width / 2, device.height / 4, device.width / 2, (device.height * 3) / 4, 100);
+        swipe(
+          device.width / 2,
+          device.height / 4,
+          device.width / 2,
+          (device.height * 3) / 4,
+          100
+        );
       }
 
       sleep(1000);

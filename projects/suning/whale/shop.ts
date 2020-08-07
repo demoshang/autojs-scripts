@@ -68,7 +68,10 @@ function doShop() {
 
     runTask(taskBtn, 0);
 
-    if (textContains('今日任务已完成').findOnce() || textContains('今日任务完成').findOnce()) {
+    if (
+      textContains('今日任务已完成').findOnce() ||
+      textContains('今日任务完成').findOnce()
+    ) {
       break;
     }
     waitFinished(12000);

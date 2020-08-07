@@ -26,9 +26,7 @@ function goToPage() {
           ?.parent()
           .parent()
           .parent() ||
-        descContains('首页')
-          .findOnce()
-          ?.parent();
+        descContains('首页').findOnce()?.parent();
 
       if (!ele) {
         return;
@@ -98,28 +96,32 @@ function doTasks() {
 
   signIn();
 
-  collection2array(textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find()).forEach((ele, index) => {
-    const parent = ele.parent();
+  collection2array(textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find()).forEach(
+    (ele, index) => {
+      const parent = ele.parent();
 
-    if (parent.findOne(textMatches(/去(完成|浏览)/))) {
-      loopRunTask({
-        ele: parent,
-        getEle: () => {
-          const list = collection2array(textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find());
-          const item = list[index];
-          return item.parent();
-        },
-        name: ele.text(),
-        checkIsInTask,
-        getBtn: (o) => {
-          return o.findOne(textMatches(/去(完成|浏览)/));
-        },
-        afterBack: () => {
-          sleep(1000);
-        },
-      });
+      if (parent.findOne(textMatches(/去(完成|浏览)/))) {
+        loopRunTask({
+          ele: parent,
+          getEle: () => {
+            const list = collection2array(
+              textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find()
+            );
+            const item = list[index];
+            return item.parent();
+          },
+          name: ele.text(),
+          checkIsInTask,
+          getBtn: (o) => {
+            return o.findOne(textMatches(/去(完成|浏览)/));
+          },
+          afterBack: () => {
+            sleep(1000);
+          },
+        });
+      }
     }
-  });
+  );
 }
 
 function runWithRetry(retries = 3) {

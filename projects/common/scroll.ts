@@ -23,7 +23,10 @@ function scroll(ele?: UiObject | null, sleepMs = 0) {
   sleep(sleepMs);
 }
 
-function scrollOut(ele?: UiObject | null, { sleepMs = 0, swipeDuration = 1000, offset = 10 } = {}) {
+function scrollOut(
+  ele?: UiObject | null,
+  { sleepMs = 0, swipeDuration = 1000, offset = 10 } = {}
+) {
   if (!ele) {
     return;
   }
@@ -52,7 +55,14 @@ function scrollInWithStaticUiObject(
   }
 
   for (let i = 0; i < max; i += 1) {
-    console.log('scrollInWithStaticUiObject', i, 'is in screen: ', checkInScreen({ x, y }), x, y);
+    console.log(
+      'scrollInWithStaticUiObject',
+      i,
+      'is in screen: ',
+      checkInScreen({ x, y }),
+      x,
+      y
+    );
     if (checkInScreen({ x, y })) {
       break;
     }
@@ -66,7 +76,10 @@ function scrollInWithStaticUiObject(
   return { x, y };
 }
 
-function scrollInWithDynamicUiObject(fn: GetUiObject, options?: ScrollInOptions) {
+function scrollInWithDynamicUiObject(
+  fn: GetUiObject,
+  options?: ScrollInOptions
+) {
   const max = (options && options.max) || 5;
 
   // 最终结果
@@ -92,9 +105,18 @@ function scrollInWithDynamicUiObject(fn: GetUiObject, options?: ScrollInOptions)
   return checkInScreen(ele) ? ele : undefined;
 }
 
-function scrollIn(fn: GetUiObject, options?: ScrollInOptions): UiObject | undefined;
-function scrollIn(ele?: UiObject | null, options?: ScrollInOptions): ScrollResult;
-function scrollIn(ele?: any, options?: ScrollInOptions): ScrollResult | UiObject {
+function scrollIn(
+  fn: GetUiObject,
+  options?: ScrollInOptions
+): UiObject | undefined;
+function scrollIn(
+  ele?: UiObject | null,
+  options?: ScrollInOptions
+): ScrollResult;
+function scrollIn(
+  ele?: any,
+  options?: ScrollInOptions
+): ScrollResult | UiObject {
   let data;
   if (typeof ele === 'function') {
     data = scrollInWithDynamicUiObject(ele, options);
