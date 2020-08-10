@@ -8,7 +8,10 @@ import { jdApplicationId, suningApplicationId } from '../../common/open-app';
 import { tl } from '../../common/toast';
 import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
 import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
-import { runWithRetry as SNWhaleRun } from '../../suning/whale';
+import {
+  loopCollect as SNLoopCollect,
+  runWithRetry as SNWhaleRun,
+} from '../../suning/whale';
 import layout from './layout.xml';
 
 layout();
@@ -36,6 +39,10 @@ const btns = [
   {
     id: 'runSNWhaleBtn',
     type: 'snWhale',
+  },
+  {
+    id: 'runSNWhaleCollect',
+    type: 'snWhaleCollect',
   },
 ];
 
@@ -119,6 +126,8 @@ function run(type: string) {
       } else if (type === 'snWhale') {
         SNWhaleRun();
         killApp(suningApplicationId);
+      } else if (type === 'snWhaleCollect') {
+        SNLoopCollect();
       } else if (type === 'all') {
         getCaptureImage();
 

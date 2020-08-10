@@ -1,6 +1,7 @@
 import xml from './floaty-debug.xml';
 import { Bounds, DebugPosition, Radius, RectWithWH } from './interface';
 import { toInt } from './to-int';
+import { tl } from './toast';
 import {
   isBounds,
   isRadius,
@@ -187,10 +188,11 @@ function floatyDebug(
 
       return hidden;
     })
-    .map((item) => {
+    .map((item, index) => {
       return {
         ...hidden,
         ...item,
+        index,
       };
     });
 
@@ -212,17 +214,25 @@ function floatyDebug(
   }
 
   ui.run(() => {
-    xmlParams.forEach(({ x, y }, i) => {
-      const ele = floatyWindow[`frame${i}`];
-      ele.x = x;
+    xmlParams.forEach(({ x, y, width, height, index }) => {
+      const window = floatyWindow[`frame${index}`];
+      window.x = x;
       // 悬浮窗和顶部的距离(状态栏)
-      ele.y = y - statusBarHeight;
+      window.y = y - statusBarHeight;
 
-      ele.click(() => {
+      window.click(() => {
         if (clickCallback) {
-          clickCallback(args[i], i);
+          clickCallback(args[index], index);
         }
       });
+
+      const text = floatyWindow[`text${index}`];
+      if (text) {
+        text.setText(`${index}`);
+        tl({ x, y });
+        text.x = width;
+        text.y = height / 2;
+      }
     });
   });
 

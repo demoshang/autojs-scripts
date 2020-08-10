@@ -17,8 +17,11 @@ function doExclusive(): void {
 
   obj?.click();
 
-  // TODO: 点击领取
+  sleep(1000);
 
+  boundsClick('开心收下');
+
+  // TODO: 点击领取
   close();
 }
 
