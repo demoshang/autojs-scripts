@@ -19,7 +19,5 @@
 
   <button id="runJDBtn" style="Widget.AppCompat.Button.Colored" text="启动[京东]脚本" visibility="gone" />
   <button id="runSNBtn" style="Widget.AppCompat.Button.Colored" text="启动[苏宁]脚本" visibility="gone" />
-  <button id="runSNWhaleBtn" style="Widget.AppCompat.Button.Colored" text="启动[苏宁鲸鱼]脚本" visibility="gone" />
-  <button id="runSNWhaleCollect" style="Widget.AppCompat.Button.Colored" text="苏宁鲸鱼死循环" visibility="gone" />
   <button id="runALLBtn" style="Widget.AppCompat.Button.Colored" text="启动所有脚本" visibility="gone" />
 </vertical>

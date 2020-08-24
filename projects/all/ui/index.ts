@@ -36,14 +36,6 @@ const btns = [
     id: 'runSNBtn',
     type: 'sn',
   },
-  {
-    id: 'runSNWhaleBtn',
-    type: 'snWhale',
-  },
-  {
-    id: 'runSNWhaleCollect',
-    type: 'snWhaleCollect',
-  },
 ];
 
 function renderAccessibility(type: boolean) {
@@ -135,9 +127,6 @@ function run(type: string) {
         killApp(jdApplicationId);
 
         SNRun();
-        killApp(suningApplicationId);
-
-        SNWhaleRun();
         killApp(suningApplicationId);
       } else {
         restoreMusic();
