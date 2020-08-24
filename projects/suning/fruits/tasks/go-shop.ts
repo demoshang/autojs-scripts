@@ -78,7 +78,6 @@ function goShop(): void {
     throw new Error('open suning page failed');
   }
 
-  runTask(/.*(店铺|店)$/);
   runTask('视频');
   runTask('会场');
   runTask('逛苏宁金融频道');
