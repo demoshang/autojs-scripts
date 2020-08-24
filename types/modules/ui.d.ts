@@ -41,7 +41,7 @@
 
 // declare const ui: UI;
 
-type View = any;
+// type View = any;
 
 interface UILike {
     toString(): string;

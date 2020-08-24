@@ -8,6 +8,7 @@ module.exports = {
     Intent: false,
     Context: false,
     AudioManager: false,
+    View: false,
 
     // autojs 自带的
     auto: false,

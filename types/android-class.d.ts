@@ -25,6 +25,11 @@ declare class Context {
   getSystemService(v: string): AudioManager;
 }
 
+declare class View {
+  static VISIBLE: string;
+  static GONE: string;
+}
+
 interface AndroidClass {
   net: {
     Uri: Uri;

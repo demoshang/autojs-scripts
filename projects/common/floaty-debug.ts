@@ -1,7 +1,6 @@
 import xml from './floaty-debug.xml';
 import { Bounds, DebugPosition, Radius, RectWithWH } from './interface';
 import { toInt } from './to-int';
-import { tl } from './toast';
 import {
   isBounds,
   isRadius,
@@ -9,6 +8,8 @@ import {
   isRectWithWH,
   isUiObject,
 } from './type-check';
+
+importClass(android.view.View);
 
 const { density } = context.getResources().getDisplayMetrics();
 const statusBarHeight = (() => {
@@ -112,13 +113,6 @@ function floatyDebug(
   if (typeof arg1 === 'undefined') {
     return;
   }
-  if (typeof arg1 === 'number') {
-    timeout = arg1;
-  } else if (typeof arg1 === 'function') {
-    clickCallback = arg1;
-  } else {
-    args.unshift(arg1);
-  }
 
   if (typeof arg2 === 'undefined') {
     // do nothing
@@ -126,6 +120,14 @@ function floatyDebug(
     timeout = arg2;
   } else {
     args.unshift(arg2);
+  }
+
+  if (typeof arg1 === 'number') {
+    timeout = arg1;
+  } else if (typeof arg1 === 'function') {
+    clickCallback = arg1;
+  } else {
+    args.unshift(arg1);
   }
 
   if (!args.length) {
@@ -163,7 +165,7 @@ function floatyDebug(
   const xmlParams = args
     .map((item) => {
       if (!item) {
-        return hidden;
+        return { ...hidden, visibility: View.GONE };
       }
 
       if (isUiObject(item)) {
@@ -186,10 +188,11 @@ function floatyDebug(
         return resolveRadius(item);
       }
 
-      return hidden;
+      return { ...hidden, visibility: View.GONE };
     })
     .map((item, index) => {
       return {
+        visibility: View.VISIBLE,
         ...hidden,
         ...item,
         index,
@@ -214,8 +217,10 @@ function floatyDebug(
   }
 
   ui.run(() => {
-    xmlParams.forEach(({ x, y, width, height, index }) => {
+    xmlParams.forEach(({ x, y, width, height, index, visibility }) => {
       const window = floatyWindow[`frame${index}`];
+
+      window.setVisibility(visibility);
       window.x = x;
       // 悬浮窗和顶部的距离(状态栏)
       window.y = y - statusBarHeight;
@@ -229,7 +234,6 @@ function floatyDebug(
       const text = floatyWindow[`text${index}`];
       if (text) {
         text.setText(`${index}`);
-        tl({ x, y });
         text.x = width;
         text.y = height / 2;
       }
