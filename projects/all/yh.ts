@@ -41,16 +41,8 @@ function capture() {
 }
 
 function start(): void {
-  app.startActivity({
-    action: 'android.intent.action.VIEW',
-    packageName: 'com.mmbox.xbrowser',
-    className: 'com.mmbox.xbrowser.BrowserActivity',
-  });
-
-  sleep(1000);
-
-  boundsClick('自动测试');
-
+  tl('请手动打开浏览器, 并刷新页面');
+  sleep(3000);
   capture();
 }
 
