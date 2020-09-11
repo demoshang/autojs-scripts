@@ -26,6 +26,7 @@ module.exports = {
     swipe: false,
     gesture: false,
     home: false,
+    gestures: false,
 
     context: false,
     importClass: false,
