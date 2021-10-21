@@ -57,7 +57,7 @@ function doShop(): void {
       () => {
         return collection2array(textContains('+100').find()).shift();
       },
-      { max: i === 0 ? 20 : 10, swipeDuration: 500 }
+      { max: i === 0 ? 20 : 10, swipeDuration: 500 },
     );
 
     if (!taskBtn) {
@@ -85,7 +85,7 @@ function doShop(): void {
       () => {
         back();
         sleep(1000);
-      }
+      },
     );
 
     if (!isInTask) {

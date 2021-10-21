@@ -17,7 +17,7 @@ function killApp(applicationId: string, timeout = 10000, delay = 1000): void {
     },
     () => {
       openAppSetting(applicationId);
-    }
+    },
   );
 
   if (!ele) {

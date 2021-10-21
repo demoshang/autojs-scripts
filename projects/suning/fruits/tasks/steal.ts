@@ -44,7 +44,7 @@ function getTaskPosition() {
 
 function stealRandom(
   taskPosition: { x: number; y: number },
-  stealRandomPosition: { x: number; y: number }
+  stealRandomPosition: { x: number; y: number },
 ) {
   click(taskPosition.x, taskPosition.y);
   sleep(1000);

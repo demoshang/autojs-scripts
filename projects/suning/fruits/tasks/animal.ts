@@ -17,7 +17,7 @@ function collectAnimal(): void {
       throwVerification();
 
       sleep(1000);
-    }
+    },
   );
 
   catchImage.recycle();
@@ -40,9 +40,9 @@ function addAnimals(): void {
           image: addImage,
           options: { threshold: 0.5 },
         },
-        1
+        1,
       );
-    }
+    },
   );
 
   if (!ele) {

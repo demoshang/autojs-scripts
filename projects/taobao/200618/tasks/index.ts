@@ -34,7 +34,7 @@ function goToPage() {
 
       const btn = collection2array(ele.children()).pop();
       boundsClick(btn);
-    }
+    },
   );
 
   if (!pageBtn) {
@@ -105,7 +105,7 @@ function doTasks() {
           ele: parent,
           getEle: () => {
             const list = collection2array(
-              textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find()
+              textMatches(/.*浏览\d+秒.*得\d+喵币.*/).find(),
             );
             const item = list[index];
             return item.parent();
@@ -120,7 +120,7 @@ function doTasks() {
           },
         });
       }
-    }
+    },
   );
 }
 
@@ -149,7 +149,7 @@ function runWithRetry(retries = 3): void {
       killApp(taobaoId);
     },
     '淘宝',
-    retries
+    retries,
   );
 }
 

@@ -1,7 +1,7 @@
 import { isRegExp, isUiObject } from './type-check';
 
 function getUiObject(
-  taskPrefix?: string | RegExp | UiObject | null
+  taskPrefix?: string | RegExp | UiObject | null,
 ): UiObject | null {
   let uiObj;
   if (typeof taskPrefix === 'string') {

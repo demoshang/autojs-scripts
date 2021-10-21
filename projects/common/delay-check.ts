@@ -3,7 +3,7 @@ function delayCheck<T>(
   delay: number,
   checkFn: () => T,
   runFn?: () => void,
-  checkFirst = true
+  checkFirst = true,
 ): false | T {
   while (timeout > 0) {
     // eslint-disable-next-line no-param-reassign
@@ -32,7 +32,7 @@ function delayRun(
   delay: number,
   runFn: () => void,
   checkFn: () => boolean,
-  retries = 3
+  retries = 3,
 ): void {
   let left = retries;
   while (left > 0) {

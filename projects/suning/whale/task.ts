@@ -34,7 +34,7 @@ const doLive = (() => {
       return collection2array(idContains('tv_bottom_title').find()).find(
         (ele) => {
           return ele.text() === last?.text();
-        }
+        },
       );
     });
 
@@ -62,7 +62,7 @@ function doTask(): void {
 
   let taskNameList = collection2array(textMatches(/.*\(\d+\/\d+\).*/).find());
   const taskDetailList = collection2array(
-    textMatches(/.*获得\d+鲸币.*/).find()
+    textMatches(/.*获得\d+鲸币.*/).find(),
   );
 
   let lastResult = getLastResult();
@@ -92,7 +92,7 @@ function doTask(): void {
       getBtn() {
         return scrollIn(() => {
           const taskBtnList = collection2array(
-            textMatches(/(去(逛逛|邀请|完成|看直播))|(已完成)/).find()
+            textMatches(/(去(逛逛|邀请|完成|看直播))|(已完成)/).find(),
           );
           return taskBtnList[index];
         });
@@ -138,7 +138,7 @@ function doTask(): void {
       () => {
         back();
         sleep(1000);
-      }
+      },
     );
 
     if (lastResult.retries > lastResult.max) {

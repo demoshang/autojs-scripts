@@ -33,7 +33,7 @@ function collection2array(collection?: UiCollection): UiObject[] {
 function filterChildren(
   parent: UiObject,
   fn: (o: UiObject) => boolean,
-  maxDepth = Number.MAX_SAFE_INTEGER
+  maxDepth = Number.MAX_SAFE_INTEGER,
 ) {
   const parents: { item: UiObject; depth: number }[] = [
     {
@@ -58,7 +58,7 @@ function filterChildren(
       parents.push(
         ...children.map((o) => {
           return { item: o, depth: depth + 1 };
-        })
+        }),
       );
     }
   }
@@ -166,7 +166,7 @@ function floatyChildren(
     filter?: ChildrenFilter;
     timeout?: number;
     depth?: number;
-  } = {}
+  } = {},
 ): void {
   if (!parent) {
     tl('没有父元素...');
@@ -187,7 +187,7 @@ function floatyChildren(
         tl(index, { id: item.id(), text: item.text() });
       },
       timeout,
-      ...children
+      ...children,
     );
     sleep(timeout);
   } else {

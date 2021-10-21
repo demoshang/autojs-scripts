@@ -26,7 +26,7 @@ function doTasks() {
     const taskBtnArr = collection2array(textContains('+50').find()).filter(
       (ele) => {
         return ele.parent().parent().text() === ele.text();
-      }
+      },
     );
 
     const taskBtn = taskBtnArr.shift();
@@ -48,7 +48,7 @@ function doTasks() {
       () => {
         back();
         sleep(1000);
-      }
+      },
     );
 
     if (!isInTask) {
@@ -110,7 +110,7 @@ function runWithRetry(retries = 3): void {
           device.height / 4,
           device.width / 2,
           (device.height * 3) / 4,
-          100
+          100,
         );
       }
 
@@ -123,7 +123,7 @@ function runWithRetry(retries = 3): void {
       killApp(suningApplicationId);
     },
     '苏宁',
-    retries
+    retries,
   );
 }
 

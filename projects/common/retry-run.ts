@@ -4,7 +4,7 @@ function retryRun(
   runFn: () => void,
   killFn: () => void,
   name = '',
-  retryLimit = 3
+  retryLimit = 3,
 ): boolean {
   for (let i = 0; i < retryLimit; i += 1) {
     try {
@@ -12,7 +12,7 @@ function retryRun(
       tl(`${name} 任务完成`);
       return true;
     } catch (e) {
-      tl(`${name}  第${i}次运行失败: ${e.message}` || e);
+      tl(`${name}  第${i}次运行失败: ${(e as Error).message}` || e);
       sleep(1000);
 
       killFn();

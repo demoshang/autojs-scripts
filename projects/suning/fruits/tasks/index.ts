@@ -53,7 +53,7 @@ function runWithRetry(retries = 3): void {
       killApp(suningApplicationId);
     },
     '苏宁',
-    retries
+    retries,
   );
 }
 

@@ -35,7 +35,7 @@ function getTaskCount(item?: string | UiObject | null): TaskCountResult | null {
 function getTaskDelay(
   item?: string | UiObject,
   taskName?: string | RegExp,
-  defaultDelay = 1000
+  defaultDelay = 1000,
 ): number {
   let text = '';
   if (!item) {

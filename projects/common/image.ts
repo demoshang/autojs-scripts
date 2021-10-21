@@ -32,7 +32,7 @@ const getImageWithCache = (() => {
 
 function matchScreenMatches(
   img: Image,
-  options: { threshold?: number; region?: any; max?: number }
+  options: { threshold?: number; region?: any; max?: number },
 ): {
   point: Point;
   similarity: number;

@@ -146,7 +146,7 @@ function floatyDebug(
         return resolveBounds(item);
       }
       return item;
-    })
+    }),
   );
 
   const hidden = resolveHidden();

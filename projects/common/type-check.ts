@@ -35,16 +35,16 @@ function isRegExp(obj: any): obj is RegExp {
   return detectType(obj, Type.regexp);
 }
 
-function isRect(obj: any): obj is Rect {
-  if (obj && obj.top && obj.left) {
+function isRect(obj?: any): obj is Rect {
+  if (obj?.top && obj?.left) {
     return true;
   }
 
   return false;
 }
 
-function isUiObject(obj: any): obj is UiObject {
-  if (obj && obj.findOne && obj.click) {
+function isUiObject(obj?: any): obj is UiObject {
+  if (obj?.findOne && obj?.click) {
     return true;
   }
 

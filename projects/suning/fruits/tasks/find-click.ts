@@ -6,7 +6,7 @@ function getPosition(
   template: Image,
   options: MatchTemplateOptions = {
     threshold: 0.5,
-  }
+  },
 ): {
   x: number;
   y: number;
@@ -39,17 +39,17 @@ type CollectParams =
 function findAndClick(
   config: { image: Image; options: MatchTemplateOptions },
   lastPositionsLen?: number,
-  afterRun?: () => void
+  afterRun?: () => void,
 ): void;
 function findAndClick(
   positionFn: (screenImage: Image) => { x: number; y: number }[],
   lastPositionsLen?: number,
-  afterRun?: () => void
+  afterRun?: () => void,
 ): void;
 function findAndClick(
   fnOrParams: CollectParams,
   lastPositionsLen = 0,
-  afterRun?: () => void
+  afterRun?: () => void,
 ): void {
   const screenImage = getCaptureImage();
 

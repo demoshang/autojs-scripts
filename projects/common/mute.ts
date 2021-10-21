@@ -7,7 +7,7 @@ function muteMusic(): void {
   audioManager.adjustStreamVolume(
     AudioManager.STREAM_MUSIC,
     AudioManager.ADJUST_MUTE,
-    0
+    0,
   );
 }
 
@@ -15,7 +15,7 @@ function unMuteMusic(): void {
   audioManager.adjustStreamVolume(
     AudioManager.STREAM_MUSIC,
     AudioManager.ADJUST_UNMUTE,
-    0
+    0,
   );
 }
 

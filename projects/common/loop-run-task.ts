@@ -36,7 +36,7 @@ function loopCheck({
   getTaskDelay?: (
     item?: string | UiObject | undefined,
     taskName?: string | RegExp | undefined,
-    defaultDelay?: number
+    defaultDelay?: number,
   ) => number;
 }): {
   taskCount: TaskCountResult;
@@ -104,7 +104,7 @@ function loopRunTask({
       () => {
         back();
         sleep(1000);
-      }
+      },
     );
   },
   lastResult = {
@@ -127,7 +127,7 @@ function loopRunTask({
     taskBtn: UiObject,
     delay: number,
     perMs: number,
-    afterMs: number
+    afterMs: number,
   ) => void;
   waitFinished?: () => void;
   checkBackToTask?: (checkIsInTask: () => boolean) => boolean;
@@ -161,7 +161,7 @@ function loopRunTask({
     }));
   } catch (e) {
     console.warn(e);
-    tl(`⚠️警告: ${e.message}`);
+    tl(`⚠️警告: ${(e as Error).message}`);
 
     loopRunTask({
       ele,

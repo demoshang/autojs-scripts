@@ -14,7 +14,7 @@ function weed(): void {
     undefined,
     () => {
       pressClose();
-    }
+    },
   );
 
   weedImage.recycle();

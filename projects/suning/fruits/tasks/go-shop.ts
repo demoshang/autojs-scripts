@@ -25,7 +25,7 @@ function isInTask() {
 
 function runTask(
   taskPrefix: string | RegExp | UiObject | null | undefined,
-  taskName = taskPrefix?.toString()
+  taskName = taskPrefix?.toString(),
 ) {
   if (!isInTask()) {
     throw new Error('不在任务界面');

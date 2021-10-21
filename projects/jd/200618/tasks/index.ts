@@ -26,7 +26,7 @@ function goToPage() {
     () => {
       tl('搜索按钮 [我的]');
       boundsClick(desc('我的').findOnce());
-    }
+    },
   );
 
   if (!cakeBtn) {
@@ -117,8 +117,8 @@ function closeTask() {
   if (checkIsInTask()) {
     boundsClick(
       textContains(
-        'x6YonE079h84lBpxnX4CVJaqei7TKx8AAAAASUVORK5CYII='
-      ).findOnce()
+        'x6YonE079h84lBpxnX4CVJaqei7TKx8AAAAASUVORK5CYII=',
+      ).findOnce(),
     );
   }
 
@@ -162,7 +162,7 @@ function loopCollectCoin() {
       }
 
       return !!idContains('goldElfin').findOnce();
-    }
+    },
   );
 }
 
@@ -199,7 +199,7 @@ function cleanCart() {
     () => {
       tl('搜索按钮 [购物车]');
       boundsClick(descContains('购物车').findOnce());
-    }
+    },
   );
 
   if (!editBtn) {
@@ -233,7 +233,7 @@ function doCartTask(
     left: number;
     retries: number;
     max: number;
-  }
+  },
 ) {
   const ele = getUiObject(taskName)?.parent().parent();
 
@@ -289,8 +289,8 @@ function doCartTask(
 
   doCartTask(taskName, {
     ...taskCount,
-    retries: ((lastResult && lastResult.retries) || 0) + 1,
-    max: (lastResult && lastResult.max) || taskCount.left + 1,
+    retries: (lastResult?.retries || 0) + 1,
+    max: lastResult?.max || taskCount.left + 1,
   });
 }
 
@@ -302,7 +302,7 @@ function doSeriesTask(
     left: number;
     retries: number;
     max: number;
-  }
+  },
 ) {
   const ele = getUiObject(taskName)?.parent().parent();
 
@@ -370,8 +370,8 @@ function doSeriesTask(
 
   doSeriesTask(taskName, {
     ...taskCount,
-    retries: ((lastResult && lastResult.retries) || 0) + 1,
-    max: (lastResult && lastResult.max) || taskCount.left + 1,
+    retries: (lastResult?.retries || 0) + 1,
+    max: lastResult?.max || taskCount.left + 1,
   });
 }
 
@@ -427,7 +427,7 @@ function runWithRetry(retries = 3): void {
       killApp(jdApplicationId);
     },
     '京东',
-    retries
+    retries,
   );
 }
 

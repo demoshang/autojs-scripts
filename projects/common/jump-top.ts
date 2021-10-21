@@ -5,7 +5,7 @@ function jumpTop(): void {
       device.height / 4,
       device.width / 2,
       (device.height * 3) / 4,
-      100
+      100,
     );
   }
   sleep(1000);

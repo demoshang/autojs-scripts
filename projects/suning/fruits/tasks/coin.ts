@@ -21,7 +21,7 @@ function collectCoin(): void {
     () => {
       throwVerification();
       sleep(3000);
-    }
+    },
   );
 
   coinImage.recycle();

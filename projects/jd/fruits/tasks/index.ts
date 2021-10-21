@@ -21,7 +21,7 @@ function goToPage() {
     () => {
       tl('搜索按钮 [我的]');
       boundsClick(desc('我的').findOnce());
-    }
+    },
   );
 
   if (!fruitsBtn) {
@@ -83,7 +83,7 @@ function doTasks() {
   tl('[每日首次浇水]');
   // 每日首次浇水
   boundsClick(
-    textContains('每日首次浇水').findOnce()?.parent().findOne(text('去完成'))
+    textContains('每日首次浇水').findOnce()?.parent().findOne(text('去完成')),
   );
 
   goToTask();
@@ -91,7 +91,7 @@ function doTasks() {
   tl('领取 [每日首次浇水]');
   // 领取 每日首次浇水
   boundsClick(
-    textContains('每日首次浇水').findOnce()?.parent().findOne(text('领取'))
+    textContains('每日首次浇水').findOnce()?.parent().findOne(text('领取')),
   );
 
   goToTask();
@@ -99,7 +99,7 @@ function doTasks() {
   tl('[定时领水]');
   // 定时领水
   boundsClick(
-    textContains('定时领水').findOnce()?.parent().findOne(text('去领取'))
+    textContains('定时领水').findOnce()?.parent().findOne(text('去领取')),
   );
 
   // 弹出框处理
@@ -157,7 +157,7 @@ function runWithRetry(retries = 3): void {
       killApp(jdApplicationId);
     },
     '京东',
-    retries
+    retries,
   );
 }
 

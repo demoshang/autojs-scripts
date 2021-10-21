@@ -8,22 +8,22 @@ function boundsClick(rect?: Rect, delay?: number, position?: Position): boolean;
 function boundsClick(
   ele?: UiObject | null,
   delay?: number,
-  position?: Position
+  position?: Position,
 ): boolean;
 function boundsClick(
   str?: string,
   delay?: number,
-  position?: Position
+  position?: Position,
 ): boolean;
 function boundsClick(
   reg?: RegExp,
   delay?: number,
-  position?: Position
+  position?: Position,
 ): boolean;
 function boundsClick(
   radius?: Radius,
   delay?: number,
-  position?: Position
+  position?: Position,
 ): boolean;
 function boundsClick(
   param?: Rect | Radius | UiObject | string | RegExp | null,
@@ -34,7 +34,7 @@ function boundsClick(
     }
 
     return bounds;
-  }
+  },
 ): boolean {
   let bounds: Rect | Radius | undefined;
 
