@@ -2,25 +2,25 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  devtool: 'none',
-  mode: 'development',
+  devtool: 'hidden-source-map',
+  mode: "development",
 
   module: {
     rules: [
       {
-        enforce: 'pre',
+        enforce: "pre",
         test: /\.ts$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
+        loader: "eslint-loader",
         options: {
           emitWarning: true,
-          formatter: require('eslint-formatter-friendly'),
+          formatter: require("eslint-formatter-friendly"),
         },
       },
       {
         test: /\.ts$/,
         use: {
-          loader: 'ts-loader',
+          loader: "ts-loader",
           options: {
             // 6133: declared but its value is never read
             // 6192: All imports in import declaration are unused.

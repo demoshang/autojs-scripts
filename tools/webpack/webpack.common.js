@@ -1,15 +1,15 @@
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
-const { root } = require('./constants');
-const { getEntry } = require('./entry');
-const AutoJsUiPlugin = require('./autojs-ui.plugin');
+const { root } = require("./constants");
+const { getEntry } = require("./entry");
+const AutoJsUiPlugin = require("./autojs-ui.plugin");
 
 module.exports = {
   entry: getEntry(),
   output: {
-    path: path.join(root, 'dist'),
-    filename: '[name].js',
+    path: path.resolve(root, "dist"),
+    filename: "[name].js",
   },
   module: {
     rules: [
@@ -17,24 +17,27 @@ module.exports = {
         test: /\.xml$/,
         use: [
           {
-            loader: path.resolve(__dirname, './autojs-xml.loader.js'),
+            loader: path.resolve(__dirname, "./autojs-xml.loader.js"),
           },
         ],
       },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.xml'],
+    extensions: [".ts", ".xml"],
   },
   plugins: [
     new CopyPlugin({
       patterns: [
         {
-          from: path.join(root, 'projects/**/*'),
-          to: path.join(root, 'dist/'),
-          context: 'projects/',
+          from: path
+            .join(root, "projects/**/*")
+            .split(path.sep)
+            .join(path.posix.sep),
+          to: path.resolve(root, "dist/").split(path.sep).join(path.posix.sep),
+          context: "projects/",
           globOptions: {
-            ignore: ['*.ts', '*.xml'],
+            ignore: ["*.ts", "*.xml"],
           },
         },
       ],

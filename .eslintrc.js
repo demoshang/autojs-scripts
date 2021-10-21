@@ -1,6 +1,13 @@
 module.exports = {
-  extends: ['@ofa2/eslint-config'],
-  parserOptions: { project: ['./tsconfig.json'] },
+  extends: ["@s4p/eslint-config"],
+  env: {
+    // 你的环境变量（包含多个预定义的全局变量）
+    // browser: true,
+    // node: true,
+    // mocha: true,
+    // jest: true,
+    // jquery: true
+  },
   globals: {
     // 引入 android class
     Settings: false,
@@ -9,6 +16,12 @@ module.exports = {
     Context: false,
     AudioManager: false,
     View: false,
+
+    Rect: false,
+    Point: false,
+    UiObject: false,
+    UiCollection: false,
+    MatchTemplateOptions: false,
 
     // autojs 自带的
     auto: false,
@@ -63,14 +76,11 @@ module.exports = {
     classNameStartsWith: false,
     classNameEndsWith: false,
     classNameMatches: false,
+    // 你的全局变量（设置为 false 表示它不允许被重新赋值）
   },
   rules: {
-    'no-console': ['off'],
-    '@typescript-eslint/explicit-module-boundary-types': [
-      'error',
-      {
-        allowArgumentsExplicitlyTypedAsAny: true,
-      },
-    ],
+    // 自定义你的规则
+    "@typescript-eslint/unified-signatures": ["off"],
+    "max-params": ["error", { max: 5 }],
   },
 };

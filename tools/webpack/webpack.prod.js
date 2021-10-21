@@ -2,7 +2,7 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  devtool: 'none',
+  devtool: 'hidden-source-map',
   mode: 'production',
   performance: {
     maxAssetSize: 5120000,
