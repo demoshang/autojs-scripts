@@ -11,11 +11,11 @@ type ChildrenFilter =
   | 'visual'
   | 'visual-id'
   | 'visual-text'
-  | undefined
   | 'visual-id-text'
   | 'visual-text-id'
+  | undefined
   | null
-  | true;
+  | boolean;
 
 function collection2array(collection?: UiCollection): UiObject[] {
   if (!collection) {
@@ -75,6 +75,10 @@ function convertFilter(filterType: ChildrenFilter) {
     case true:
       return () => {
         return true;
+      };
+    case false:
+      return () => {
+        return false;
       };
     case 'text':
       return (ele: UiObject) => {
@@ -154,24 +158,32 @@ function floatyCopy(ele: UiObject) {
   }
 }
 
+interface FloatConfig {
+  concurrence?: boolean;
+  filter?: ChildrenFilter;
+  timeout?: number;
+  depth?: number;
+}
+
+function floatyChildren(parent?: UiObject | null, filter?: boolean): void;
+function floatyChildren(parent?: UiObject | null, config?: FloatConfig): void;
 function floatyChildren(
   parent?: UiObject | null,
-  {
-    filter,
-    concurrence = false,
-    timeout = 1000,
-    depth,
-  }: {
-    concurrence?: boolean;
-    filter?: ChildrenFilter;
-    timeout?: number;
-    depth?: number;
-  } = {},
+  config?: FloatConfig | boolean,
 ): void {
   if (!parent) {
     tl('没有父元素...');
     return;
   }
+
+  let {
+    filter,
+    concurrence,
+    timeout = 1000,
+    depth,
+  }: FloatConfig = {
+    ...(typeof config === 'boolean' ? { filter: config } : config),
+  };
 
   const children = filterChildren(parent, convertFilter(filter), depth);
 

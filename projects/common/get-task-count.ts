@@ -16,7 +16,7 @@ function getTaskCount(item?: string | UiObject | null): TaskCountResult | null {
     text = item?.findOne(textMatches(/.*\d+\/\d+.*/))?.text() || '';
   }
 
-  console.info('=======task detail', text);
+  console.info('task detail', text);
   if (!/(\d+)\/(\d+)/.test(text)) {
     return null;
   }

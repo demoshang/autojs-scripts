@@ -75,6 +75,20 @@ function isRadius(obj: any): obj is Radius {
   return false;
 }
 
+function isImage(obj: any): obj is Image {
+  if (
+    obj?.getWidth &&
+    obj?.getHeight &&
+    obj?.saveTo &&
+    obj?.pixel &&
+    obj?.recycle
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 export {
   detectType,
   isNumber,
@@ -84,4 +98,5 @@ export {
   isBounds,
   isRectWithWH,
   isRadius,
+  isImage,
 };

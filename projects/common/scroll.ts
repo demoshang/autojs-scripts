@@ -40,7 +40,7 @@ function scrollOut(
 
 function scrollInWithStaticUiObject(
   ele?: UiObject | null,
-  { sleepMs = 0, swipeDuration = 1000, step = device.height / 4, max = 5 } = {},
+  { sleepMs = 0, swipeDuration = 300, step = device.height / 4, max = 5 } = {},
 ) {
   if (!ele) {
     return undefined;
@@ -138,4 +138,18 @@ function scrollPage(swipeDuration = 1000): void {
   swipe(x, device.height / 2, x, device.height / 4, swipeDuration);
 }
 
-export { scroll as myScroll, scrollOut, scrollIn, scrollPage };
+function scrollLoop(direction = -1, len = 30, swipeDuration = 100): void {
+  for (let i = 0; i < len; i += 1) {
+    const x = device.width / 2;
+
+    swipe(
+      x,
+      device.height / 2,
+      x,
+      device.height / 2 + (device.height / 4) * direction,
+      swipeDuration,
+    );
+  }
+}
+
+export { scroll as myScroll, scrollOut, scrollIn, scrollPage, scrollLoop };

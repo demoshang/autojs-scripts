@@ -59,6 +59,10 @@ function loopCheck({
     throw new Error(`[${name}] 未找到任务数据`);
   }
 
+  if (lastResult.total !== 0 && lastResult.total !== taskCount.total) {
+    throw new Error(`[${name}] 任务数据出现混乱`);
+  }
+
   if (lastResult.left !== taskCount.left) {
     // eslint-disable-next-line no-param-reassign
     lastResult.retries = 0;
@@ -161,7 +165,14 @@ function loopRunTask({
     }));
   } catch (e) {
     console.warn(e);
-    tl(`⚠️警告: ${(e as Error).message}`);
+
+    const lr = {
+      ...lastResult,
+      retries: lastResult.retries + 1,
+      max: lastResult.max,
+    };
+
+    tl(`⚠️警告: ${(e as Error).message}`, lr);
 
     loopRunTask({
       ele,
@@ -172,11 +183,7 @@ function loopRunTask({
       runTask,
       waitFinished,
       checkBackToTask,
-      lastResult: {
-        ...lastResult,
-        retries: lastResult.retries + 1,
-        max: lastResult.max,
-      },
+      lastResult: lr,
     });
 
     return;

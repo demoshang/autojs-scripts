@@ -1,8 +1,10 @@
 import { delayCheck } from './delay-check';
+import { getUiObject } from './ui-object';
 
 const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';
 const taobaoId = 'com.taobao.taobao';
+const jdJinRongId = 'com.jd.jrapp';
 
 function openPage(url: string, sleepTime = 0): void {
   const i = app.intent({
@@ -34,6 +36,20 @@ function openJDMain(timeout = 10000, delay = 500): boolean {
   });
 }
 
+function openJDJR(timeout = 10000, delay = 500): boolean {
+  app.startActivity({
+    action: 'android.intent.action.VIEW',
+    packageName: jdJinRongId,
+    className: 'com.jd.jrapp.bm.mainbox.main.MainActivity',
+  });
+
+  return !!delayCheck(timeout, delay, () => {
+    return (
+      currentPackage() === jdJinRongId && idContains('iv_fifth_icon').findOnce()
+    );
+  });
+}
+
 function openTaoBaoMain(timeout = 10000, delay = 500): boolean {
   app.startActivity({
     action: 'android.intent.action.VIEW',
@@ -54,9 +70,11 @@ function openTaoBaoMain(timeout = 10000, delay = 500): boolean {
 export {
   suningApplicationId,
   jdApplicationId,
+  jdJinRongId,
   taobaoId,
   openPage,
   openSuning,
   openJDMain,
+  openJDJR,
   openTaoBaoMain,
 };
