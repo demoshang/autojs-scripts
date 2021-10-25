@@ -1,17 +1,9 @@
-import './head';
-
 import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
 import { getCaptureImage } from '../../common/image';
-import { killApp } from '../../common/kill-app';
 import { muteRestoreMusic } from '../../common/mute';
-import { jdApplicationId, suningApplicationId } from '../../common/open-app';
 import { tl } from '../../common/toast';
-import { runWithRetry as JDRun } from '../../jd/fruits/tasks';
-import { runWithRetry as SNRun } from '../../suning/fruits/tasks';
-import {
-  loopCollect as SNLoopCollect,
-  runWithRetry as SNWhaleRun,
-} from '../../suning/whale';
+import { runWithRetry } from '../../jd/211111/tasks/index';
+import './head';
 import layout from './layout.xml';
 
 layout();
@@ -25,16 +17,8 @@ const status: { [key: string]: boolean } = {};
 
 const btns = [
   {
-    id: 'runALLBtn',
-    type: 'all',
-  },
-  {
     id: 'runJDBtn',
     type: 'jd',
-  },
-  {
-    id: 'runSNBtn',
-    type: 'sn',
   },
 ];
 
@@ -109,28 +93,8 @@ function run(type: string) {
       const restoreMusic = muteRestoreMusic();
 
       if (type === 'jd') {
-        JDRun();
-        killApp(jdApplicationId);
-      } else if (type === 'sn') {
         getCaptureImage();
-        SNRun();
-        killApp(suningApplicationId);
-      } else if (type === 'snWhale') {
-        SNWhaleRun();
-        killApp(suningApplicationId);
-      } else if (type === 'snWhaleCollect') {
-        SNLoopCollect();
-      } else if (type === 'all') {
-        getCaptureImage();
-
-        JDRun();
-        killApp(jdApplicationId);
-
-        SNRun();
-        killApp(suningApplicationId);
-      } else {
-        restoreMusic();
-        throw new Error('启动任务失败, 无法识别任务类型');
+        runWithRetry(3);
       }
 
       restoreMusic();

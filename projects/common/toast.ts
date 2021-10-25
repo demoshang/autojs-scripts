@@ -41,7 +41,7 @@ function tl(...msg: any[]): void {
         return '|-格式化失败-|';
       }
     })
-    .join('; ');
+    .join(' ');
 
   showToast(text);
 }
