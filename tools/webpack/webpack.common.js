@@ -37,7 +37,7 @@ module.exports = {
           to: path.resolve(root, "dist/").split(path.sep).join(path.posix.sep),
           context: "projects/",
           globOptions: {
-            ignore: ["*.ts", "*.xml"],
+            ignore: ["**/*.ts", "**/*.xml"],
           },
         },
       ],
