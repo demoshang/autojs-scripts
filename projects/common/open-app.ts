@@ -1,5 +1,4 @@
 import { delayCheck } from './delay-check';
-import { getUiObject } from './ui-object';
 
 const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';

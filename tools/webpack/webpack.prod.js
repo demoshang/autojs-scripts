@@ -1,28 +1,31 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
-  devtool: 'hidden-source-map',
-  mode: 'production',
+  devtool: "hidden-source-map",
+  mode: "production",
   performance: {
     maxAssetSize: 5120000,
+  },
+  optimization: {
+    minimize: false,
   },
   module: {
     rules: [
       {
-        enforce: 'pre',
+        enforce: "pre",
         test: /\.ts$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
+        loader: "eslint-loader",
         options: {
           failOnError: true,
-          formatter: require('eslint-formatter-friendly'),
+          formatter: require("eslint-formatter-friendly"),
         },
       },
       {
         test: /\.ts$/,
         use: {
-          loader: 'ts-loader',
+          loader: "ts-loader",
           options: {},
         },
         exclude: /node_modules/,

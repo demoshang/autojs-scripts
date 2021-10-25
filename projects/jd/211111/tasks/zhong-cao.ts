@@ -3,7 +3,6 @@
 import { boundsClick } from '../../../common/click-ele-bounds';
 import { getTaskCount } from '../../../common/get-task-count';
 import { scrollIn, scrollPage } from '../../../common/scroll';
-import { tl } from '../../../common/toast';
 import { getUiObject } from '../../../common/ui-object';
 
 const MATCH_REG = /互动种草/;

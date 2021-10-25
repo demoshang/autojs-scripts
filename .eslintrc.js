@@ -55,7 +55,6 @@ module.exports = {
     waitForPackage: false,
     exit: false,
     random: false,
-    random: false,
     text: false,
     textContains: false,
     textStartsWith: false,
