@@ -12,7 +12,7 @@ import {
 } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { scrollIn, scrollPage } from '../../../common/scroll';
-import { tl, toastUiObject } from '../../../common/toast';
+import { tl } from '../../../common/toast';
 import { getUiObject } from '../../../common/ui-object';
 import { checkIsInChengCheng, doChengCheng } from './cheng-cheng';
 import { checkIsViewProduct, viewProduct } from './view-product';
