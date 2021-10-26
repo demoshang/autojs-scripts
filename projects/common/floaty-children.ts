@@ -1,6 +1,6 @@
 import { floatyDebug } from './floaty-debug';
 import { checkInScreen } from './in-screen';
-import { tl } from './toast';
+import { tl, toastUiObject } from './toast';
 
 type ChildrenFilter =
   | ((ele: UiObject) => any)
@@ -8,11 +8,15 @@ type ChildrenFilter =
   | 'text'
   | 'id-text'
   | 'text-id'
+  | 'id-text-desc'
+  | 'desc'
   | 'visual'
   | 'visual-id'
   | 'visual-text'
   | 'visual-id-text'
+  | 'visual-id-text-desc'
   | 'visual-text-id'
+  | 'visual-desc'
   | undefined
   | null
   | boolean;
@@ -69,7 +73,7 @@ function filterChildren(
   return list.filter(fn);
 }
 
-function convertFilter(filterType: ChildrenFilter) {
+function convertFilter(filterType: ChildrenFilter): (obj: UiObject) => boolean {
   switch (filterType) {
     case null:
     case true:
@@ -90,9 +94,19 @@ function convertFilter(filterType: ChildrenFilter) {
         const val = ele.id();
         return !!val;
       };
+    case 'desc':
+      return (ele: UiObject) => {
+        const desc = ele.contentDescription;
+        return !!desc;
+      };
     case 'id-text':
       return (ele: UiObject) => {
         const val = ele.id() || ele.text();
+        return !!val;
+      };
+    case 'id-text-desc':
+      return (ele: UiObject) => {
+        const val = ele.id() || ele.text() || ele.contentDescription;
         return !!val;
       };
     case 'text-id':
@@ -120,13 +134,29 @@ function convertFilter(filterType: ChildrenFilter) {
         const val = ele.id();
         return !!val;
       };
-    case undefined:
+    case 'visual-desc':
+      return (ele: UiObject) => {
+        if (!checkInScreen(ele)) {
+          return false;
+        }
+        const desc = ele.contentDescription;
+        return !!desc;
+      };
     case 'visual-id-text':
       return (ele: UiObject) => {
         if (!checkInScreen(ele)) {
           return false;
         }
         const val = ele.id() || ele.text();
+        return !!val;
+      };
+    case undefined:
+    case 'visual-id-text-desc':
+      return (ele: UiObject) => {
+        if (!checkInScreen(ele)) {
+          return false;
+        }
+        const val = ele.id() || ele.text() || ele.contentDescription;
         return !!val;
       };
     case 'visual-text-id':
@@ -146,6 +176,8 @@ function floatyCopy(ele: UiObject) {
   const text = ele.text();
   const id = ele.id();
 
+  const desc = ele.contentDescription;
+
   if (text) {
     setClip(text);
     tl(`复制text成功 ${text}`);
@@ -155,6 +187,11 @@ function floatyCopy(ele: UiObject) {
   if (id) {
     setClip(id);
     tl(`复制id成功 ${id}`);
+  }
+
+  if (desc) {
+    setClip(desc);
+    tl(`复制desc成功 ${desc}`);
   }
 }
 
@@ -196,7 +233,7 @@ function floatyChildren(
     floatyDebug(
       (item, index) => {
         floatyCopy(item);
-        tl(index, { id: item.id(), text: item.text() });
+        toastUiObject(item, { index });
       },
       timeout,
       ...children,
@@ -204,7 +241,7 @@ function floatyChildren(
     sleep(timeout);
   } else {
     children.forEach((item, index) => {
-      tl(index, { id: item.id(), text: item.text() });
+      toastUiObject(item, { index });
 
       floatyDebug(floatyCopy, timeout, item);
 
@@ -215,4 +252,8 @@ function floatyChildren(
   tl('floatyChildren 结束');
 }
 
-export { floatyChildren, collection2array };
+function getChild(parent?: UiObject, index = 0) {
+  return collection2array(parent?.children())[index];
+}
+
+export { floatyChildren, collection2array, getChild };

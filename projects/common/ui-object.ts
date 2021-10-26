@@ -78,4 +78,17 @@ function getUiObject(
   }
 }
 
-export { getUiObject, getTextUiObject, getDescUiObject };
+function simpleUiObject(ele?: UiObject) {
+  if (!ele) {
+    return undefined;
+  }
+
+  return {
+    id: ele.id(),
+    text: ele.text(),
+    desc: ele.contentDescription,
+    className: ele.className(),
+  };
+}
+
+export { getUiObject, getTextUiObject, getDescUiObject, simpleUiObject };

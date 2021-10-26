@@ -8,6 +8,7 @@ import {
   isRectWithWH,
   isUiObject,
 } from './type-check';
+import { simpleUiObject } from './ui-object';
 
 importClass(android.view.View);
 
@@ -139,8 +140,7 @@ function floatyDebug(
       if (isUiObject(item)) {
         return {
           ...resolveRect(item.bounds()),
-          text: item.text(),
-          id: item.id(),
+          ...simpleUiObject(item),
         };
       }
       if (isRect(item)) {

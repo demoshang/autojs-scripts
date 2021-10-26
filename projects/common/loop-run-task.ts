@@ -59,8 +59,29 @@ function loopCheck({
     throw new Error(`[${name}] 未找到任务数据`);
   }
 
-  if (lastResult.total !== 0 && lastResult.total !== taskCount.total) {
-    throw new Error(`[${name}] 任务数据出现混乱`);
+  // 上次执行 总数和 本次执行 总数不相同 (第一次执行total为0, 要忽略)
+  const isTotalChange =
+    lastResult.total !== 0 && lastResult.total === taskCount.total;
+  // 上次执行 完成数 存在(不是第一次执行任务), 但本次完成数为0 (新任务开始)
+  const isCompletedChange =
+    lastResult.completed !== 0 && taskCount.completed === 0;
+
+  console.log('============任务检查======', {
+    lastResult,
+    taskCount,
+    isTotalChange,
+    isCompletedChange,
+  });
+
+  if (isTotalChange || isCompletedChange) {
+    return {
+      taskCount: {
+        ...taskCount,
+        dataConfusion: true,
+      },
+      delay,
+      taskBtn,
+    };
   }
 
   if (lastResult.left !== taskCount.left) {
@@ -186,6 +207,12 @@ function loopRunTask({
       lastResult: lr,
     });
 
+    return;
+  }
+
+  // 数据混乱
+  if (taskCount.dataConfusion) {
+    console.warn(`[${name}] 任务数据出现混乱, 跳过该任务`);
     return;
   }
 

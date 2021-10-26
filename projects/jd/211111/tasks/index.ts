@@ -12,8 +12,9 @@ import {
 } from '../../../common/open-app';
 import { retryRun } from '../../../common/retry-run';
 import { scrollIn, scrollPage } from '../../../common/scroll';
-import { tl } from '../../../common/toast';
+import { tl, toastUiObject } from '../../../common/toast';
 import { getUiObject } from '../../../common/ui-object';
+import { checkIsInChengCheng, doChengCheng } from './cheng-cheng';
 import { checkIsViewProduct, viewProduct } from './view-product';
 import { checkIsWall, doWall } from './wall';
 import { checkIsZhongCao, doZhongCao } from './zhong-cao';
@@ -64,11 +65,14 @@ function runTask(
 
   const isViewProduct = checkIsViewProduct();
   const isZhongCao = checkIsZhongCao();
+  const isChengCheng = checkIsInChengCheng();
 
   if (isViewProduct) {
     viewProduct();
   } else if (isZhongCao) {
     doZhongCao();
+  } else if (isChengCheng) {
+    doChengCheng();
   } else {
     scrollPage();
     sleep(delay);
@@ -82,8 +86,13 @@ function checkIsSkipTask(txt: string, executedList: string[]) {
     return true;
   }
 
+  // 邀请好友
+  if (/邀请好友/.test(txt)) {
+    return true;
+  }
+
   // 加入会员的任务不做
-  if (/入会|开.*会员/.test(txt)) {
+  if (/入会|开.*会员|注册.*会员/.test(txt)) {
     return true;
   }
 
@@ -105,9 +114,7 @@ function checkIsSkipTask(txt: string, executedList: string[]) {
 }
 
 function buildTaskList(executedList: string[]) {
-  const list = collection2array(
-    textMatches(/.*(浏览|逛|组队竞猜|小程序|去抽|去领).*\(\d+\/\d+.*/).find(),
-  );
+  const list = collection2array(textMatches(/.*\(\d+\/\d+.*/).find());
 
   return list.filter((ele) => {
     if (!ele) {
@@ -238,11 +245,11 @@ function goToPage(isJR = false) {
         return idContains('redPacketIV').findOnce();
       }
 
-      return getUiObject(/热爱环游记|分\d+亿/)?.parent();
+      return getUiObject(/浮层活动/);
     },
     () => {
-      tl('搜索按钮 [我的]');
-      boundsClick(desc('我的').findOnce());
+      tl('搜索按钮 [首页]');
+      boundsClick(getUiObject('首页', 'dt'));
     },
   );
 
@@ -251,12 +258,17 @@ function goToPage(isJR = false) {
   }
 
   tl('点击 [京东11.11]');
-  boundsClick(btn);
 
-  tl('等待进入 [京东11.11]');
-  delayCheck(15000, 1000, () => {
-    return getUiObject(/打卡领红包|解锁.*站/);
-  });
+  delayCheck(
+    15000,
+    1000,
+    () => {
+      return getUiObject(/打卡领红包|解锁.*站/);
+    },
+    () => {
+      boundsClick(btn);
+    },
+  );
 }
 
 function runWithRetry(retries = 3): void {

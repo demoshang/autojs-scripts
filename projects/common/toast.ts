@@ -1,3 +1,5 @@
+import { simpleUiObject } from './ui-object';
+
 importClass(android.widget.Toast);
 
 const showToast = (() => {
@@ -46,4 +48,11 @@ function tl(...msg: any[]): void {
   showToast(text);
 }
 
-export { showToast, tl };
+function toastUiObject(ele?: UiObject, extra?: Record<string, any>): void {
+  tl({
+    ...extra,
+    ...simpleUiObject(ele),
+  });
+}
+
+export { showToast, tl, toastUiObject };

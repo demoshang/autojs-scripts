@@ -1,4 +1,5 @@
 import { delayCheck } from './delay-check';
+import { getUiObject } from './ui-object';
 
 const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';
@@ -41,6 +42,8 @@ function openJDJR(timeout = 10000, delay = 500): boolean {
     packageName: jdJinRongId,
     className: 'com.jd.jrapp.bm.mainbox.main.MainActivity',
   });
+
+  sleep(8000);
 
   return !!delayCheck(timeout, delay, () => {
     return (

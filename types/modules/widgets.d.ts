@@ -98,6 +98,9 @@ declare interface UiObject {
     find(selector): UiCollection;
     visibility: 0 | 8;
     setTextColor(text: number): boolean;
+
+    contentDescription: string;
+    className(): string;
 }
 
 declare interface UiCollection {

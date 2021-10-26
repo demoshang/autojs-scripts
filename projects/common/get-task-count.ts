@@ -2,6 +2,8 @@ export interface TaskCountResult {
   total: number;
   completed: number;
   left: number;
+
+  dataConfusion?: boolean;
 }
 
 function getTaskCount(ele?: UiObject | null): TaskCountResult | null;
