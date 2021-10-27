@@ -15,6 +15,7 @@ import { scrollIn, scrollPage } from '../../../common/scroll';
 import { tl } from '../../../common/toast';
 import { getUiObject } from '../../../common/ui-object';
 import { checkIsInChengCheng, doChengCheng } from './cheng-cheng';
+import { doSumTask } from './sum-task';
 import { checkIsViewProduct, viewProduct } from './view-product';
 import { checkIsWall, doWall } from './wall';
 import { checkIsZhongCao, doZhongCao } from './zhong-cao';
@@ -291,6 +292,10 @@ function runJDMall(retries: number) {
 
       openTaskList();
       doTask();
+
+      sleep(2000);
+
+      doSumTask();
 
       sleep(2000);
 

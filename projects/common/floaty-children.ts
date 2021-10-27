@@ -256,4 +256,18 @@ function getChild(parent?: UiObject, index = 0) {
   return collection2array(parent?.children())[index];
 }
 
-export { floatyChildren, filterChildren, collection2array, getChild };
+function getChildren(parent?: UiObject, indexes: number[] = []) {
+  const list = collection2array(parent?.children());
+
+  return indexes.map((index) => {
+    return list[index];
+  });
+}
+
+export {
+  floatyChildren,
+  filterChildren,
+  collection2array,
+  getChild,
+  getChildren,
+};
