@@ -256,4 +256,4 @@ function getChild(parent?: UiObject, index = 0) {
   return collection2array(parent?.children())[index];
 }
 
-export { floatyChildren, collection2array, getChild };
+export { floatyChildren, filterChildren, collection2array, getChild };

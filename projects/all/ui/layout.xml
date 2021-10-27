@@ -17,5 +17,8 @@
 
   <button id="consoleBtn" style="Widget.AppCompat.Button.Colored" text="打开日志" />
 
-  <button id="runJDBtn" style="Widget.AppCompat.Button.Colored" text="启动[京东双十一]脚本" visibility="gone" />
+  <button id="runJDMall" style="Widget.AppCompat.Button.Colored" text="启动[京东商城双十一]脚本" visibility="gone" />
+  <button id="runJDJR" style="Widget.AppCompat.Button.Colored" text="启动[京东金融双十一]脚本" visibility="gone" />
+  <button id="runJDBtn" style="Widget.AppCompat.Button.Colored" text="启动[全部]脚本" visibility="gone" />
+
 </vertical>

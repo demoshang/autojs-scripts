@@ -39,18 +39,17 @@ function openTaskList() {
   tl('打开任务');
   sleep(1000);
 
-  const list = collection2array(
-    getUiObject(/打卡领红包|解锁.*站/)
-      ?.parent()
-      ?.children(),
-  );
+  const ele = getUiObject(/打卡领红包|解锁.*站/);
 
-  let btn = list[10];
-  if (list[10]?.text()) {
-    btn = list[9];
+  if (!ele) {
+    throw new Error('找不到任务按钮');
   }
 
-  boundsClick(btn);
+  const bounds = ele.bounds();
+  const x = bounds.right + (device.width - bounds.right) / 2;
+  const y = bounds.centerY();
+
+  boundsClick({ x, y });
   sleep(1000);
 }
 
@@ -67,7 +66,9 @@ function runTask(
   const isZhongCao = checkIsZhongCao();
   const isChengCheng = checkIsInChengCheng();
 
-  if (isViewProduct) {
+  if (checkIsInTask()) {
+    return;
+  } else if (isViewProduct) {
     viewProduct();
   } else if (isZhongCao) {
     doZhongCao();
@@ -246,6 +247,10 @@ function goToPage(isJR = false) {
       return getUiObject(/浮层活动/);
     },
     () => {
+      if (isJR) {
+        return;
+      }
+
       tl('搜索按钮 [首页]');
       boundsClick(getUiObject('首页', 'dt')?.parent());
     },
@@ -269,7 +274,7 @@ function goToPage(isJR = false) {
   );
 }
 
-function runWithRetry(retries = 3): void {
+function runJDMall(retries: number) {
   retryRun(
     () => {
       tl('打开京东中');
@@ -298,7 +303,9 @@ function runWithRetry(retries = 3): void {
     '京东',
     retries,
   );
+}
 
+function runJDJR(retries: number) {
   retryRun(
     () => {
       tl('打开京东金融中');
@@ -329,4 +336,9 @@ function runWithRetry(retries = 3): void {
   );
 }
 
-export { runWithRetry, goToPage };
+function runWithRetry(retries = 3): void {
+  runJDMall(3);
+  runJDJR(3);
+}
+
+export { runWithRetry, runJDMall, runJDJR };

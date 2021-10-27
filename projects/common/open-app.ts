@@ -1,6 +1,9 @@
 import { boundsClick } from './click-ele-bounds';
 import { delayCheck } from './delay-check';
+import { tl } from './toast';
 import { getUiObject } from './ui-object';
+
+const autojsId = 'org.autojs.autojs';
 
 const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';
@@ -20,6 +23,55 @@ function openPage(url: string, sleepTime = 0): void {
   }
 }
 
+function skipAd({
+  timeout,
+  delay,
+  mainPageCheck,
+  mainCheckTimes = 2,
+  adRun = () => {
+    // 是否存在广告
+    const jumpBtn = getUiObject('跳过');
+    if (jumpBtn) {
+      tl('检测到广告, 正在执行跳过');
+      boundsClick(jumpBtn);
+      return true;
+    }
+
+    return false;
+  },
+}: {
+  timeout: number;
+  delay: number;
+  adRun?: () => boolean;
+  mainPageCheck: () => boolean | UiObject | null | undefined;
+  mainCheckTimes?: number;
+}) {
+  let index = 0;
+  return delayCheck(timeout, delay, () => {
+    const isAd = adRun();
+
+    // 是广告, 就略过
+    if (isAd) {
+      return false;
+    }
+
+    const isMainPage = mainPageCheck();
+
+    // 不是主页面, 跳过
+    if (!isMainPage) {
+      return false;
+    }
+
+    // 主页面检查次数未达标
+    if (index < mainCheckTimes) {
+      index += 1;
+      return false;
+    }
+
+    return true;
+  });
+}
+
 function openSuning(page: string, sleepTime?: number): void {
   const url = `suning://m.suning.com/index?adTypeCode=1002&adId=${page}`;
   openPage(url, sleepTime);
@@ -32,20 +84,16 @@ function openJDMain(timeout = 10000, delay = 500): boolean {
     className: 'com.jingdong.app.mall.main.MainActivity',
   });
 
-  return !!delayCheck(timeout, delay, () => {
-    if (currentPackage() !== jdApplicationId) {
-      return false;
-    }
+  return skipAd({
+    timeout,
+    delay,
+    mainPageCheck: () => {
+      if (currentPackage() !== jdApplicationId) {
+        return false;
+      }
 
-    // 是否存在广告
-    const jumpBtn = getUiObject('跳过');
-
-    if (jumpBtn) {
-      boundsClick(jumpBtn);
-      return false;
-    }
-
-    return desc('我的').findOnce();
+      return desc('我的').findOnce();
+    },
   });
 }
 
@@ -56,19 +104,18 @@ function openJDJR(timeout = 10000, delay = 500): boolean {
     className: 'com.jd.jrapp.bm.mainbox.main.MainActivity',
   });
 
-  return !!delayCheck(timeout, delay, () => {
-    if (currentPackage() !== jdJinRongId) {
-      return false;
-    }
+  return skipAd({
+    timeout,
+    delay,
+    mainPageCheck: () => {
+      const cp = currentPackage();
 
-    // 是否存在广告
-    const jumpBtn = getUiObject('跳过');
-    if (jumpBtn) {
-      boundsClick(jumpBtn);
-      return false;
-    }
+      if (cp !== jdJinRongId && cp !== autojsId) {
+        return false;
+      }
 
-    return idContains('iv_fifth_icon').findOnce();
+      return idContains('iv_fifth_icon').findOnce();
+    },
   });
 }
 

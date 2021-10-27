@@ -2,7 +2,7 @@ import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
 import { getCaptureImage } from '../../common/image';
 import { muteRestoreMusic } from '../../common/mute';
 import { tl } from '../../common/toast';
-import { runWithRetry } from '../../jd/211111/tasks/index';
+import { runJDJR, runJDMall, runWithRetry } from '../../jd/211111/tasks/index';
 import './head';
 import layout from './layout.xml';
 
@@ -19,6 +19,14 @@ const btns = [
   {
     id: 'runJDBtn',
     type: 'jd',
+  },
+  {
+    id: 'runJDMall',
+    type: 'mall',
+  },
+  {
+    id: 'runJDJR',
+    type: 'jr',
   },
 ];
 
@@ -91,10 +99,14 @@ function run(type: string) {
   try {
     threadCache = threads.start(() => {
       const restoreMusic = muteRestoreMusic();
+      getCaptureImage();
 
       if (type === 'jd') {
-        getCaptureImage();
         runWithRetry(3);
+      } else if (type === 'mall') {
+        runJDMall(3);
+      } else if (type === 'jr') {
+        runJDJR(3);
       }
 
       restoreMusic();
