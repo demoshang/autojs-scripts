@@ -48,7 +48,10 @@ function tl(...msg: any[]): void {
   showToast(text);
 }
 
-function toastUiObject(ele?: UiObject, extra?: Record<string, any>): void {
+function toastUiObject(
+  ele?: UiObject | null,
+  extra?: Record<string, any>,
+): void {
   tl({
     ...extra,
     ...simpleUiObject(ele),

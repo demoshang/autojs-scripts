@@ -1,4 +1,6 @@
+import { boundsClick } from './click-ele-bounds';
 import { delayCheck } from './delay-check';
+import { getUiObject } from './ui-object';
 
 const jdApplicationId = 'com.jingdong.app.mall';
 const suningApplicationId = 'com.suning.mobile.ebuy';
@@ -31,7 +33,19 @@ function openJDMain(timeout = 10000, delay = 500): boolean {
   });
 
   return !!delayCheck(timeout, delay, () => {
-    return currentPackage() === jdApplicationId && desc('我的').findOnce();
+    if (currentPackage() !== jdApplicationId) {
+      return false;
+    }
+
+    // 是否存在广告
+    const jumpBtn = getUiObject('跳过');
+
+    if (jumpBtn) {
+      boundsClick(jumpBtn);
+      return false;
+    }
+
+    return desc('我的').findOnce();
   });
 }
 
@@ -42,12 +56,19 @@ function openJDJR(timeout = 10000, delay = 500): boolean {
     className: 'com.jd.jrapp.bm.mainbox.main.MainActivity',
   });
 
-  sleep(8000);
-
   return !!delayCheck(timeout, delay, () => {
-    return (
-      currentPackage() === jdJinRongId && idContains('iv_fifth_icon').findOnce()
-    );
+    if (currentPackage() !== jdJinRongId) {
+      return false;
+    }
+
+    // 是否存在广告
+    const jumpBtn = getUiObject('跳过');
+    if (jumpBtn) {
+      boundsClick(jumpBtn);
+      return false;
+    }
+
+    return idContains('iv_fifth_icon').findOnce();
   });
 }
 

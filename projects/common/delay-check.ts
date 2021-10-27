@@ -3,22 +3,22 @@ function delayCheck<T>(
   delay: number,
   checkFn: () => T,
   runFn?: () => void,
-  checkFirst = true,
+  runFirst = true,
 ): false | T {
+  if (runFirst && runFn) {
+    runFn();
+  }
+
   while (timeout > 0) {
     // eslint-disable-next-line no-param-reassign
     timeout -= delay;
-
-    if (checkFirst && runFn) {
-      runFn();
-    }
 
     const result = checkFn();
     if (result) {
       return result;
     }
 
-    if (!checkFirst && runFn) {
+    if (runFn) {
       runFn();
     }
 

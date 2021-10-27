@@ -239,8 +239,6 @@ function goToPage(isJR = false) {
     1000,
     () => {
       tl('搜索按钮 [京东11.11]');
-      console.info('currentPackage: ', currentPackage());
-
       if (isJR) {
         return idContains('redPacketIV').findOnce();
       }
@@ -249,7 +247,7 @@ function goToPage(isJR = false) {
     },
     () => {
       tl('搜索按钮 [首页]');
-      boundsClick(getUiObject('首页', 'dt'));
+      boundsClick(getUiObject('首页', 'dt')?.parent());
     },
   );
 

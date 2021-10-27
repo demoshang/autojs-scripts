@@ -1,6 +1,7 @@
 import { floatyDebug } from './floaty-debug';
 import { Radius } from './interface';
-import { isRadius, isRect, isRegExp } from './type-check';
+import { isRadius, isRect, isRegExp, isUiObject } from './type-check';
+import { simpleUiObject } from './ui-object';
 
 type Position = (bounds: Rect | Radius) => { x: number; y: number };
 
@@ -29,11 +30,24 @@ function boundsClick(
   param?: Rect | Radius | UiObject | string | RegExp | null,
   delay = 2000,
   position = (bounds: Rect | Radius) => {
+    let tmp: { x: number; y: number };
+
     if (isRect(bounds)) {
-      return { x: bounds.centerX(), y: bounds.centerY() };
+      tmp = { x: bounds.centerX(), y: bounds.centerY() };
+    } else {
+      tmp = bounds;
     }
 
-    return bounds;
+    if (
+      tmp.x === null ||
+      tmp.x === null ||
+      tmp.x === undefined ||
+      tmp.x === undefined
+    ) {
+      throw new Error('no position found');
+    }
+
+    return tmp;
   },
 ): boolean {
   let bounds: Rect | Radius | undefined;
@@ -50,7 +64,8 @@ function boundsClick(
     bounds = param;
   } else if (isRadius(param)) {
     bounds = param;
-  } else {
+  } else if (isUiObject(param)) {
+    console.log(simpleUiObject(param));
     bounds = param?.bounds();
   }
 

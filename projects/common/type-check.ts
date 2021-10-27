@@ -1,4 +1,4 @@
-import { Bounds, RectWithWH, Radius } from './interface';
+import { Bounds, Radius, RectWithWH } from './interface';
 
 enum Type {
   'null' = 'null',
@@ -36,7 +36,7 @@ function isRegExp(obj: any): obj is RegExp {
 }
 
 function isRect(obj?: any): obj is Rect {
-  if (obj?.top && obj?.left) {
+  if (obj?.centerX && obj?.centerY && obj?.intersect) {
     return true;
   }
 

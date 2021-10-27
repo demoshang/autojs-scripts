@@ -78,7 +78,7 @@ function getUiObject(
   }
 }
 
-function simpleUiObject(ele?: UiObject) {
+function simpleUiObject(ele?: UiObject | null) {
   if (!ele) {
     return undefined;
   }

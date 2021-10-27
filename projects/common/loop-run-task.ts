@@ -59,21 +59,30 @@ function loopCheck({
     throw new Error(`[${name}] 未找到任务数据`);
   }
 
-  // 上次执行 总数和 本次执行 总数不相同 (第一次执行total为0, 要忽略)
-  const isTotalChange =
-    lastResult.total !== 0 && lastResult.total === taskCount.total;
-  // 上次执行 完成数 存在(不是第一次执行任务), 但本次完成数为0 (新任务开始)
-  const isCompletedChange =
-    lastResult.completed !== 0 && taskCount.completed === 0;
+  let changeStatus = { lastResult, taskCount, changedName: '' };
 
-  console.log('============任务检查======', {
-    lastResult,
-    taskCount,
-    isTotalChange,
-    isCompletedChange,
-  });
+  if (
+    lastResult.total === taskCount.total &&
+    lastResult.completed === taskCount.completed &&
+    lastResult.left === taskCount.left
+  ) {
+    // 上次和本次任务内容完全一样, 不做处理
+  }
 
-  if (isTotalChange || isCompletedChange) {
+  // 不是第一次执行本任务
+  else if (lastResult.total !== 0) {
+    if (lastResult.total !== taskCount.total) {
+      changeStatus.changedName = 'total';
+    } else if (taskCount.completed === 0) {
+      changeStatus.changedName = 'completed';
+    } else if (Math.abs(taskCount.left - lastResult.left) > 1) {
+      changeStatus.changedName = 'left';
+    }
+  }
+
+  console.log('====任务检查====', changeStatus);
+
+  if (changeStatus.changedName) {
     return {
       taskCount: {
         ...taskCount,
