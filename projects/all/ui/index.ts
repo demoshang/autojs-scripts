@@ -3,6 +3,7 @@ import { getCaptureImage } from '../../common/image';
 import { muteRestoreMusic } from '../../common/mute';
 import { tl } from '../../common/toast';
 import { runJDJR, runJDMall, runWithRetry } from '../../jd/211111/tasks/index';
+import { downloadFile, getScriptPath } from '../../third-party/download';
 import './head';
 import layout from './layout.xml';
 
@@ -14,6 +15,13 @@ enum Status {
 }
 
 const status: { [key: string]: boolean } = {};
+
+const thirdPartyScripts = [
+  {
+    key: 'czj2369_tb',
+    url: 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/czj2369/jd_tb_auto/master/auto_20211111/tb/main.js',
+  },
+];
 
 const btns = [
   {
@@ -59,6 +67,62 @@ function renderFloaty(type: boolean | 'hidden') {
   }
 }
 
+function renderThirdParty() {
+  const statusList: { key: string; success?: boolean; failed?: boolean }[] = [];
+
+  const interval = setInterval(() => {
+    if (!thirdPartyScripts.length) {
+      clearInterval(interval);
+      return;
+    }
+
+    thirdPartyScripts.forEach(({ key }) => {
+      const status = statusList.find(({ key: sk }) => {
+        return sk === key;
+      }) ?? { success: false, failed: false };
+
+      if (status.success) {
+        ui[key].visibility = Status.visible;
+      } else if (status.failed) {
+        ui[`${key}_failed`].visibility = Status.visible;
+      } else {
+        ui[key].visibility = Status.invisible;
+        ui[`${key}_failed`].visibility = Status.invisible;
+      }
+    });
+
+    if (statusList.length === thirdPartyScripts.length) {
+      clearInterval(interval);
+      tl('结束第三方脚本检测');
+      return;
+    }
+  }, 1000);
+
+  thirdPartyScripts.forEach(({ key, url }) => {
+    ui[key].click(() => {
+      engines.execScriptFile(getScriptPath(key));
+    });
+
+    downloadFile({
+      url,
+      key,
+      callback: (error, _, filePath) => {
+        if (error) {
+          statusList.push({ key, failed: true });
+          return;
+        }
+
+        if (!filePath) {
+          statusList.push({ key, failed: true });
+          return;
+        }
+
+        statusList.push({ key, success: true });
+      },
+    });
+  });
+}
+
 function render() {
   if (!status.accessibility) {
     renderAccessibility(false);
@@ -66,6 +130,8 @@ function render() {
   } else {
     renderAccessibility(true);
     renderFloaty(status.floaty);
+
+    renderThirdParty();
   }
 
   if (status.accessibility && status.floaty) {

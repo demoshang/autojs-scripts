@@ -21,4 +21,7 @@
   <button id="runJDJR" style="Widget.AppCompat.Button.Colored" text="启动[京东金融双十一]脚本" visibility="gone" />
   <button id="runJDBtn" style="Widget.AppCompat.Button.Colored" text="启动[全部]脚本" visibility="gone" />
 
+  <button id="czj2369_tb_failed" style="Widget.AppCompat.Button.Colored" text="[czj2369-淘宝]脚本下载失败" visibility="gone" />
+  <button id="czj2369_tb" style="Widget.AppCompat.Button.Colored" text="启动[czj2369-淘宝]脚本" visibility="gone" />
+
 </vertical>

@@ -1,16 +1,16 @@
 /// <reference path="../auto.d.ts" />
 
 declare namespace http {
-    interface HttpRequestOptions {
-        header: { [key: string]: string },
-        method: 'GET' | 'POST' | 'PUT' | 'DELET' | 'PATCH';
-        contentType: string;
-        body: string | string[] | files.byte[]
+    export interface HttpRequestOptions {
+        header?: { [key: string]: string },
+        method?: 'GET' | 'POST' | 'PUT' | 'DELET' | 'PATCH';
+        contentType?: string;
+        body?: string | string[] | files.byte[]
     }
     interface Request {
 
     }
-    interface Response {
+    export interface Response {
         statusCode: number;
         statusMessage: string;
         headers: { [key: string]: string };
@@ -35,6 +35,6 @@ declare namespace http {
     function postMultipart(url: string, files: RequestMultipartBody, options?: HttpRequestOptions, callback?: (resp: Response) => void): void;
     function postMultipart(url: string, files: { [key: string]: string } & RequestMultipartBody, options?: HttpRequestOptions, callback?: (resp: Response) => void): void;
 
-    function request(url: string, options?: HttpRequestOptions, callback?: (resp: Response) => void): void;
+    function request(url: string, options?: HttpRequestOptions, callback?: (resp: Response, error?: Error) => void): void;
 
 }

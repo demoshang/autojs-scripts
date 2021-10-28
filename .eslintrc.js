@@ -75,6 +75,9 @@ module.exports = {
     classNameStartsWith: false,
     classNameEndsWith: false,
     classNameMatches: false,
+    http: false,
+    files: false,
+    engines: false,
     // 你的全局变量（设置为 false 表示它不允许被重新赋值）
   },
   rules: {
