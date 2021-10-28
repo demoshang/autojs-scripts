@@ -342,8 +342,8 @@ function runJDJR(retries: number) {
 }
 
 function runWithRetry(retries = 3): void {
-  runJDMall(3);
-  runJDJR(3);
+  runJDMall(retries);
+  runJDJR(retries);
 }
 
 export { runWithRetry, runJDMall, runJDJR };
