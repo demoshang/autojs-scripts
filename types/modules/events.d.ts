@@ -9,6 +9,7 @@ declare namespace events {
     }
 
     function emitter(): EventEmitter;
+    function emitter(thread: threads.Thread): EventEmitter;
 
     function observeKey(): void;
 

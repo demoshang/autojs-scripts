@@ -1,9 +1,17 @@
+import { $ } from './ui-object';
+
 export interface TaskCountResult {
   total: number;
   completed: number;
   left: number;
 
   dataConfusion?: boolean;
+}
+
+function getTaskIntro(container: UiObject | null) {
+  const intro =
+    $(container, /.*\d+(秒|s).*/)?.text() ?? $(container, /可得\d+/)?.text();
+  return intro;
 }
 
 function getTaskCount(ele?: UiObject | null): TaskCountResult | null;
@@ -39,16 +47,18 @@ function getTaskDelay(
   taskName?: string | RegExp,
   defaultDelay = 1000,
 ): number {
+  const regex = /(\d+)(秒|s)/;
+
   let text = '';
   if (!item) {
     text = '';
   } else if (typeof item === 'string') {
     text = item;
   } else {
-    text = item?.findOne(textMatches(/.*\d+(秒|s).*/))?.text() || '';
+    text = $(item, regex)?.text() ?? '';
   }
 
-  if (!/(\d+)(秒|s)/.test(text)) {
+  if (!regex.test(text)) {
     console.warn(`没有时间限制 ${text}  ${taskName?.toString()}`);
 
     return defaultDelay;
@@ -59,4 +69,4 @@ function getTaskDelay(
   return seconds * 1000;
 }
 
-export { getTaskCount, getTaskDelay };
+export { getTaskCount, getTaskIntro, getTaskDelay };

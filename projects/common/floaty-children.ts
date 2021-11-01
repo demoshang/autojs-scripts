@@ -57,7 +57,7 @@ function filterChildren(
     const { item, depth } = next;
     list.push(item);
 
-    if (depth < maxDepth && item.childCount() > 0) {
+    if (depth < maxDepth && item && item.childCount() > 0) {
       const children = collection2array(item.children());
       parents.push(
         ...children.map((o) => {
@@ -253,14 +253,14 @@ function floatyChildren(
 }
 
 function getChild(parent?: UiObject, index = 0) {
-  return collection2array(parent?.children())[index];
+  return parent?.children()?.get(index);
 }
 
 function getChildren(parent?: UiObject, indexes: number[] = []) {
-  const list = collection2array(parent?.children());
+  const children = parent?.children();
 
   return indexes.map((index) => {
-    return list[index];
+    return children?.get(index);
   });
 }
 

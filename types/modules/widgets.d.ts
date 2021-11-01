@@ -62,6 +62,7 @@ declare interface UiSelector {
     untilFind(): UiCollection;
     exists(): boolean;
     waitFor(): void;
+    depth(nu: number): UiSelector;
     filter(filter: (obj: UiObject) => boolean)
 }
 

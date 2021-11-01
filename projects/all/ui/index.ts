@@ -2,7 +2,7 @@ import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
 import { getCaptureImage } from '../../common/image';
 import { muteRestoreMusic } from '../../common/mute';
 import { tl } from '../../common/toast';
-import { runJDJR, runJDMall, runWithRetry } from '../../jd/211111/tasks/index';
+import { runJDJR, runJDMall } from '../../jd/211111/tasks';
 import { downloadFile, getScriptPath } from '../../third-party/download';
 import './head';
 import layout from './layout.xml';
@@ -168,7 +168,8 @@ function run(type: string) {
       getCaptureImage();
 
       if (type === 'jd') {
-        runWithRetry(3);
+        runJDMall(3);
+        runJDJR(3);
       } else if (type === 'mall') {
         runJDMall(3);
       } else if (type === 'jr') {

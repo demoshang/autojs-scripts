@@ -22,6 +22,8 @@ module.exports = {
     UiObject: false,
     UiCollection: false,
     MatchTemplateOptions: false,
+    UiSelector: false,
+    EventEmitter: false,
 
     // autojs 自带的
     auto: false,

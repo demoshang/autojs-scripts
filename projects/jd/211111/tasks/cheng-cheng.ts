@@ -3,7 +3,7 @@ import { getChild } from '../../../common/floaty-children';
 import { getUiObject } from '../../../common/ui-object';
 
 function checkIsInChengCheng() {
-  return !!getUiObject(/邀请新|624393fabf2293cb/);
+  return !!getUiObject(/邀请新|624393fabf2293cb|e300dc37709c6f82/);
 }
 
 function doChengCheng() {
@@ -18,11 +18,13 @@ function doChengCheng() {
   }
 
   boundsClick(getUiObject('624393fabf2293cb'));
+  boundsClick(getUiObject('e300dc37709c6f82'));
 
   back();
   sleep(1000);
 
   boundsClick(getUiObject('624393fabf2293cb'));
+  boundsClick(getUiObject('e300dc37709c6f82'));
 
   sleep(1000);
   back();

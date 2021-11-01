@@ -130,6 +130,10 @@ function scrollIn(
   if (checkInScreen(data)) {
     return data;
   }
+
+  // 滚动有个动画
+  sleep(2000);
+
   return undefined;
 }
 
