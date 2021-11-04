@@ -244,14 +244,12 @@ function runTask(
 function runJDMall(retries: number) {
   const worker = new Worker({
     name: '京东',
-    openApp: openJDNoCheck,
-    killApp: () => {
-      killApp(jdApplicationId);
-    },
     runTask,
     keepInTaskPage,
     taskSkip,
     workerRetires: retries,
+
+    ...buildJdMall(),
   });
 
   worker.start();
@@ -260,14 +258,13 @@ function runJDMall(retries: number) {
 function runJDJR(retries: number) {
   const worker = new Worker({
     name: '京东金融',
-    openApp: openJDJRNoCheck,
-    killApp: () => {
-      killApp(jdJinRongId);
-    },
+
     runTask,
     keepInTaskPage,
     taskSkip,
     workerRetires: retries,
+
+    ...buildJdJR(),
   });
 
   worker.start();
