@@ -1,11 +1,33 @@
 # 个人 `Auto.js` 脚本
 
-## 说明
+## 下载
+
+### 使用构建好的 apk
+
+1. 进入[`Actions`](https://github.com/demoshang/autojs-scripts/actions), 选择最新的构建
+2. 在 `Artifacts` 中 找到 `debug-apk` 并下载
+3. 解压下载的 `debug-apk`, 选择对应 apk (大部分手机使用 `inrt-armeabi-v7a-debug.apk `), 在手机中安装
+4. 打开安装的软件, 按操作执行
+
+### 已经安装 `autojs 4.1.1 Alpha2`
+
+1. 进入[`Actions`](https://github.com/demoshang/autojs-scripts/actions), 选择最新的构建
+2. 在 `Artifacts` 中 找到 `js-dist` 并下载
+3. 解压下载的 `js-dist` 放置到手机中
+4. 用 `autojs` 打开这个目录, 运行后按操作提示执行
+
+## 使用
+
+1. 音量键上键, 按一次表示暂停执行(当前逻辑要处理完), 间隔 1 秒后, 再按一次表示继续执行, 连续按 2 次以上(1 秒内), 退出本次执行
+2. 提示的权限全部需要给
+3. 请尽量保持网络顺畅, 防止因为网络原因导致脚本执行的延迟不匹配
+
+## 开发说明
 
 1. 支持 `typescript` 开发
 2. 由于 ts 不支持 `Auto.js` 中 `用户界面(UI)` 相关函数(如 `ui.layout(xml)`), 需要特殊转换  
    2.1 将 `xml` 独立成文件, 如 `layout.xml`  
-   2.2 在 `xml` 文件 头部添加注释 `<!-- wrap: 调用方法 -->`, 如:  
+   2.2 在 `xml` 文件 头部添加注释 `<!-- wrap: 调用方法 -->`, 如:
 
    ```xml
    <!-- wrap: ui.layout -->
@@ -16,18 +38,18 @@
    </frame>
    ```
 
-   2.3 `xml` 文件中可以使用变量 `__ARGS__`, `__ARG0__` ... `__ARG9__`  
+   2.3 `xml` 文件中可以使用变量 `__ARGS__`, `__ARG0__` ... `__ARG9__`
 
-   2.4 在 `.ts` 文件中使用  
+   2.4 在 `.ts` 文件中使用
 
    ```ts
-   import layout from './layout.xml';
+   import layout from "./layout.xml";
 
    const params = {
      radius: 10,
      width: 10,
      height: 10,
-     color: 'purple',
+     color: "purple",
    };
 
    // 这里的 params 在 xml 中为 __ARG0__
@@ -66,7 +88,7 @@
 
 1. `clone`
 2. `npm install`
-3. `npm run watch`
+3. `npm start`
 4. `dist` 为生成目录, 可用于 `Auto.js` 运行
 
 ## 开发依赖
