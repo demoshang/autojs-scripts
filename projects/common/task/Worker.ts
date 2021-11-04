@@ -72,9 +72,6 @@ class Worker {
       return;
     }
 
-    // 删除上次线程
-    this.closeThread();
-
     if (this.taskStatus === TaskStatus.suspend) {
       tl(`执行任务 ${this.config.name}`);
     } else {
@@ -99,6 +96,9 @@ class Worker {
 
     // 更新线程定时器
     this.updateEventEmitter();
+
+    // 删除上次线程
+    this.closeThread();
 
     // 子线程监听脚本
     this.thread = threads.start(() => {
