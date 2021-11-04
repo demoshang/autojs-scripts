@@ -1,19 +1,13 @@
-import { boundsClick } from '../../../common/click-ele-bounds';
-import { delayCheck } from '../../../common/delay-check';
-import { findAndClick } from '../../../common/find-click';
-import { checkInScreen } from '../../../common/in-screen';
-import { killApp } from '../../../common/kill-app';
-import {
-  jdApplicationId,
-  jdJinRongId,
-  openJDJRNoCheck,
-  openJDNoCheck,
-} from '../../../common/open-app/old-open-app';
-import { scrollIn, scrollPage } from '../../../common/scroll';
-import { Task } from '../../../common/task/Task';
-import { Worker } from '../../../common/task/Worker';
-import { tl } from '../../../common/toast';
-import { $ } from '../../../common/ui-object';
+import { buildJdJR, buildJdMall } from '@/common/app/open-kill';
+import { boundsClick } from '@/common/click-ele-bounds';
+import { delayCheck } from '@/common/delay-check';
+import { findAndClick } from '@/common/find-click';
+import { checkInScreen } from '@/common/in-screen';
+import { scrollIn, scrollPage } from '@/common/scroll';
+import { Task } from '@/common/task/Task';
+import { Worker } from '@/common/task/Worker';
+import { tl } from '@/common/toast';
+import { $ } from '@/common/ui-object';
 import { checkIsInChengCheng, doChengCheng } from './cheng-cheng';
 import { checkIsViewProduct, viewProduct } from './view-product';
 import { checkIsWall, doWall } from './wall';

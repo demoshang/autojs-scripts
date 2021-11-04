@@ -1,9 +1,9 @@
-import { checkFloaty, openFloatySetting } from '../../common/floaty-permission';
-import { getCaptureImage } from '../../common/image';
-import { muteRestoreMusic } from '../../common/mute';
-import { tl } from '../../common/toast';
-import { runJDJR, runJDMall } from '../../jd/211111/tasks';
-import { downloadFile, getScriptPath } from '../../third-party/download';
+import { checkFloaty, openFloatySetting } from '@/common/floaty-permission';
+import { getCaptureImage } from '@/common/image';
+import { muteRestoreMusic } from '@/common/mute';
+import { tl } from '@/common/toast';
+import { runJDJR, runJDMall } from '@/jd/211111/tasks';
+import { downloadFile, getScriptPath } from '@/third-party/download';
 import './head';
 import layout from './layout.xml';
 

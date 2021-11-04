@@ -4,6 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const { root } = require("./constants");
 const { getEntry } = require("./entry");
 const AutoJsUiPlugin = require("./autojs-ui.plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = {
   entry: getEntry(),
@@ -25,6 +26,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".xml"],
+    plugins: [new TsconfigPathsPlugin()],
   },
   plugins: [
     new CopyPlugin({

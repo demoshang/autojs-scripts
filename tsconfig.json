@@ -2,6 +2,10 @@
   "include": ["projects/**/*.ts", "types/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./projects/*"]
+    },
     "resolveJsonModule": true,
     "target": "ES5",
     "module": "CommonJS",
