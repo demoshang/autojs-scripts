@@ -1,22 +1,13 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const { merge } = require("webpack-merge");
+const ESLintPlugin = require("eslint-webpack-plugin");
+const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
-  devtool: 'hidden-source-map',
+  devtool: "hidden-source-map",
   mode: "development",
 
   module: {
     rules: [
-      {
-        enforce: "pre",
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {
-          emitWarning: true,
-          formatter: require("eslint-formatter-friendly"),
-        },
-      },
       {
         test: /\.ts$/,
         use: {
@@ -31,4 +22,12 @@ module.exports = merge(common, {
       },
     ],
   },
+
+  plugins: [
+    new ESLintPlugin({
+      extensions: ["ts"],
+      emitWarning: true,
+      formatter: require("eslint-formatter-friendly"),
+    }),
+  ],
 });

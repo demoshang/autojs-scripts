@@ -1,4 +1,5 @@
 const { merge } = require("webpack-merge");
+const ESLintPlugin = require("eslint-webpack-plugin");
 const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
@@ -13,16 +14,6 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        enforce: "pre",
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {
-          failOnError: true,
-          formatter: require("eslint-formatter-friendly"),
-        },
-      },
-      {
         test: /\.ts$/,
         use: {
           loader: "ts-loader",
@@ -32,4 +23,12 @@ module.exports = merge(common, {
       },
     ],
   },
+
+  plugins: [
+    new ESLintPlugin({
+      extensions: ["ts"],
+      failOnError: true,
+      formatter: require("eslint-formatter-friendly"),
+    }),
+  ],
 });
