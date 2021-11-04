@@ -3,7 +3,10 @@ import { delayCheck } from '../../../common/delay-check';
 import { collection2array } from '../../../common/floaty-children';
 import { floatyDebug } from '../../../common/floaty-debug';
 import { killApp } from '../../../common/kill-app';
-import { openSuning, suningApplicationId } from '../../../common/open-app';
+import {
+  openSuning,
+  suningApplicationId,
+} from '../../../common/app/old-open-app';
 import { retryRun } from '../../../common/retry-run';
 import { scrollIn, scrollOut, scrollPage } from '../../../common/scroll';
 import { tl } from '../../../common/toast';

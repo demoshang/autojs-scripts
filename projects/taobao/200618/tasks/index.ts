@@ -3,7 +3,7 @@ import { delayCheck } from '../../../common/delay-check';
 import { collection2array } from '../../../common/floaty-children';
 import { killApp } from '../../../common/kill-app';
 import { loopRunTask } from '../../../common/loop-run-task';
-import { openTaoBaoMain, taobaoId } from '../../../common/open-app';
+import { openTaoBaoMain, taobaoId } from '../../../common/app/old-open-app';
 import { retryRun } from '../../../common/retry-run';
 import { tl } from '../../../common/toast';
 

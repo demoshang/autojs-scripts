@@ -1,8 +1,8 @@
-import { boundsClick } from './click-ele-bounds';
-import { delayCheck } from './delay-check';
-import { scrollIn, scrollPage } from './scroll';
-import { tl } from './toast';
-import { getUiObject } from './ui-object';
+import { boundsClick } from '../click-ele-bounds';
+import { delayCheck } from '../delay-check';
+import { scrollIn, scrollPage } from '../scroll';
+import { tl } from '../toast';
+import { getUiObject } from '../ui-object';
 
 const autojsId = 'org.autojs.autojs';
 

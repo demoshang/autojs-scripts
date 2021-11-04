@@ -1,5 +1,5 @@
 import { delayCheck } from '../../common/delay-check';
-import { openSuning } from '../../common/open-app';
+import { openSuning } from '../../common/app/old-open-app';
 import { tl } from '../../common/toast';
 
 function openWhale(): void {

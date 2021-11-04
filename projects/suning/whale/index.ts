@@ -1,6 +1,6 @@
 import { jumpTop } from '../../common/jump-top';
 import { killApp } from '../../common/kill-app';
-import { suningApplicationId } from '../../common/open-app';
+import { suningApplicationId } from '../../common/app/old-open-app';
 import { retryRun } from '../../common/retry-run';
 import { collect } from './collect';
 import { doExclusive } from './exclusive-reward';

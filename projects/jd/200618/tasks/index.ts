@@ -6,7 +6,7 @@ import { getTaskCount } from '../../../common/get-task-count';
 import { checkInScreen } from '../../../common/in-screen';
 import { killApp } from '../../../common/kill-app';
 import { loopRunTask } from '../../../common/loop-run-task';
-import { jdApplicationId, openJDMain } from '../../../common/open-app';
+import { jdApplicationId, openJDMain } from '../../../common/app/old-open-app';
 import { retryRun } from '../../../common/retry-run';
 import { myScroll, scrollIn } from '../../../common/scroll';
 import { tl } from '../../../common/toast';

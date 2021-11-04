@@ -8,7 +8,7 @@ import {
   jdJinRongId,
   openJDJRNoCheck,
   openJDNoCheck,
-} from '../../../common/open-app';
+} from '../../../common/open-app/old-open-app';
 import { scrollIn, scrollPage } from '../../../common/scroll';
 import { Task } from '../../../common/task/Task';
 import { Worker } from '../../../common/task/Worker';

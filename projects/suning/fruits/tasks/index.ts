@@ -1,6 +1,9 @@
 import { delayCheck } from '../../../common/delay-check';
 import { killApp } from '../../../common/kill-app';
-import { openSuning, suningApplicationId } from '../../../common/open-app';
+import {
+  openSuning,
+  suningApplicationId,
+} from '../../../common/app/old-open-app';
 import { retryRun } from '../../../common/retry-run';
 import { tl } from '../../../common/toast';
 import { addAnimals, collectAnimal } from './animal';
