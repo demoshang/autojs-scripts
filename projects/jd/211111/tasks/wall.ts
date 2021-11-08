@@ -1,7 +1,8 @@
-import { boundsClick } from '../../../common/click-ele-bounds';
-import { collection2array } from '../../../common/floaty-children';
-import { checkInScreen } from '../../../common/in-screen';
-import { scrollPage } from '../../../common/scroll';
+import { boundsClick } from '@/common/click-ele-bounds';
+import { collection2array } from '@/common/floaty-children';
+import { checkInScreen } from '@/common/in-screen';
+import { scrollPage } from '@/common/scroll';
+import { $ } from '@/common/ui-object';
 
 function getList() {
   const list = collection2array(textMatches(/.*(jpg|png).*/).find());
@@ -11,7 +12,7 @@ function getList() {
 }
 
 function checkIsWall(ele = getList()[0]) {
-  return checkInScreen(ele);
+  return checkInScreen(ele) && $(/打卡领红包|解锁.*站/);
 }
 
 function doWall() {
