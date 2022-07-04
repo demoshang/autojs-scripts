@@ -29,6 +29,8 @@ interface WorkerConfig {
   taskSkip?: CustomTaskSkip;
   taskRetires?: number;
   workerRetires?: number;
+
+  destroy?: () => void;
 }
 
 class Worker {
@@ -131,8 +133,14 @@ class Worker {
     // 清除 volume 进程
     this.volumeThread.interrupt();
 
+    this.em.removeAllListeners();
+
     // 重置状态
     this.taskStatus = TaskStatus.ended;
+
+    if (this.config.destroy) {
+      this.config.destroy();
+    }
   }
 
   // 去除老的监听, 防止线程阻塞

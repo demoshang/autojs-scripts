@@ -1,7 +1,7 @@
 function delayCheck<T>(
   timeout: number,
   delay: number,
-  checkFn: () => T,
+  checkFn: (restTimeout?: number) => T,
   runFn?: () => void,
   runFirst = true,
 ): false | T {
@@ -13,7 +13,7 @@ function delayCheck<T>(
     // eslint-disable-next-line no-param-reassign
     timeout -= delay;
 
-    const result = checkFn();
+    const result = checkFn(timeout);
     if (result) {
       return result;
     }

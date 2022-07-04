@@ -234,7 +234,7 @@ function $$(
   forceType?: SelectorType | SelectorType[],
 ): UiObject[];
 function $$(
-  parent: UiObject | null,
+  parent: UiObject | null | undefined,
   selector: string | RegExp,
   forceType?: SelectorType | SelectorType[],
 ): UiObject[];
