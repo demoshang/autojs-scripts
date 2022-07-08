@@ -43,6 +43,10 @@ class Task {
 
   public constructor(public config: TaskConfig) {}
 
+  public get container() {
+    return this.config.container;
+  }
+
   public get title() {
     return this.buildAttr('title');
   }

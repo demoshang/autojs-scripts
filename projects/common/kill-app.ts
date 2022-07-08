@@ -4,10 +4,10 @@ import { tl } from './toast';
 function killApp(applicationId: string, timeout = 10000, delay = 1000): void {
   tl(`停止应用${applicationId}中...`);
 
-  let ele = delayCheck(
+  let ele = delayCheck({
     timeout,
     delay,
-    () => {
+    checkFn: () => {
       return (
         textContains('FORCE STOP').findOnce() ||
         textContains('Force stop').findOnce() ||
@@ -15,10 +15,10 @@ function killApp(applicationId: string, timeout = 10000, delay = 1000): void {
         textContains('强行停止').findOnce()
       );
     },
-    () => {
+    runFn: () => {
       openAppSetting(applicationId);
     },
-  );
+  });
 
   if (!ele) {
     throw new Error('无法停止应用, exit');

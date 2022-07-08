@@ -1,25 +1,72 @@
-function delayCheck<T>(
-  timeout: number,
-  delay: number,
-  checkFn: (restTimeout?: number) => T,
-  runFn?: () => void,
+const buildTimerLogger = (timeout: number, log: boolean | number = false) => {
+  const when = Date.now();
+  let lastLogTime = when;
+
+  return () => {
+    const now = Date.now();
+    const passTime = now - when;
+    const restTime = timeout - passTime;
+
+    let isLog = false;
+
+    if (log === true) {
+      isLog = true;
+    } else if (typeof log === 'number' && now - lastLogTime > log) {
+      isLog = true;
+      lastLogTime = now;
+    }
+
+    if (isLog) {
+      if (passTime >= 500) {
+        console.log(
+          `pass ${(passTime / 1000).toFixed(1)}s, rest ${(
+            restTime / 1000
+          ).toFixed(1)}s, total ${(timeout / 1000).toFixed(1)}s`,
+        );
+      } else {
+        console.log(`total ${(timeout / 1000).toFixed(1)}s`);
+      }
+    }
+
+    return { passTime, restTime };
+  };
+};
+
+function delayCheck<T>({
+  timeout,
+  delay,
+  checkFn,
+  runFn,
   runFirst = true,
-): false | T {
+  log = false,
+}: {
+  timeout: number;
+  delay: number;
+  checkFn: (restTime?: number) => T;
+  runFn?: (restTime?: number) => void;
+  runFirst?: boolean;
+  log?: boolean | number;
+}): false | T {
   if (runFirst && runFn) {
     runFn();
   }
 
-  while (timeout > 0) {
-    // eslint-disable-next-line no-param-reassign
-    timeout -= delay;
+  const getTime = buildTimerLogger(timeout, log);
 
-    const result = checkFn(timeout);
+  while (true) {
+    const { restTime } = getTime();
+
+    if (restTime < 0) {
+      break;
+    }
+
+    const result = checkFn(restTime);
     if (result) {
       return result;
     }
 
     if (runFn) {
-      runFn();
+      runFn(restTime);
     }
 
     sleep(delay);

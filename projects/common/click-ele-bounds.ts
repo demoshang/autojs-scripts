@@ -1,7 +1,6 @@
 import { floatyDebug } from './floaty-debug';
 import { Radius } from './interface';
 import { isRadius, isRect, isRegExp, isUiObject } from './type-check';
-import { simpleUiObject } from './ui-object';
 
 type Position = (bounds: Rect | Radius) => { x: number; y: number };
 
@@ -65,7 +64,6 @@ function boundsClick(
   } else if (isRadius(param)) {
     bounds = param;
   } else if (isUiObject(param)) {
-    console.log(simpleUiObject(param));
     bounds = param?.bounds();
   }
 

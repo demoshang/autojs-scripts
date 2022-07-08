@@ -71,6 +71,7 @@ class Worker {
     ) {
       tl('已经达到最大次数, 销毁程序', this.config.name);
       this.destroy();
+      exit();
       return;
     }
 

@@ -55,14 +55,6 @@ function scrollInWithStaticUiObject(
   }
 
   for (let i = 0; i < max; i += 1) {
-    console.log(
-      'scrollInWithStaticUiObject',
-      i,
-      'is in screen: ',
-      checkInScreen({ x, y }),
-      x,
-      y,
-    );
     if (checkInScreen({ x, y })) {
       break;
     }

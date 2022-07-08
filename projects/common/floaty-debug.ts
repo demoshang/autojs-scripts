@@ -8,7 +8,6 @@ import {
   isRectWithWH,
   isUiObject,
 } from './type-check';
-import { simpleUiObject } from './ui-object';
 
 importClass(android.view.View);
 
@@ -135,23 +134,23 @@ function floatyDebug(
     return;
   }
 
-  console.log(
-    args.map((item) => {
-      if (isUiObject(item)) {
-        return {
-          ...resolveRect(item.bounds()),
-          ...simpleUiObject(item),
-        };
-      }
-      if (isRect(item)) {
-        return resolveRect(item);
-      }
-      if (isBounds(item)) {
-        return resolveBounds(item);
-      }
-      return item;
-    }),
-  );
+  // console.log(
+  //   args.map((item) => {
+  //     if (isUiObject(item)) {
+  //       return {
+  //         ...resolveRect(item.bounds()),
+  //         ...simpleUiObject(item),
+  //       };
+  //     }
+  //     if (isRect(item)) {
+  //       return resolveRect(item);
+  //     }
+  //     if (isBounds(item)) {
+  //       return resolveBounds(item);
+  //     }
+  //     return item;
+  //   }),
+  // );
 
   const hidden = resolveHidden();
 

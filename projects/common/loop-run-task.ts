@@ -80,8 +80,6 @@ function loopCheck({
     }
   }
 
-  console.log('====任务检查====', changeStatus);
-
   if (changeStatus.changedName) {
     return {
       taskCount: {
@@ -121,25 +119,29 @@ function loopRunTask({
     sleep(after);
   },
   waitFinished = () => {
-    delayCheck(5000, 1000, () => {
-      return !!(
-        descMatches(/.*任务.*完成.*/).findOnce() ||
-        textMatches(/.*任务.*完成.*/).findOnce()
-      );
+    delayCheck({
+      timeout: 5000,
+      delay: 1000,
+      checkFn: () => {
+        return !!(
+          descMatches(/.*任务.*完成.*/).findOnce() ||
+          textMatches(/.*任务.*完成.*/).findOnce()
+        );
+      },
     });
   },
   checkBackToTask = (check) => {
-    return delayCheck(
-      5000,
-      1000,
-      () => {
+    return delayCheck({
+      timeout: 5000,
+      delay: 1000,
+      checkFn: () => {
         return check();
       },
-      () => {
+      runFn: () => {
         back();
         sleep(1000);
       },
-    );
+    });
   },
   lastResult = {
     total: 0,

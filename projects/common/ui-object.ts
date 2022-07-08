@@ -201,7 +201,7 @@ function $(
   forceType?: SelectorType | SelectorType[],
 ): UiObject | null;
 function $(
-  parent: UiObject | null,
+  parent: UiObject | null | undefined,
   selector: string | RegExp,
   forceType?: SelectorType | SelectorType[],
 ): UiObject | null;

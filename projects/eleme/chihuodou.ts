@@ -1,21 +1,25 @@
 import { boundsClick } from '@/common/click-ele-bounds';
 import { delayCheck } from '@/common/delay-check';
-import { floatyDebug } from '@/common/floaty-debug';
-import { checkInScreen } from '@/common/in-screen';
+import { statusBarHeight } from '@/common/floaty-debug';
+import { keepInDynamic } from '@/common/in-screen';
 import { killApp } from '@/common/kill-app';
-import { scrollIn, scrollPage } from '@/common/scroll';
+import { scrollPage } from '@/common/scroll';
 import { Task } from '@/common/task/Task';
 import { Worker } from '@/common/task/Worker';
 import { tl } from '@/common/toast';
 import { $, $$ } from '@/common/ui-object';
 
 function checkIsInTask() {
-  return delayCheck(5000, 800, () => {
-    if ($('吃货豆') && $('逛逛任务')) {
-      return true;
-    }
+  return delayCheck({
+    timeout: 5000,
+    delay: 800,
+    checkFn: () => {
+      if ($('吃货豆') && $('逛逛任务')) {
+        return true;
+      }
 
-    return;
+      return;
+    },
   });
 }
 
@@ -31,19 +35,30 @@ function openActivityPage() {
 }
 
 function keepInTaskPage() {
-  const isInTask = delayCheck(15000, 800, (timeout) => {
-    if ($('吃货豆') && $('逛逛任务')) {
-      return true;
-    }
+  const isInTask = delayCheck({
+    timeout: 15000,
+    delay: 800,
+    runFirst: false,
+    checkFn: (timeout) => {
+      if ($('吃货豆') && $('逛逛任务')) {
+        return true;
+      }
 
-    tl('返回');
-    back();
+      const IKnow = $('我知道了');
 
-    if (timeout && timeout < 3000) {
-      app.launchApp('me.ele');
-    }
+      if (IKnow) {
+        boundsClick(IKnow);
+      }
 
-    return;
+      tl('返回');
+      back();
+
+      if (timeout && timeout < 3000) {
+        app.launchApp('me.ele');
+      }
+
+      return;
+    },
   });
 
   if (!isInTask) {
@@ -56,35 +71,53 @@ function runTask(task: Task, index: number) {
   const after = 3000;
 
   const { intro, title, delay } = task;
-  tl(`执行任务: `, title, intro, delay);
+  const timeout = delay + after * (index - 1) ** 2;
+
+  tl(`执行任务: `, title, intro, '执行时长: ', timeout);
 
   const goBtn = task.btn;
+  const headBounds = $('做任务赚吃货豆')?.parent()?.bounds();
 
-  floatyDebug(goBtn);
+  if (
+    !keepInDynamic(
+      () => {
+        if (!goBtn || !title) {
+          return null;
+        }
 
-  if (!checkInScreen(goBtn)) {
-    scrollIn(goBtn);
+        return $($(title)?.parent(), goBtn?.text());
+      },
+      {
+        x: headBounds?.left ?? 0,
+        y:
+          (headBounds?.top ?? 0) +
+          (headBounds?.height() ?? 0) +
+          (goBtn?.bounds()?.height() ?? 0) +
+          statusBarHeight,
+      },
+    )
+  ) {
+    tl('任务超出屏幕, 先滚动...');
     return;
   }
-
-  floatyDebug(goBtn);
 
   boundsClick(goBtn);
 
   sleep(pre);
   scrollPage();
-  sleep(delay);
 
-  delayCheck(
-    delay + after * (index - 1),
-    500,
-    () => {
+  delayCheck({
+    timeout,
+    delay: 500,
+    checkFn: () => {
       return !!$('点击返回');
     },
-    () => {
+    runFn: () => {
       scrollPage();
     },
-  );
+    log: 1000,
+    runFirst: true,
+  });
 }
 
 function queryTask() {
