@@ -73,7 +73,11 @@ function runTask(
 function goShop(): void {
   tl('开始');
 
-  const isOpenSuccess = delayCheck(15000, 1000, isInTask);
+  const isOpenSuccess = delayCheck({
+    timeout: 15000,
+    delay: 1000,
+    checkFn: isInTask,
+  });
   if (!isOpenSuccess) {
     throw new Error('open suning page failed');
   }

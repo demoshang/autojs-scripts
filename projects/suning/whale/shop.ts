@@ -14,8 +14,12 @@ function checkIsFinished() {
 }
 
 function waitFinished(wait = 12000, interval = 1000) {
-  delayCheck(wait, interval, () => {
-    return checkIsFinished();
+  delayCheck({
+    timeout: wait,
+    delay: interval,
+    checkFn: () => {
+      return checkIsFinished();
+    },
   });
 }
 
@@ -76,17 +80,17 @@ function doShop(): void {
     }
     waitFinished(12000);
 
-    const isInTask = delayCheck(
-      5000,
-      1000,
-      () => {
+    const isInTask = delayCheck({
+      timeout: 5000,
+      delay: 1000,
+      checkFn: () => {
         return text('+100').findOnce() || textContains('今日已领').findOnce();
       },
-      () => {
+      runFn: () => {
         back();
         sleep(1000);
       },
-    );
+    });
 
     if (!isInTask) {
       throw new Error('not in task');

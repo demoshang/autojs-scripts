@@ -10,19 +10,19 @@ import { closeTaskPanel } from './close-task-panel';
 function goToPage() {
   tl('尝试进入 [东东农场] 页面');
 
-  const fruitsBtn = delayCheck(
-    10000,
-    1000,
-    () => {
+  const fruitsBtn = delayCheck({
+    timeout: 10000,
+    delay: 1000,
+    checkFn: () => {
       tl('搜索按钮 [东东农场]');
       console.info('currentPackage: ', currentPackage());
       return textContains('东东农场').findOnce()?.parent();
     },
-    () => {
+    runFn: () => {
       tl('搜索按钮 [我的]');
       boundsClick(desc('我的').findOnce());
     },
-  );
+  });
 
   if (!fruitsBtn) {
     throw new Error('[东东农场] 页面未找到');
@@ -32,8 +32,12 @@ function goToPage() {
   boundsClick(fruitsBtn);
 
   tl('等待进入 [东东农场]');
-  delayCheck(15000, 1000, () => {
-    return textContains('c88963830485cf49').findOnce();
+  delayCheck({
+    timeout: 15000,
+    delay: 1000,
+    checkFn: () => {
+      return textContains('c88963830485cf49').findOnce();
+    },
   });
 }
 
@@ -58,8 +62,12 @@ function goToTask() {
 
   const key = '领水滴';
   if (
-    delayCheck(2000, 500, () => {
-      return textContains(key).findOnce();
+    delayCheck({
+      timeout: 2000,
+      delay: 500,
+      checkFn: () => {
+        return textContains(key).findOnce();
+      },
     })
   ) {
     return;

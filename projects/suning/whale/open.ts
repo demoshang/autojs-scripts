@@ -9,11 +9,15 @@ function openWhale(): void {
   tl('打开苏宁中...');
   openSuning('https://c.m.suning.com/snWhale.html#/', 3000);
 
-  const isSuccess = delayCheck(15000, 1000, () => {
-    return (
-      textContains('天天发现鲸').findOnce() &&
-      textContains('领奖店铺').findOnce()
-    );
+  const isSuccess = delayCheck({
+    timeout: 15000,
+    delay: 1000,
+    checkFn: () => {
+      return (
+        textContains('天天发现鲸').findOnce() &&
+        textContains('领奖店铺').findOnce()
+      );
+    },
   });
 
   if (!isSuccess) {

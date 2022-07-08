@@ -19,8 +19,12 @@ function runTask(position: { x: number; y: number }, delay = 10) {
 }
 
 function waitFinished() {
-  delayCheck(5000, 1000, () => {
-    return textContains('返回领取').findOnce();
+  delayCheck({
+    timeout: 5000,
+    delay: 1000,
+    checkFn: () => {
+      return textContains('返回领取').findOnce();
+    },
   });
 }
 
@@ -42,17 +46,17 @@ function doTasks() {
     runTask(position);
     waitFinished();
 
-    const isInTask = delayCheck(
-      5000,
-      1000,
-      () => {
+    const isInTask = delayCheck({
+      timeout: 5000,
+      delay: 1000,
+      checkFn: () => {
         return textContains('+50').findOnce();
       },
-      () => {
+      runFn: () => {
         back();
         sleep(1000);
       },
-    );
+    });
 
     if (!isInTask) {
       throw new Error('not in task');
@@ -85,8 +89,12 @@ function runWithRetry(retries = 3): void {
       tl('打开苏宁中');
       openSuning('https://c.m.suning.com/snWhale.html#/', 5000);
 
-      const isSuccess = delayCheck(15000, 1000, () => {
-        return textContains('点击收鲸币').findOnce();
+      const isSuccess = delayCheck({
+        timeout: 15000,
+        delay: 1000,
+        checkFn: () => {
+          return textContains('点击收鲸币').findOnce();
+        },
       });
 
       if (!isSuccess) {

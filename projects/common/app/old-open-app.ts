@@ -49,28 +49,32 @@ function skipAd({
   mainCheckTimes?: number;
 }) {
   let index = 0;
-  return delayCheck(timeout, delay, () => {
-    const isAd = adRun();
+  return delayCheck({
+    timeout,
+    delay,
+    checkFn: () => {
+      const isAd = adRun();
 
-    // 是广告, 就略过
-    if (isAd) {
-      return false;
-    }
+      // 是广告, 就略过
+      if (isAd) {
+        return false;
+      }
 
-    const isMainPage = mainPageCheck();
+      const isMainPage = mainPageCheck();
 
-    // 不是主页面, 跳过
-    if (!isMainPage) {
-      return false;
-    }
+      // 不是主页面, 跳过
+      if (!isMainPage) {
+        return false;
+      }
 
-    // 主页面检查次数未达标
-    if (index < mainCheckTimes) {
-      index += 1;
-      return false;
-    }
+      // 主页面检查次数未达标
+      if (index < mainCheckTimes) {
+        index += 1;
+        return false;
+      }
 
-    return true;
+      return true;
+    },
   });
 }
 
@@ -159,31 +163,31 @@ function openMINA(
 
   tl(`进入发现页->小程序->寻找 [${name}] 小程序`);
 
-  delayCheck(
-    5000,
-    500,
-    () => {
+  delayCheck({
+    timeout: 5000,
+    delay: 500,
+    checkFn: () => {
       return getUiObject(/我的小程序/);
     },
-    () => {
+    runFn: () => {
       boundsClick(getUiObject(/发现/)?.parent());
       sleep(1000);
       boundsClick(getUiObject(/^小程序$/));
       sleep(1000);
     },
-  );
+  });
 
-  const isFind = delayCheck(
-    5000,
-    200,
-    () => {
+  const isFind = delayCheck({
+    timeout: 5000,
+    delay: 200,
+    checkFn: () => {
       return getUiObject(name);
     },
-    () => {
+    runFn: () => {
       scrollPage(200);
     },
-    false,
-  );
+    runFirst: false,
+  });
 
   if (!isFind) {
     return false;
@@ -204,13 +208,17 @@ function openTaoBaoMain(timeout = 10000, delay = 500): boolean {
     className: 'com.taobao.tao.TBMainActivity',
   });
 
-  return !!delayCheck(timeout, delay, () => {
-    return (
-      currentPackage() === taobaoId &&
-      (textContains('天猫超市').findOnce() ||
-        textContains('天猫新品').findOnce() ||
-        descContains('首页').findOnce())
-    );
+  return !!delayCheck({
+    timeout,
+    delay,
+    checkFn: () => {
+      return (
+        currentPackage() === taobaoId &&
+        (textContains('天猫超市').findOnce() ||
+          textContains('天猫新品').findOnce() ||
+          descContains('首页').findOnce())
+      );
+    },
   });
 }
 
@@ -242,25 +250,29 @@ function openJDNoCheck() {
   };
 
   let index = 0;
-  return delayCheck(5000, 1000, () => {
-    const isAd = adRun();
+  return delayCheck({
+    timeout: 5000,
+    delay: 1000,
+    checkFn: () => {
+      const isAd = adRun();
 
-    // 是广告, 就略过
-    if (isAd) {
-      return false;
-    }
-
-    // 主界面能找到
-    if (checkIsMain()) {
-      if (index < 2) {
-        index += 1;
+      // 是广告, 就略过
+      if (isAd) {
         return false;
       }
 
-      return true;
-    }
+      // 主界面能找到
+      if (checkIsMain()) {
+        if (index < 2) {
+          index += 1;
+          return false;
+        }
 
-    return false;
+        return true;
+      }
+
+      return false;
+    },
   });
 }
 
@@ -294,25 +306,29 @@ function openJDJRNoCheck() {
   };
 
   let index = 0;
-  return delayCheck(5000, 1000, () => {
-    const isAd = adRun();
+  return delayCheck({
+    timeout: 5000,
+    delay: 1000,
+    checkFn: () => {
+      const isAd = adRun();
 
-    // 是广告, 就略过
-    if (isAd) {
-      return false;
-    }
-
-    // 主界面能找到
-    if (checkIsMain()) {
-      if (index < 2) {
-        index += 1;
+      // 是广告, 就略过
+      if (isAd) {
         return false;
       }
 
-      return true;
-    }
+      // 主界面能找到
+      if (checkIsMain()) {
+        if (index < 2) {
+          index += 1;
+          return false;
+        }
 
-    return false;
+        return true;
+      }
+
+      return false;
+    },
   });
 }
 

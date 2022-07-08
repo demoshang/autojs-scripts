@@ -1,5 +1,8 @@
 {
   "cSpell.words": [
     "scrollable"
-  ]
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }

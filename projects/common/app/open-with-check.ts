@@ -34,26 +34,30 @@ function openAppWithCheck({
   };
 
   let index = 0;
-  return delayCheck(wait, 500, () => {
-    const isAd = skipAd();
+  return delayCheck({
+    timeout: wait,
+    delay: 500,
+    checkFn: () => {
+      const isAd = skipAd();
 
-    // 是广告, 就略过
-    if (isAd) {
-      index = 0;
-      return false;
-    }
-
-    // 主界面能找到
-    if (checkIsMain()) {
-      if (index < confirmCheck) {
-        index += 1;
+      // 是广告, 就略过
+      if (isAd) {
+        index = 0;
         return false;
       }
 
-      return true;
-    }
+      // 主界面能找到
+      if (checkIsMain()) {
+        if (index < confirmCheck) {
+          index += 1;
+          return false;
+        }
 
-    return false;
+        return true;
+      }
+
+      return false;
+    },
   });
 }
 

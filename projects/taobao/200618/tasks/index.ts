@@ -10,14 +10,14 @@ import { tl } from '../../../common/toast';
 function goToPage() {
   tl('尝试进入 [瓜分10亿] 页面');
 
-  const pageBtn = delayCheck(
-    10000,
-    1000,
-    () => {
+  const pageBtn = delayCheck({
+    timeout: 10000,
+    delay: 1000,
+    checkFn: () => {
       tl('搜索按钮 [瓜分10亿]');
       return textContains('瓜分10亿').findOnce();
     },
-    () => {
+    runFn: () => {
       tl('搜索按钮 [首页]');
       const ele =
         id('android:id/tabs').findOnce() ||
@@ -35,7 +35,7 @@ function goToPage() {
       const btn = collection2array(ele.children()).pop();
       boundsClick(btn);
     },
-  );
+  });
 
   if (!pageBtn) {
     throw new Error('[瓜分10亿] 页面未找到');

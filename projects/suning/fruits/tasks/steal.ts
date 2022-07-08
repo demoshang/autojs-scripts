@@ -50,8 +50,12 @@ function stealRandom(
   sleep(1000);
   click(stealRandomPosition.x, stealRandomPosition.y);
 
-  const result = delayCheck(10000, 500, () => {
-    return textContains('TA的成就').findOnce();
+  const result = delayCheck({
+    timeout: 10000,
+    delay: 500,
+    checkFn: () => {
+      return textContains('TA的成就').findOnce();
+    },
   });
 
   if (result) {

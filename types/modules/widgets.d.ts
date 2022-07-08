@@ -102,6 +102,9 @@ declare interface UiObject {
 
     contentDescription: string;
     className(): string;
+
+    addView(v: any): void;
+    removeView(v: any): void;
 }
 
 declare interface UiCollection {

@@ -15,19 +15,19 @@ import { getUiObject } from '../../../common/ui-object';
 function goToPage() {
   tl('尝试进入 [叠蛋糕] 页面');
 
-  const cakeBtn = delayCheck(
-    10000,
-    1000,
-    () => {
+  const cakeBtn = delayCheck({
+    timeout: 10000,
+    delay: 1000,
+    checkFn: () => {
       tl('搜索按钮 [叠蛋糕]');
       console.info('currentPackage: ', currentPackage());
       return textContains('叠蛋糕').findOnce()?.parent();
     },
-    () => {
+    runFn: () => {
       tl('搜索按钮 [我的]');
       boundsClick(desc('我的').findOnce());
     },
-  );
+  });
 
   if (!cakeBtn) {
     throw new Error('[叠蛋糕] 页面未找到');
@@ -82,11 +82,15 @@ function toFinishTask(taskName: string | RegExp) {
       return ele?.findOne(textContains('去完成'));
     },
     waitFinished: () => {
-      delayCheck(8000, 500, () => {
-        return !!(
-          descMatches(/.*恭喜完成.*/).findOnce() ||
-          textMatches(/.*恭喜完成.*/).findOnce()
-        );
+      delayCheck({
+        timeout: 8000,
+        delay: 500,
+        checkFn: () => {
+          return !!(
+            descMatches(/.*恭喜完成.*/).findOnce() ||
+            textMatches(/.*恭喜完成.*/).findOnce()
+          );
+        },
       });
     },
     afterMs: 3000,
@@ -189,18 +193,18 @@ function cleanCart() {
     }
   }
 
-  const editBtn = delayCheck(
-    10000,
-    1000,
-    () => {
+  const editBtn = delayCheck({
+    timeout: 10000,
+    delay: 1000,
+    checkFn: () => {
       tl('搜索按钮 [编辑]');
       return textContains('编辑').findOnce();
     },
-    () => {
+    runFn: () => {
       tl('搜索按钮 [购物车]');
       boundsClick(descContains('购物车').findOnce());
     },
-  );
+  });
 
   if (!editBtn) {
     throw new Error('[购物车] 页面未找到');

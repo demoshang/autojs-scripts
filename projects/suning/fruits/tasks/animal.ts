@@ -26,13 +26,13 @@ function collectAnimal(): void {
 function addAnimals(): void {
   const addImage = images.read('./assets/match-template/add.png');
 
-  const ele = delayCheck(
-    10000,
-    1500,
-    () => {
+  const ele = delayCheck({
+    timeout: 10000,
+    delay: 1500,
+    checkFn: () => {
       return textMatches(/成熟:\s*\d+小时/).findOnce();
     },
-    () => {
+    runFn: () => {
       pressClose();
 
       findAndClick(
@@ -43,7 +43,7 @@ function addAnimals(): void {
         1,
       );
     },
-  );
+  });
 
   if (!ele) {
     tl('不需要养殖动物');

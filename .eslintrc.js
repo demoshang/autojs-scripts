@@ -26,6 +26,7 @@ module.exports = {
     EventEmitter: false,
 
     // autojs 自带的
+    dialogs: false,
     auto: false,
     ui: false,
     threads: false,

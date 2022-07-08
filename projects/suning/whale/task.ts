@@ -48,11 +48,15 @@ const doLive = (() => {
     sleep(1000);
 
     // 等待任务完成
-    delayCheck(8000, 1000, () => {
-      return !!(
-        descMatches(/.*任务.*完成.*/).findOnce() ||
-        textMatches(/(.*任务.*完成.*)|(.*回去领奖.*)/).findOnce()
-      );
+    delayCheck({
+      timeout: 8000,
+      delay: 1000,
+      checkFn: () => {
+        return !!(
+          descMatches(/.*任务.*完成.*/).findOnce() ||
+          textMatches(/(.*任务.*完成.*)|(.*回去领奖.*)/).findOnce()
+        );
+      },
     });
   };
 })();
@@ -120,26 +124,30 @@ function doTask(): void {
       scrollPage();
 
       // 等待任务完成
-      delayCheck(delay + 5000, 1000, () => {
-        return !!(
-          descMatches(/.*任务.*完成.*/).findOnce() ||
-          textMatches(/(.*任务.*完成.*)|(.*回去领奖.*)/).findOnce()
-        );
+      delayCheck({
+        timeout: delay + 5000,
+        delay: 1000,
+        checkFn: () => {
+          return !!(
+            descMatches(/.*任务.*完成.*/).findOnce() ||
+            textMatches(/(.*任务.*完成.*)|(.*回去领奖.*)/).findOnce()
+          );
+        },
       });
     }
 
     // 尝试返回
-    delayCheck(
-      5000,
-      1000,
-      () => {
+    delayCheck({
+      timeout: 5000,
+      delay: 1000,
+      checkFn: () => {
         return checkIsInTaskPanel();
       },
-      () => {
+      runFn: () => {
         back();
         sleep(1000);
       },
-    );
+    });
 
     if (lastResult.retries > lastResult.max) {
       tl(`⚠️警告: ${name} 任务失败, 重试过多`);

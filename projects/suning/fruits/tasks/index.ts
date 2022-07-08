@@ -18,8 +18,12 @@ function runWithRetry(retries = 3): void {
     () => {
       openSuning('https://c.m.suning.com/newFarm.html#/', 3000);
 
-      const isOpenSuccess = delayCheck(15000, 1000, () => {
-        return textContains('ico-lingjingbi').findOnce();
+      const isOpenSuccess = delayCheck({
+        timeout: 15000,
+        delay: 1000,
+        checkFn: () => {
+          return textContains('ico-lingjingbi').findOnce();
+        },
       });
 
       if (!isOpenSuccess) {

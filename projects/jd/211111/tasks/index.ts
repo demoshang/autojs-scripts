@@ -28,10 +28,10 @@ function checkIsInMainPages() {
 }
 
 function openActivity() {
-  const isHaveActivityBtn = delayCheck(
-    10000,
-    500,
-    () => {
+  const isHaveActivityBtn = delayCheck({
+    timeout: 10000,
+    delay: 500,
+    checkFn: () => {
       // 京东商城
       if (checkIsInJDMainPages()) {
         return $(/浮层活动/);
@@ -44,33 +44,33 @@ function openActivity() {
 
       return null;
     },
-    () => {
+    runFn: () => {
       const b1 = $('#iv_fifth_icon');
       const b2 = $('首页', ['desc', 'text'])?.parent();
 
       // 京东金融    京东商城
       boundsClick(b1 ?? b2);
     },
-  );
+  });
 
   if (!isHaveActivityBtn) {
     throw new Error('寻找活动按钮失败');
   }
 
-  const isOpen = !!delayCheck(
-    15000,
-    1000,
-    () => {
+  const isOpen = !!delayCheck({
+    timeout: 15000,
+    delay: 1000,
+    checkFn: () => {
       return $(RED_PACKET_REGEX);
     },
-    () => {
+    runFn: () => {
       if (checkIsInJDMainPages()) {
         boundsClick($(/浮层活动/));
       } else if (checkIsInJDJRMainPages()) {
         boundsClick($('瓜分20'));
       }
     },
-  );
+  });
 
   if (!isOpen) {
     throw new Error('进入活动页面失败');
@@ -121,8 +121,12 @@ function openTask() {
 
   boundsClick({ x, y });
 
-  const isOpen = delayCheck(3000, 500, () => {
-    return $('当前进度');
+  const isOpen = delayCheck({
+    timeout: 3000,
+    delay: 500,
+    checkFn: () => {
+      return $('当前进度');
+    },
   });
 
   if (!isOpen) {
@@ -135,25 +139,29 @@ function checkIsInTask() {
 }
 
 function keepInTaskPage() {
-  const isInTask = delayCheck(15000, 800, () => {
-    if (checkIsInTask()) {
-      return true;
-    }
+  const isInTask = delayCheck({
+    timeout: 15000,
+    delay: 800,
+    checkFn: () => {
+      if (checkIsInTask()) {
+        return true;
+      }
 
-    if (checkIsInActivity()) {
-      tl('在活动页, 打开任务列表');
-      closePop();
-      sleep(1000);
-      openTask();
-    } else if (checkIsInMainPages()) {
-      tl('在首页, 打开活动界面');
-      openActivity();
-    } else {
-      tl('返回');
-      back();
-    }
+      if (checkIsInActivity()) {
+        tl('在活动页, 打开任务列表');
+        closePop();
+        sleep(1000);
+        openTask();
+      } else if (checkIsInMainPages()) {
+        tl('在首页, 打开活动界面');
+        openActivity();
+      } else {
+        tl('返回');
+        back();
+      }
 
-    return;
+      return;
+    },
   });
 
   if (!isInTask) {
@@ -220,16 +228,16 @@ function runTask(
   sleep(delay);
 
   if (index > 1) {
-    delayCheck(
-      after * (index - 1),
-      500,
-      () => {
+    delayCheck({
+      timeout: after * (index - 1),
+      delay: 500,
+      checkFn: () => {
         return !!$(/得\d+汪汪币/);
       },
-      () => {
+      runFn: () => {
         scrollPage();
       },
-    );
+    });
   }
 
   afterRun(task);
