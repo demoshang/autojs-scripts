@@ -1,17 +1,19 @@
 import { getChild } from '../floaty-children';
+import { $ } from '../ui-object';
 import {
   getTaskCount,
   getTaskDelay,
   getTaskIntro,
   TaskCountResult,
-} from '../get-task-count';
-import { $ } from '../ui-object';
+} from './get-task-count';
 
-type GetTaskBtn = (container: UiObject) => UiObject | null | undefined;
-type GetTaskTitle = (container: UiObject) => string;
-type GetTaskCount = (container: UiObject) => TaskCountResult | undefined;
-type GetTaskIntro = (container: UiObject) => string | undefined;
-type GetTaskDelay = (container: UiObject) => number;
+type GetTaskAttr<T> = (container: UiObject) => T;
+
+type GetTaskBtn = GetTaskAttr<UiObject | null | undefined>;
+type GetTaskTitle = GetTaskAttr<string>;
+type GetTaskCount = GetTaskAttr<TaskCountResult | undefined>;
+type GetTaskIntro = GetTaskAttr<string | undefined>;
+type GetTaskDelay = GetTaskAttr<number>;
 
 interface TaskConfig {
   container: UiObject;

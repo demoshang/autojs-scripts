@@ -1,9 +1,9 @@
 import { $ } from '../ui-object';
 import { JD_MALL } from './constants';
-import { openAppWithCheck } from './open-with-check';
+import { openApp } from './open-with-check';
 
 function openJDMall(wait?: number, confirmCheck?: number) {
-  return openAppWithCheck({
+  return openApp({
     packageName: JD_MALL,
     className: 'com.jingdong.app.mall.main.MainActivity',
     checkIsIn: () => {

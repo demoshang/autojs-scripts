@@ -1,0 +1,14 @@
+<!-- wrap: ui.layout -->
+
+<vertical>
+  <appbar>
+    <toolbar title="状态监测界面" />
+  </appbar>
+
+  <vertical id="container">
+  </vertical>
+
+  <button id="console" style="Widget.AppCompat.Button.Colored" text="打开日志" />
+
+
+</vertical>

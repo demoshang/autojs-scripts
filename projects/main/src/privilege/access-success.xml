@@ -1,0 +1,3 @@
+<!-- wrap: ui.inflate -->
+
+<text gravity="center" text="无障碍服务正常" textSize="40sp" textColor="green" />

@@ -1,0 +1,12 @@
+<!-- wrap: ui.inflate -->
+
+<vertical>
+
+  <text gravity="center" text="需要 无障碍服务" textSize="40sp" textColor="red" />
+
+  <text gravity="center" text="如果无障碍服务已经启动, 但是依然显示本行警告, 请关闭无障碍服务,然后再次启动, 如果依然不行, 请重启手机" textColor="red" />
+
+  <button style="Widget.AppCompat.Button.Colored" text="检测/打开无障碍设置" />
+
+</vertical>
+

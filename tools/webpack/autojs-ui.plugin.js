@@ -41,25 +41,12 @@ class AutoJsUiPlugin {
 
   apply(compiler) {
     compiler.hooks.compilation.tap('AutoJsUiPlugin', (compilation) => {
-      let isUI = false;
-      compilation.hooks.optimizeChunkAssets.tap('AutoJsUiPlugin', (chunks) => {
-        for (const chunk of chunks) {
-          if (chunk.canBeInitial()) {
-            chunk.files.forEach((file) => {
-              if (!isUI) {
-                isUI = checkUIMode(compilation.assets[file].source());
-              }
-            });
-          }
-        }
-      });
-
       compilation.hooks.afterOptimizeChunkAssets.tap('AutoJsUiPlugin', (chunks) => {
         for (const chunk of chunks) {
           if (chunk.canBeInitial()) {
             chunk.files.forEach((file) => {
               let source = compilation.assets[file].source();
-              if (isUI) {
+              if (checkUIMode(source)) {
                 source = appendHeader(source);
               }
               source = appendXML(source);

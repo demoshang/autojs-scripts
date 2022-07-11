@@ -1,9 +1,9 @@
 import { $ } from '../ui-object';
 import { JD_JR } from './constants';
-import { openAppWithCheck } from './open-with-check';
+import { openApp } from './open-with-check';
 
 function openJDJR(wait?: number, confirmCheck?: number) {
-  return openAppWithCheck({
+  return openApp({
     packageName: JD_JR,
     className: 'com.jd.jrapp.bm.mainbox.main.MainActivity',
     checkIsIn: () => {

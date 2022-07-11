@@ -1,4 +1,4 @@
-import { $ } from './ui-object';
+import { $ } from '../ui-object';
 
 export interface TaskCountResult {
   total: number;

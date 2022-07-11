@@ -19,7 +19,7 @@ type CustomTaskSkip = (task: Task) => boolean;
 
 interface WorkerConfig {
   name: string;
-  openApp: () => void;
+  openApp: () => boolean;
   killApp: () => void;
 
   runTask: (task: Task, index: number) => void;
@@ -71,10 +71,10 @@ class Worker {
     ) {
       tl('已经达到最大次数, 销毁程序', this.config.name);
       this.destroy();
-      exit();
       return;
     }
 
+    let isOpenAppSuccess = true;
     if (this.taskStatus === TaskStatus.suspend) {
       tl(`执行任务 ${this.config.name}`);
     } else {
@@ -93,7 +93,7 @@ class Worker {
       }
 
       tl(`打开 [${this.config.name}] 应用中`);
-      this.config.openApp();
+      isOpenAppSuccess = this.config.openApp();
       sleep(1000);
     }
 
@@ -106,6 +106,10 @@ class Worker {
     // 子线程监听脚本
     this.thread = threads.start(() => {
       try {
+        if (!isOpenAppSuccess) {
+          throw new Error('打开 APP 失败');
+        }
+
         // 标记为正在运行
         this.taskStatus = TaskStatus.running;
         // 开始运行
@@ -174,7 +178,7 @@ class Worker {
 
     this.innerStatus = status;
 
-    this.em?.emit('status', state);
+    this.em.emit('status', state);
   }
 
   private run() {

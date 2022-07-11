@@ -1,0 +1,12 @@
+<!-- wrap: ui.inflate -->
+
+<horizontal>
+
+  <button style="Widget.AppCompat.Button.Colored" w="200" text="{{__ARG0__.label}}" textSize="14sp"/>
+
+  <vertical w="*">
+    <button text="下载远程代码" textSize="14sp"/>
+    <button text="删除" textSize="14sp"/>
+  </vertical>
+
+</horizontal>

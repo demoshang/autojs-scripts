@@ -2,26 +2,27 @@ import { delayCheck } from '../delay-check';
 import { AUTO_JS } from './constants';
 import { skipAd as defaultSkipAd } from './skip-ad';
 
-function openAppWithCheck({
-  packageName,
-  className,
+function openApp({
   checkIsIn = () => true,
 
   wait = 5000,
   confirmCheck = 2,
   skipAd = defaultSkipAd,
+
+  packageName,
+  ...intent
 }: {
-  packageName: string;
-  className: string;
   checkIsIn?: () => boolean;
   wait?: number;
   confirmCheck?: number;
   skipAd?: () => boolean;
-}) {
+
+  packageName: string;
+} & Omit<app.IntentOptions, 'packageName'>) {
   app.startActivity({
     action: 'android.intent.action.VIEW',
     packageName,
-    className,
+    ...intent,
   });
 
   const checkIsMain = () => {
@@ -61,4 +62,4 @@ function openAppWithCheck({
   });
 }
 
-export { openAppWithCheck };
+export { openApp };

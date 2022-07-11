@@ -21,34 +21,33 @@ function getScriptPath(key: string) {
 function downloadFile({
   url,
   key,
-  callback = () => {},
   options = { method: 'GET' },
 }: {
   url: string;
   key: string;
   options?: http.HttpRequestOptions;
-  callback: (
-    error: Error | null,
-    res: http.Response,
-    filePath?: string,
-  ) => void;
 }) {
-  http.request(url, options, (res, error) => {
-    if (error) {
-      callback(error, res);
-      return;
-    }
+  return new Promise<{
+    body?: string;
+    filePath: string;
+  }>((rs, rj) => {
+    http.request(url, options, (res, error) => {
+      if (error) {
+        rj(error);
+        return;
+      }
 
-    const body = res.body.string();
+      const body = res.body.string();
 
-    const filePath = getScriptPath(key);
+      const filePath = getScriptPath(key);
 
-    if (!files.exists(filePath)) {
-      files.createWithDirs(filePath);
-    }
+      if (!files.exists(filePath)) {
+        files.createWithDirs(filePath);
+      }
 
-    files.write(filePath, body, 'utf8');
-    callback(null, res, filePath);
+      files.write(filePath, body, 'utf8');
+      rs({ filePath });
+    });
   });
 }
 

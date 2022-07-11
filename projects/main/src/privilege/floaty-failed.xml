@@ -1,0 +1,9 @@
+<!-- wrap: ui.inflate -->
+
+<vertical>
+
+  <text gravity="center" id="floatyStatusCheck" text="需要 悬浮窗服务" textSize="40sp" textColor="red" />
+
+  <button id="floatyBtn" style="Widget.AppCompat.Button.Colored" text="检测/打开悬浮窗设置" />
+
+</vertical>

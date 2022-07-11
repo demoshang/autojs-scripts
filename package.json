@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run watch",
     "watch": "npm run dev -- --watch",
-    "dev": "webpack --config tools/webpack/webpack.dev.js",
-    "build": "webpack --config tools/webpack/webpack.prod.js",
+    "dev": "rimraf dist && webpack --config tools/webpack/webpack.dev.js",
+    "build": "rimraf dist && webpack --config tools/webpack/webpack.prod.js",
     "lint": "eslint --format eslint-formatter-friendly \"projects/**/*.ts\"",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/demoshang/autojs-scripts#readme",
   "devDependencies": {
     "@s4p/eslint-config": "^5.1.1",
+    "@types/bluebird": "^3.5.36",
     "@types/node": "^16.11.1",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
@@ -36,13 +37,16 @@
     "eslint-webpack-plugin": "^3.1.0",
     "glob": "^7.2.0",
     "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
     "ts-loader": "^9.2.6",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.4.4",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.59.1",
     "webpack-cli": "^4.9.1",
     "webpack-merge": "^5.8.0",
     "webpack-sources": "^3.2.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2"
   }
 }
