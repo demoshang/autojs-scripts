@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: js-dist
-          path: dist/all/
+          path: dist/main/
 
       - name: clone Auto.js
         working-directory: ./dist
@@ -35,7 +35,7 @@ jobs:
       - name: Auto.js replace inrt
         working-directory: ./dist
         run: |
-          npx @s4p/autojs-replace-inrt "./Auto.js" "./all"
+          npx @s4p/autojs-replace-inrt "./Auto.js" "./main"
           cd "./Auto.js"
           git status
 
