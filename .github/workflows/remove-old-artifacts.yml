@@ -16,3 +16,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           age: "3 day"
           skip-tags: false
+          skip-recent: 3
