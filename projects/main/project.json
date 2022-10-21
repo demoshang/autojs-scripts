@@ -8,5 +8,5 @@
   "versionName": "0.1.0",
   "versionCode": 700,
   "ignore": [],
-  "entries": ["./chihuodou.ts", "./fruits.ts"]
+  "entries": ["./chihuodou.ts", "./jd-d11.ts"]
 }

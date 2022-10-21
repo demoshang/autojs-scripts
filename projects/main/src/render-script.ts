@@ -33,11 +33,18 @@ const SCRIPTS: (LocalScript | RemoteScript)[] = [
     url: 'chihuodou.js',
   },
 
+  // {
+  //   label: '饿了么-水果',
+
+  //   type: ScriptType.local,
+  //   url: 'fruits.js',
+  // },
+
   {
-    label: '饿了么-水果',
+    label: '京东 双十一',
 
     type: ScriptType.local,
-    url: 'fruits.js',
+    url: 'jd-d11.js',
   },
 
   // {
