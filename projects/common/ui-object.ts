@@ -267,8 +267,6 @@ function getRelativeObject(ele?: UiObject | null, index = 1) {
   if (!ele) {
     return undefined;
   }
-  const id = ele.id();
-  const text = ele.text();
   const react = ele.bounds();
   const x = react.centerX();
   const y = react.centerY();
