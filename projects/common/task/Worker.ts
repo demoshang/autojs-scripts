@@ -25,7 +25,7 @@ interface WorkerConfig {
   runTask: (task: Task, index: number) => void;
   keepInTaskPage: () => void;
 
-  queryTask?: () => Task[];
+  queryTask?: (index?: number) => Task[];
   taskSkip?: CustomTaskSkip;
   taskRetires?: number;
   workerRetires?: number;
@@ -184,11 +184,12 @@ class Worker {
   private run() {
     this.config.keepInTaskPage();
 
+    let index = 0;
     while (true) {
       let tasks: Task[];
 
       if (this.config.queryTask) {
-        tasks = this.config.queryTask();
+        tasks = this.config.queryTask(index);
       } else {
         tasks = $$(/.*\(\d+\/\d+.*/).map((ele) => {
           const container = ele.parent();
@@ -208,6 +209,8 @@ class Worker {
       this.config.runTask(task, history?.current ?? 1);
 
       this.config.keepInTaskPage();
+
+      index += 1;
     }
   }
 

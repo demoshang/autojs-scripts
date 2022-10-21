@@ -33,15 +33,15 @@ const buildTimerLogger = (timeout: number, log: boolean | number = false) => {
 };
 
 function delayCheck<T>({
-  timeout,
-  delay,
+  timeout = 15000,
+  delay = 800,
   checkFn,
   runFn,
   runFirst = true,
   log = false,
 }: {
-  timeout: number;
-  delay: number;
+  timeout?: number;
+  delay?: number;
   checkFn: (restTime?: number) => T;
   runFn?: (restTime?: number) => void;
   runFirst?: boolean;

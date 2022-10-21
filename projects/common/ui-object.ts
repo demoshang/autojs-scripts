@@ -263,4 +263,38 @@ function $$(a1: any, a2: any, a3?: any) {
   return [];
 }
 
-export { $, $$, getUiObject, getTextUiObject, getDescUiObject, simpleUiObject };
+function getRelativeObject(ele?: UiObject | null, index = 1) {
+  if (!ele) {
+    return undefined;
+  }
+  const id = ele.id();
+  const text = ele.text();
+  const react = ele.bounds();
+  const x = react.centerX();
+  const y = react.centerY();
+
+  const children = collection2array(ele.parent().children());
+  const curPos = children.findIndex((item) => {
+    const bounds = item.bounds();
+
+    return x === bounds.centerX() && y === bounds.centerY();
+  });
+
+  if (curPos === -1) {
+    return undefined;
+  }
+
+  const pos = curPos + index;
+
+  return children[pos];
+}
+
+export {
+  $,
+  $$,
+  getUiObject,
+  getTextUiObject,
+  getDescUiObject,
+  simpleUiObject,
+  getRelativeObject,
+};

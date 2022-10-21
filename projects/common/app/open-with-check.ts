@@ -5,7 +5,7 @@ import { skipAd as defaultSkipAd } from './skip-ad';
 function openApp({
   checkIsIn = () => true,
 
-  wait = 5000,
+  wait = 10000,
   confirmCheck = 2,
   skipAd = defaultSkipAd,
 

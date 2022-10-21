@@ -1,6 +1,7 @@
 import { floatyDebug } from './floaty-debug';
 import { checkInScreen } from './in-screen';
 import { tl, toastUiObject } from './toast';
+import { simpleUiObject } from './ui-object';
 
 type ChildrenFilter =
   | ((ele: UiObject) => any)
@@ -39,13 +40,15 @@ function filterChildren(
   fn: (o: UiObject) => boolean,
   maxDepth = Number.MAX_SAFE_INTEGER,
 ) {
-  const parents: { item: UiObject; depth: number }[] = [
+  const parents: { item: UiObject; depth: number; paths: number[] }[] = [
     {
       item: parent,
       depth: 0,
+      paths: [],
     },
   ];
-  const list: UiObject[] = [];
+
+  const list: { item: UiObject; paths: number[] }[] = [];
 
   while (parents.length) {
     const next = parents.shift();
@@ -54,14 +57,14 @@ function filterChildren(
       break;
     }
 
-    const { item, depth } = next;
-    list.push(item);
+    const { item, depth, paths } = next;
+    list.push({ item, paths });
 
     if (depth < maxDepth && item && item.childCount() > 0) {
       const children = collection2array(item.children());
       parents.push(
-        ...children.map((o) => {
-          return { item: o, depth: depth + 1 };
+        ...children.map((o, index) => {
+          return { item: o, depth: depth + 1, paths: [...paths, index] };
         }),
       );
     }
@@ -70,7 +73,15 @@ function filterChildren(
   // 删除第一个 parent
   list.shift();
 
-  return list.filter(fn);
+  const filteredList = list.filter(({ item }) => {
+    return fn(item);
+  });
+
+  filteredList.forEach(({ paths, item }, index) => {
+    console.log(index, paths.join(','), simpleUiObject(item));
+  });
+
+  return filteredList.map(({ item }) => item);
 }
 
 function convertFilter(filterType: ChildrenFilter): (obj: UiObject) => boolean {
@@ -214,9 +225,9 @@ function floatyChildren(
   }
 
   let {
-    filter,
     concurrence,
-    timeout = 1000,
+    filter = concurrence ? null : undefined,
+    timeout = concurrence ? 5000 : 1000,
     depth,
   }: FloatConfig = {
     ...(typeof config === 'boolean' ? { filter: config } : config),
@@ -227,7 +238,7 @@ function floatyChildren(
   floatyDebug(parent);
   tl('子元素有', children.length);
 
-  sleep(1000);
+  sleep(concurrence ? 1000 : timeout);
 
   if (concurrence) {
     floatyDebug(
@@ -252,8 +263,36 @@ function floatyChildren(
   tl('floatyChildren 结束');
 }
 
-function getChild(parent?: UiObject, index = 0) {
-  return parent?.children()?.get(index);
+function getChild(
+  parent: UiObject | null | undefined,
+  indexes: number[],
+): UiObject | undefined;
+function getChild(
+  parent: UiObject | null | undefined,
+  index: number,
+): UiObject | undefined;
+function getChild(
+  parent: UiObject | null | undefined,
+  index: number | number[],
+) {
+  let indexes: number[] = [];
+  if (typeof index === 'number') {
+    indexes = [index];
+  } else {
+    indexes = index;
+  }
+
+  let p = parent;
+  try {
+    while (indexes.length) {
+      const i = indexes.shift()!;
+      p = p?.children()?.get(i);
+    }
+  } catch (e) {
+    return undefined;
+  }
+
+  return p;
 }
 
 function getChildren(parent?: UiObject, indexes: number[] = []) {

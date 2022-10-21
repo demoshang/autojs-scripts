@@ -11,6 +11,12 @@ import {
 
 importClass(android.view.View);
 
+function getRandomColor() {
+  return (
+    '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).substr(-6)
+  );
+}
+
 const { density } = context.getResources().getDisplayMetrics();
 const statusBarHeight = (() => {
   const id = context
@@ -154,13 +160,13 @@ function floatyDebug(
 
   const hidden = resolveHidden();
 
-  // 强制设置长度为 30
-  if (args.length > 30) {
-    console.warn('too many pints, only show 30 point');
+  // 强制设置长度为 100
+  if (args.length > 100) {
+    console.warn('too many pints, only show 100 point');
     // eslint-disable-next-line no-param-reassign
-    args.length = 30;
+    args.length = 100;
   } else {
-    while (args.length < 30) {
+    while (args.length < 100) {
       args.push(hidden);
     }
   }
@@ -199,6 +205,8 @@ function floatyDebug(
         ...hidden,
         ...item,
         index,
+
+        color: getRandomColor(),
       };
     });
 
