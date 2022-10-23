@@ -17,18 +17,12 @@
 
     div:hover {
       background: gray;
-
-
-    }
-
-    div:hover span {
-      position: relative;
-      z-index: 999999999 !important;
     }
   </style>
 </head>
 
 <body>
+  <img src="./bg.jpg" style="position: absolute; top: 0; left: 0; width: 100vw;height: 100vh;" />
   <div id="container" style="position: relative"></div>
   <script>
     window.nodes = [
@@ -5287,56 +5281,92 @@
     const W = 1080;
     const H = 2340;
 
-    const maxLen = Math.max(
-      ...window.nodes.map(({ paths }) => {
-        return paths.length
-      })
-    )
-
-    function getZIndex(paths) {
-      const values = new Array(maxLen).fill(0);
-      for (let i = 0; i < paths.length; i += 1) {
-        values[i] = paths[i];
+    function sortFn({ paths: p1 }, { paths: p2 }) {
+      if (p1.length !== p2.length) {
+        return p1.length - p2.length;
       }
 
-      let r = 0;
-      values.reverse().forEach((v, index) => {
-        r += v * (10 ** index);
-      })
+      for (let i = 0; i < p1.length; i += 1) {
+        if (p1[i] < p2[i]) {
+          return -1;
+        }
+      }
 
-      return r;
+      return 1;
     }
 
-    const arr = window.nodes.map((item) => {
-      return {
-
-        ...item,
-        zIndex: getZIndex(item.paths)
-      }
-    })
-      .sort(({ zIndex: z1 }, { zIndex: z2 }) => {
-        return z1 - z2;
+    const arr = window.nodes.sort(sortFn)
+      .map((item, index) => {
+        return {
+          ...item,
+          zIndex: index,
+        }
+      }).filter(({ top, left, bottom, right }) => {
+        return (bottom - top < H / 2) && (right - left < W / 2)
       })
 
+    const eleList = arr.map((item, index) => {
+      const {
+        paths,
+        id,
+        text,
+        desc,
+        className,
+        left,
+        top,
+        right,
+        bottom,
 
-    const html = arr.map(({
-      paths,
-      id,
-      text,
-      desc,
-      className,
-      left,
-      top,
-      right,
-      bottom,
+        zIndex
+      } = item
 
-      zIndex
-    }, index) => {
-      return `<div style="position: absolute; top: ${top / H * 100}vh; left: ${left / W * 100}vw; right: ${right / W * 100}vw; bottom: ${bottom / H * 100}vh; width: ${(right - left) / W * 100}vw; height: ${(bottom - top) / H * 100}vh; z-index: ${zIndex}; outline: 1px dashed gray; display: flex;    justify-content: center; align-items: center;">
-        <span>${index}</span></div>`
-    }).join('\n')
+      const ele = document.createElement('div');
+      ele.style = `position: absolute; top: ${top / H * 100}vh; left: ${left / W * 100}vw; right: ${right / W * 100}vw; bottom: ${bottom / H * 100}vh; width: ${(right - left) / W * 100}vw; height: ${(bottom - top) / H * 100}vh; z-index: ${zIndex}; outline: 1px dashed white; display: flex; justify-content: center; align-items: center;`;
+      ele.setAttribute('onclick', `getPos(${JSON.stringify(paths)})`)
 
-    document.querySelector('#container').innerHTML = html
+      return {
+        ...item,
+        ele,
+      }
+    })
+
+
+    const locationList = eleList.filter(({ id, text, desc }) => {
+      return !!id || !!text || !!desc;
+    });
+
+    function getPos(paths) {
+      const r = locationList.map((item) => {
+        const fromPaths = item.paths
+        const toPaths = paths;
+
+        let i = 0;
+        for (i = 0; i < fromPaths.length; i += 1) {
+          if (fromPaths[i] !== toPaths[i]) {
+            break;
+          }
+        }
+
+        let f = fromPaths.length - i;
+        return {
+          ...item,
+
+          fromPaths,
+          toPaths,
+
+          paths: [...new Array(f).fill(-1), ...toPaths.slice(i)]
+        }
+      }).sort(sortFn)
+
+      console.log('==================', r)
+    }
+
+
+
+    eleList.forEach(({ ele }) => {
+      document.querySelector('#container').appendChild(ele);
+    })
+
 
   </script>
 </body>
