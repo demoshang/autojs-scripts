@@ -56,6 +56,11 @@ function openActivityPage() {
       if ($('距离下次抽到分红')) {
         return true;
       }
+
+      if ($(/消耗/)) {
+        return true;
+      }
+
       return false;
     },
   });
@@ -174,12 +179,8 @@ function keepInTaskPage() {
         return false;
       }
 
-      if ($(/.*解锁.*次抽奖/)) {
-        const bottomEle = $(/.*解锁.*次抽奖/)
-          ?.parent()
-          ?.parent()
-          ?.parent()
-          ?.parent();
+      if ($(/消耗/)) {
+        const bottomEle = $(/消耗/)?.parent()?.parent()?.parent()?.parent();
 
         const taskBtn = getChild(bottomEle, 3);
         boundsClick(taskBtn);
